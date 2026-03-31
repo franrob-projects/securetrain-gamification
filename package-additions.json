@@ -1,0 +1,7 @@
+{
+  "note": "Add these to your existing package.json dependencies, then run: npm install",
+  "dependencies_to_add": {
+    "@supabase/supabase-js": "^2.43.0",
+    "@supabase/ssr": "^0.3.0"
+  }
+}
