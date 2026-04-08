@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Pacifico&display=swap');
+
+:root {
+  --bg:          #0e0c1e;
+  --surface:     #1a1730;
+  --border:      #2a2550;
+  --brand:       #5B54B8;
+  --brand-hover: #7A74CC;
+  --brand-dark:  #3F3A8A;
+  --muted:       #8b87a8;
+  --accent:      #9d97e8;
+  --text:        #ffffff;
+
+  /* legacy aliases used by existing pages */
+  --navy:        #0e0c1e;
+  --navy-mid:    #1a1730;
+  --navy-light:  #1a1730;
+  --card-bg:     #1a1730;
+  --border-gold: rgba(91,84,184,0.35);
+  --gold:        #5B54B8;
+  --gold-light:  #7A74CC;
+  --gold-pale:   #9d97e8;
+  --text-1:      #ffffff;
+  --text-2:      #8b87a8;
+  --text-3:      #8b87a8;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}

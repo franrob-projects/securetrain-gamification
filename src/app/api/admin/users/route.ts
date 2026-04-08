@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createServerClient } from '@/lib/supabaseServer'
-import { getBadgeById, BADGES } from '@/data/badges'
 
 export async function GET(req: NextRequest) {
   const supabase = createServerClient()
@@ -12,18 +11,18 @@ export async function GET(req: NextRequest) {
   const { data: { user }, error: authErr } = await supabase.auth.getUser(token)
   if (authErr || !user) return NextResponse.json({ error: 'Invalid token' }, { status: 401 })
 
-  const { data: earnedRows } = await supabase
-    .from('user_badges')
-    .select('badge_id, earned_at')
-    .eq('user_id', user.id)
+  const { data: profile } = await supabase
+    .from('users')
+    .select('role')
+    .eq('id', user.id)
+    .single()
 
-  const earnedMap = new Map(earnedRows?.map(r => [r.badge_id, r.earned_at]) ?? [])
+  if (profile?.role !== 'admin') {
+    return NextResponse.json({ error: 'Admin access required' }, { status: 403 })
+  }
 
-  const allBadges = BADGES.map(b => ({
-    ...b,
-    earned: earnedMap.has(b.id),
-    earned_at: earnedMap.get(b.id) ?? null,
-  }))
+  const { data: users, error } = await supabase.rpc('get_user_stats')
+  if (error) return NextResponse.json({ error: error.message }, { status: 500 })
 
-  return NextResponse.json(allBadges)
+  return NextResponse.json({ users: users || [] })
 }
