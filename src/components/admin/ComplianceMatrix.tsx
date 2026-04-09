@@ -1,7 +1,8 @@
 'use client'
-import { useState } from 'react'
-import { CheckCircle2, XCircle, Minus, Bell } from 'lucide-react'
+import { useState, useEffect } from 'react'
+import { CheckCircle2, XCircle, Minus, Bell, Plus } from 'lucide-react'
 import { createClient } from '@/lib/supabase'
+import { AddTeamMemberForm } from './AddTeamMemberForm'
 
 type UserSector = 'crypto' | 'gambling' | 'both'
 type ComplianceStatus = 'compliant' | 'in-progress' | 'overdue'
@@ -161,9 +162,58 @@ function SectorLabel({ sector }: { sector: UserSector }) {
 
 type Toast = { type: 'success' | 'error'; message: string } | null
 
+interface ApiTeamMember {
+  id:         string
+  email:      string
+  name:       string
+  job_title:  string | null
+  sector:     UserSector
+  user_id:    string | null
+  invited_at: string
+  completions: { module_id: string; created_at: string }[]
+}
+
+// Convert an ApiTeamMember into the same TeamMember shape used by the matrix
+function toTeamMember(api: ApiTeamMember): TeamMember {
+  const completions: Record<string, string> = {}
+  for (const c of api.completions) {
+    const dateOnly = c.created_at.slice(0, 10)
+    if (!completions[c.module_id] || dateOnly > completions[c.module_id]) {
+      completions[c.module_id] = dateOnly
+    }
+  }
+  return {
+    id:     api.id,
+    name:   api.name,
+    role:   api.job_title ?? '—',
+    sector: api.sector,
+    completions,
+  }
+}
+
 export function ComplianceMatrix() {
-  const [toast, setToast]   = useState<Toast>(null)
-  const [pendingId, setPending] = useState<string | null>(null)
+  const [toast, setToast]         = useState<Toast>(null)
+  const [pendingId, setPending]   = useState<string | null>(null)
+  const [realMembers, setReal]    = useState<TeamMember[] | null>(null)
+  const [showAddForm, setShowAdd] = useState(false)
+
+  const fetchMembers = async () => {
+    try {
+      const supabase = createClient()
+      const { data: { session } } = await supabase.auth.getSession()
+      if (!session) return
+      const res = await fetch('/api/admin/team', {
+        headers: { 'Authorization': 'Bearer ' + session.access_token },
+      })
+      if (!res.ok) return
+      const json = await res.json() as { members: ApiTeamMember[] }
+      setReal(json.members.map(toTeamMember))
+    } catch {
+      // Silent fail — falls back to seed data
+    }
+  }
+
+  useEffect(() => { fetchMembers() }, [])
 
   const sendReminder = async (member: TeamMember) => {
     setPending(member.id)
@@ -194,21 +244,43 @@ export function ComplianceMatrix() {
     }
   }
 
-  const statuses = TEAM.map(getStatus)
+  // Use real members if any have been added, else fall back to seed data
+  const isRealData    = realMembers !== null && realMembers.length > 0
+  const displayTeam   = isRealData ? realMembers : TEAM
+
+  const statuses = displayTeam.map(getStatus)
   const compliantCount   = statuses.filter(s => s === 'compliant').length
   const overdueCount     = statuses.filter(s => s === 'overdue').length
-  const thisWeekCount    = TEAM.reduce((acc, m) =>
+  const thisWeekCount    = displayTeam.reduce((acc, m) =>
     acc + Object.values(m.completions).filter(d => d >= THIS_WEEK_CUTOFF).length, 0)
 
   return (
     <div>
+      {/* Header row with Add button */}
+      <div className="flex items-center justify-between mb-6">
+        <div>
+          {!isRealData && (
+            <p className="text-xs px-3 py-1.5 rounded-full inline-block"
+              style={{ background: 'rgba(217,119,6,0.12)', color: '#d97706', border: '1px solid rgba(217,119,6,0.3)' }}>
+              Showing seed data — add real team members to replace this view
+            </p>
+          )}
+        </div>
+        <button onClick={() => setShowAdd(true)}
+          className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold text-white"
+          style={{ background: 'var(--brand)' }}>
+          <Plus className="w-4 h-4" />
+          Add team member
+        </button>
+      </div>
+
       {/* Stat cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         {[
-          { label: 'Team members',        value: TEAM.length,     color: 'var(--text)'  },
-          { label: 'Fully compliant',      value: compliantCount,  color: '#16a34a'      },
-          { label: 'Overdue',              value: overdueCount,    color: '#dc2626'      },
-          { label: 'Completions this week', value: thisWeekCount,  color: 'var(--accent)' },
+          { label: 'Team members',        value: displayTeam.length, color: 'var(--text)'  },
+          { label: 'Fully compliant',      value: compliantCount,    color: '#16a34a'      },
+          { label: 'Overdue',              value: overdueCount,      color: '#dc2626'      },
+          { label: 'Completions this week', value: thisWeekCount,    color: 'var(--accent)' },
         ].map(card => (
           <div key={card.label} className="rounded-xl px-5 py-4"
             style={{ background: '#1e1b38', border: '1px solid #2e2a52' }}>
@@ -236,7 +308,7 @@ export function ComplianceMatrix() {
             </tr>
           </thead>
           <tbody>
-            {TEAM.map((member, i) => {
+            {displayTeam.map((member, i) => {
               const status   = getStatus(member)
               const required = getRequiredModules(member.sector)
               const done     = required.filter(m => member.completions[m.id])
@@ -309,8 +381,15 @@ export function ComplianceMatrix() {
       )}
 
       <p className="mt-3 text-xs" style={{ color: 'rgba(139,135,168,0.5)' }}>
-        Showing seed data · {TEAM.length} team members · RG = Responsible Gambling · SM = Senior Manager
+        {isRealData ? 'Live data' : 'Seed data'} · {displayTeam.length} team members · RG = Responsible Gambling · SM = Senior Manager
       </p>
+
+      {showAddForm && (
+        <AddTeamMemberForm
+          onClose={() => setShowAdd(false)}
+          onAdded={() => fetchMembers()}
+        />
+      )}
     </div>
   )
 }
