@@ -120,9 +120,14 @@ export default function TrainPage() {
     <div className="min-h-screen" style={{ background: 'var(--bg)' }}>
       <nav className="px-6 py-4 flex items-center justify-between" style={{ borderBottom: '1px solid var(--border)' }}>
         <ConplyLogo size="sm" />
-        <Link href="/" className="flex items-center gap-1.5 text-sm transition-colors" style={{ color: 'var(--muted)' }}>
-          <ArrowLeft className="w-4 h-4" /> Back
-        </Link>
+        <div className="flex items-center gap-6">
+          <Link href="/progress" className="text-sm transition-colors" style={{ color: 'var(--muted)' }}>
+            My progress
+          </Link>
+          <Link href="/" className="flex items-center gap-1.5 text-sm transition-colors" style={{ color: 'var(--muted)' }}>
+            <ArrowLeft className="w-4 h-4" /> Back
+          </Link>
+        </div>
       </nav>
 
       <main className="max-w-2xl mx-auto px-6 py-10">
@@ -195,6 +200,9 @@ export default function TrainPage() {
                 className="text-xs transition-colors" style={{ color: 'var(--muted)' }}>
                 Retry
               </button>
+              <Link href="/progress" className="text-xs transition-colors" style={{ color: 'var(--muted)' }}>
+                My progress
+              </Link>
               <Link href="/" className="text-xs transition-colors" style={{ color: 'var(--muted)' }}>
                 Back to modules
               </Link>
