@@ -1,15 +1,38 @@
 'use client'
-import { useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { createClient } from '@/lib/supabase'
 import { ConplyLogo } from '@/components/ui/ConplyLogo'
 
 type Step = 'email' | 'sent'
 
 export default function AuthPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen" style={{ background: 'var(--bg)' }} />}>
+      <AuthInner />
+    </Suspense>
+  )
+}
+
+function AuthInner() {
+  const router       = useRouter()
+  const searchParams = useSearchParams()
+  const redirect     = searchParams.get('redirect') ?? '/'
+
   const [step, setStep]       = useState<Step>('email')
   const [email, setEmail]     = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError]     = useState<string | null>(null)
+
+  // If user lands here already authenticated (e.g. from magic link), forward them
+  useEffect(() => {
+    const checkSession = async () => {
+      const supabase = createClient()
+      const { data: { session } } = await supabase.auth.getSession()
+      if (session) router.replace(redirect)
+    }
+    checkSession()
+  }, [router, redirect])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -17,11 +40,11 @@ export default function AuthPage() {
     setLoading(true)
     try {
       const supabase = createClient()
+      // Preserve the redirect target across the magic link round-trip
+      const redirectUrl = `${window.location.origin}/auth?redirect=${encodeURIComponent(redirect)}`
       const { error: err } = await supabase.auth.signInWithOtp({
         email,
-        options: {
-          emailRedirectTo: `${window.location.origin}/`,
-        },
+        options: { emailRedirectTo: redirectUrl },
       })
       if (err) throw err
       setStep('sent')

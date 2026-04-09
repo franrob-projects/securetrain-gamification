@@ -1,7 +1,8 @@
 'use client'
 import { useState, useEffect, useCallback } from 'react'
+import { motion } from 'framer-motion'
 import { TrainingModule } from '@/data/modules'
-import { CheckCircle2, XCircle, Loader2, ExternalLink } from 'lucide-react'
+import { CheckCircle2, XCircle, ExternalLink } from 'lucide-react'
 
 interface Scenario {
   scenario: string
@@ -13,7 +14,15 @@ interface Scenario {
 
 const TOTAL = 3
 
-export function ScenarioPlayer({ module: m, onComplete }: { module: TrainingModule; onComplete: (score: number) => void }) {
+// Split the explanation body from the trailing "Regulation reference: …" line
+function splitCitation(explanation: string): { body: string; citation: string | null } {
+  const match = explanation.match(/Regulation reference:\s*(.+)$/im)
+  if (!match) return { body: explanation.trim(), citation: null }
+  const body = explanation.slice(0, match.index).trim()
+  return { body, citation: match[0].trim() }
+}
+
+export function ScenarioPlayer({ module: m, onComplete }: { module: TrainingModule; onComplete: (score: number, correct: number) => void }) {
   const [scenarios, setScenarios] = useState<Scenario[]>([])
   const [current, setCurrent]     = useState(0)
   const [selected, setSelected]   = useState<number | null>(null)
@@ -49,9 +58,10 @@ export function ScenarioPlayer({ module: m, onComplete }: { module: TrainingModu
   }
 
   function handleNext() {
+    const finalCorrect = correct + (selected === scenarios[current].correctIndex ? 0 : 0) // already counted in handleAnswer
     const nextIdx = current + 1
     if (nextIdx >= TOTAL) {
-      onComplete(Math.round(((correct + (selected === scenarios[current].correctIndex ? 1 : 0)) / TOTAL) * 100))
+      onComplete(Math.round((finalCorrect / TOTAL) * 100), finalCorrect)
       return
     }
     setCurrent(nextIdx)
@@ -60,9 +70,16 @@ export function ScenarioPlayer({ module: m, onComplete }: { module: TrainingModu
   }
 
   if (loading && !scenarios[current]) return (
-    <div className="flex flex-col items-center gap-4 py-20" style={{ color: 'var(--muted)' }}>
-      <Loader2 className="w-6 h-6 animate-spin" />
-      <p className="text-sm">Generating scenario…</p>
+    <div className="flex flex-col items-center gap-4 py-20">
+      <p
+        style={{
+          color: '#ffffff',
+          fontSize: '14px',
+          animation: 'pulse 1.5s ease-in-out infinite',
+        }}
+      >
+        Generating scenario from Gibraltar regulation...
+      </p>
     </div>
   )
 
@@ -78,18 +95,26 @@ export function ScenarioPlayer({ module: m, onComplete }: { module: TrainingModu
 
   const answered   = selected !== null
   const wasCorrect = selected === s.correctIndex
+  const { body: explanationBody, citation } = splitCitation(s.explanation)
+
+  // Progress as percentage for animated bar
+  const progressPct = ((current + (answered ? 1 : 0)) / TOTAL) * 100
 
   return (
     <div className="space-y-6">
-      {/* Progress */}
+      {/* Animated progress bar */}
       <div className="flex items-center gap-3">
-        <div className="flex gap-1.5">
-          {Array.from({ length: TOTAL }).map((_, i) => (
-            <div key={i} className="h-1 w-8 rounded-full transition-colors"
-              style={{ background: i <= current ? 'var(--brand)' : 'var(--border)' }} />
-          ))}
+        <div className="flex-1 h-1 rounded-full overflow-hidden" style={{ background: 'var(--border)' }}>
+          <div
+            style={{
+              width: `${progressPct}%`,
+              height: '100%',
+              background: 'var(--brand)',
+              transition: 'width 500ms ease-in-out',
+            }}
+          />
         </div>
-        <span className="text-xs" style={{ color: 'var(--muted)' }}>{current + 1} / {TOTAL}</span>
+        <span className="text-xs whitespace-nowrap" style={{ color: 'var(--muted)' }}>{current + 1} / {TOTAL}</span>
       </div>
 
       {/* Scenario */}
@@ -122,16 +147,28 @@ export function ScenarioPlayer({ module: m, onComplete }: { module: TrainingModu
 
       {/* Feedback */}
       {answered && (
-        <div className="rounded-xl p-4 flex gap-3"
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.2, ease: 'easeOut' }}
+          className="rounded-xl p-4 flex gap-3"
           style={{
             border: `1px solid ${wasCorrect ? 'rgba(22,163,74,0.4)' : 'rgba(185,28,28,0.4)'}`,
             background: wasCorrect ? 'rgba(22,163,74,0.08)' : 'rgba(185,28,28,0.08)',
-          }}>
+          }}
+        >
           {wasCorrect
             ? <CheckCircle2 className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
             : <XCircle      className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" />}
-          <p className="text-sm leading-relaxed" style={{ color: 'var(--text)' }}>{s.explanation}</p>
-        </div>
+          <div className="flex-1">
+            <p className="text-sm leading-relaxed" style={{ color: 'var(--text)' }}>{explanationBody}</p>
+            {citation && (
+              <p style={{ fontSize: '12px', color: '#8b87a8', marginTop: '12px' }}>
+                {citation}
+              </p>
+            )}
+          </div>
+        </motion.div>
       )}
 
       {answered && (

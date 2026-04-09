@@ -5,11 +5,18 @@ const styles: Record<string, { border: string; color: string; background: string
   critical: { border: '1px solid rgba(239,68,68,0.4)',   color: '#f87171', background: 'rgba(239,68,68,0.08)'   },
 }
 
+const labels: Record<string, string> = {
+  low:      'Optional',
+  medium:   'Recommended',
+  high:     'Required',
+  critical: 'Mandatory',
+}
+
 export function ThreatBadge({ level }: { level: keyof typeof styles }) {
   return (
     <span className="text-xs font-semibold px-2.5 py-1 rounded-full uppercase tracking-wider"
       style={styles[level]}>
-      {level}
+      {labels[level] ?? level}
     </span>
   )
 }

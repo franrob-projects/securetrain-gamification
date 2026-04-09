@@ -31,6 +31,11 @@
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.4; }
+}
+
 /* Blog post prose */
 .prose-conply { color: var(--muted); line-height: 1.75; font-size: 0.9375rem; }
 .prose-conply h2 { color: var(--text); font-size: 1.125rem; font-weight: 700; margin: 2rem 0 0.75rem; }

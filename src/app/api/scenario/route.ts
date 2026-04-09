@@ -16,10 +16,18 @@ Return ONLY valid JSON matching this exact shape:
   "question": "A clear multiple-choice question about what they should do",
   "options": ["Option A", "Option B", "Option C", "Option D"],
   "correctIndex": 0,
-  "explanation": "1-2 sentences explaining why the correct answer is right and what the regulatory basis is"
+  "explanation": "1-2 sentences explaining why the correct answer is right and what the regulatory basis is.\\nRegulation reference: [Act name and section or principle number]."
 }
 
-Make it specific to Gibraltar regulation (GFSC, Gibraltar Gambling Commissioner, POCA 2015, etc.). Use realistic names and firms.`
+Make it specific to Gibraltar regulation (GFSC, Gibraltar Gambling Commissioner, POCA 2015, etc.). Use realistic names and firms.
+
+The explanation field MUST end with a new line containing the regulation reference in this exact format:
+Regulation reference: [Act name and section or principle number].
+
+Examples of valid regulation references:
+- Regulation reference: POCA 2015, Section 28 — MLRO appointment and reporting obligations.
+- Regulation reference: GFSC DLT Regulatory Principles, Principle 7 — Systems and security protocols.
+- Regulation reference: Gibraltar Gambling Act 2025, AML Code of Practice — staff training requirements.`
 
   const message = await client.messages.create({
     model: 'claude-haiku-4-5-20251001',

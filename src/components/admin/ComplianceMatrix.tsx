@@ -1,4 +1,7 @@
-import { CheckCircle2, XCircle, Minus } from 'lucide-react'
+'use client'
+import { useState } from 'react'
+import { CheckCircle2, XCircle, Minus, Bell } from 'lucide-react'
+import { createClient } from '@/lib/supabase'
 
 type UserSector = 'crypto' | 'gambling' | 'both'
 type ComplianceStatus = 'compliant' | 'in-progress' | 'overdue'
@@ -156,7 +159,41 @@ function SectorLabel({ sector }: { sector: UserSector }) {
   return <span className="text-xs" style={{ color: s.color }}>{s.label}</span>
 }
 
+type Toast = { type: 'success' | 'error'; message: string } | null
+
 export function ComplianceMatrix() {
+  const [toast, setToast]   = useState<Toast>(null)
+  const [pendingId, setPending] = useState<string | null>(null)
+
+  const sendReminder = async (member: TeamMember) => {
+    setPending(member.id)
+    try {
+      const supabase = createClient()
+      const { data: { session } } = await supabase.auth.getSession()
+      if (!session) {
+        setToast({ type: 'error', message: 'You need to be signed in.' })
+        return
+      }
+      const required = getRequiredModules(member.sector)
+      const nextModule = required.find(m => !member.completions[m.id]) ?? required[0]
+      const res = await fetch('/api/slack/remind', {
+        method: 'POST',
+        headers: {
+          'Content-Type':  'application/json',
+          'Authorization': 'Bearer ' + session.access_token,
+        },
+        body: JSON.stringify({ userName: member.name, moduleId: nextModule.id }),
+      })
+      if (!res.ok) throw new Error('Request failed')
+      setToast({ type: 'success', message: `Reminder sent to ${member.name}` })
+    } catch {
+      setToast({ type: 'error', message: `Could not send reminder to ${member.name}` })
+    } finally {
+      setPending(null)
+      setTimeout(() => setToast(null), 3000)
+    }
+  }
+
   const statuses = TEAM.map(getStatus)
   const compliantCount   = statuses.filter(s => s === 'compliant').length
   const overdueCount     = statuses.filter(s => s === 'overdue').length
@@ -195,7 +232,7 @@ export function ComplianceMatrix() {
                 </th>
               ))}
               <th className="px-4 py-3 text-center font-medium" style={{ color: 'var(--muted)', minWidth: '50px' }}>%</th>
-              <th className="px-4 py-3 text-center font-medium" style={{ color: 'var(--muted)', minWidth: '100px' }}>Status</th>
+              <th className="px-4 py-3 text-center font-medium" style={{ color: 'var(--muted)', minWidth: '130px' }}>Status</th>
             </tr>
           </thead>
           <tbody>
@@ -232,13 +269,44 @@ export function ComplianceMatrix() {
                     style={{ color: pct === 100 ? '#16a34a' : pct > 0 ? '#d97706' : '#dc2626' }}>
                     {pct}%
                   </td>
-                  <td className="px-4 py-3 text-center"><StatusBadge status={status} /></td>
+                  <td className="px-4 py-3 text-center">
+                    <div className="flex items-center justify-center gap-2">
+                      <StatusBadge status={status} />
+                      {status === 'overdue' && (
+                        <button
+                          onClick={() => sendReminder(member)}
+                          disabled={pendingId === member.id}
+                          title={`Send Slack reminder to ${member.name}`}
+                          className="p-1 rounded transition-colors disabled:opacity-50"
+                          style={{ color: 'var(--accent)' }}
+                          onMouseOver={e => (e.currentTarget.style.background = 'rgba(91,84,184,0.15)')}
+                          onMouseOut={e => (e.currentTarget.style.background = 'transparent')}
+                        >
+                          <Bell className="w-3.5 h-3.5" />
+                        </button>
+                      )}
+                    </div>
+                  </td>
                 </tr>
               )
             })}
           </tbody>
         </table>
       </div>
+
+      {/* Toast */}
+      {toast && (
+        <div
+          className="fixed bottom-6 right-6 px-4 py-3 rounded-lg text-sm font-medium shadow-lg z-50"
+          style={{
+            background:  toast.type === 'success' ? 'rgba(22,163,74,0.95)' : 'rgba(220,38,38,0.95)',
+            color:       '#fff',
+            border:      `1px solid ${toast.type === 'success' ? 'rgba(22,163,74,1)' : 'rgba(220,38,38,1)'}`,
+          }}
+        >
+          {toast.message}
+        </div>
+      )}
 
       <p className="mt-3 text-xs" style={{ color: 'rgba(139,135,168,0.5)' }}>
         Showing seed data · {TEAM.length} team members · RG = Responsible Gambling · SM = Senior Manager
