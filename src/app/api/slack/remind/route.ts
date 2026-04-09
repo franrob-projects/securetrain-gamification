@@ -1,11 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-export async function POST(req: NextRequest) {
-  const secret = req.headers.get('x-cron-secret')
-  if (secret !== process.env.CRON_SECRET) {
-    return NextResponse.json({ error: 'Unauthorised' }, { status: 401 })
-  }
-
+async function sendReminder(): Promise<{ ok: boolean; error?: string }> {
   const base     = process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000'
   const moduleId = process.env.SLACK_MODULE_ID ?? 'aml-financial-crime'
   const url      = `${base}/train/${moduleId}`
@@ -23,6 +18,29 @@ export async function POST(req: NextRequest) {
   })
 
   const data = await res.json()
-  if (!data.ok) return NextResponse.json({ error: data.error }, { status: 500 })
+  return data.ok ? { ok: true } : { ok: false, error: data.error }
+}
+
+// Called by Vercel cron — Authorization: Bearer {CRON_SECRET} sent automatically
+export async function GET(req: NextRequest) {
+  const auth = req.headers.get('Authorization')
+  if (auth !== `Bearer ${process.env.CRON_SECRET}`) {
+    return NextResponse.json({ error: 'Unauthorised' }, { status: 401 })
+  }
+
+  const result = await sendReminder()
+  if (!result.ok) return NextResponse.json({ error: result.error }, { status: 500 })
+  return NextResponse.json({ ok: true })
+}
+
+// Manual trigger — pass x-cron-secret header
+export async function POST(req: NextRequest) {
+  const secret = req.headers.get('x-cron-secret')
+  if (secret !== process.env.CRON_SECRET) {
+    return NextResponse.json({ error: 'Unauthorised' }, { status: 401 })
+  }
+
+  const result = await sendReminder()
+  if (!result.ok) return NextResponse.json({ error: result.error }, { status: 500 })
   return NextResponse.json({ ok: true })
 }
