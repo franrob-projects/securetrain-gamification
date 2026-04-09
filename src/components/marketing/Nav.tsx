@@ -23,6 +23,13 @@ export function Nav() {
           Blog
         </Link>
         <Link
+          href="/help"
+          className="text-sm transition-colors"
+          style={{ color: 'var(--muted)' }}
+        >
+          Help
+        </Link>
+        <Link
           href="/auth"
           className="text-sm transition-colors"
           style={{ color: 'var(--muted)' }}

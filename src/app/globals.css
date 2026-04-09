@@ -47,6 +47,9 @@
 .prose-conply a { color: var(--accent); text-decoration: underline; }
 .prose-conply hr { border: none; border-top: 1px solid var(--border); margin: 2rem 0; }
 .prose-conply code { font-size: 0.85em; background: rgba(91,84,184,0.15); color: var(--accent); padding: 0.1em 0.35em; border-radius: 4px; }
+.prose-conply pre { background: rgba(91,84,184,0.08); border: 1px solid #2e2a52; border-radius: 8px; padding: 1rem; overflow-x: auto; margin: 0 0 1.25rem; font-size: 0.8125rem; }
+.prose-conply pre code { background: transparent; color: var(--text); padding: 0; font-size: inherit; }
+.prose-conply h3 { margin-top: 1.5rem; }
 
 body {
   font-family: 'Inter', system-ui, sans-serif;
