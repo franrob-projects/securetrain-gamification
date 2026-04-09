@@ -64,9 +64,10 @@ export default function HomePage() {
           }} />
           {/* Hero content */}
           <div className="relative max-w-4xl mx-auto px-6 pt-24 pb-32 text-center" style={{ zIndex: 3 }}>
-            <div className="inline-block text-xs font-semibold px-3 py-1 rounded-full mb-6"
-              style={{ background: 'rgba(91,84,184,0.15)', color: 'var(--accent)', border: '1px solid rgba(91,84,184,0.3)' }}>
-              Built for Gibraltar regulation
+            <div className="inline-block text-2xl px-4 py-1 rounded-full mb-6"
+              style={{ background: 'rgba(91,84,184,0.15)', border: '1px solid rgba(91,84,184,0.3)' }}
+              aria-label="Gibraltar">
+              🇬🇮
             </div>
             <h1 className="text-4xl sm:text-5xl font-bold leading-tight mb-6" style={{ color: 'var(--text)' }}>
               Compliance training your<br />Gibraltar regulator will accept
