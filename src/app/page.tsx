@@ -1,18 +1,34 @@
 'use client'
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import { createClient } from '@/lib/supabase'
 import { MODULES } from '@/data/modules'
 
 export default function HomePage() {
   const router = useRouter()
 
   useEffect(() => {
-    const next = MODULES.find(m => m.status === 'available')
-    if (next) {
-      router.replace(`/train/${next.id}`)
-    } else {
-      router.replace('/admin')
+    const init = async () => {
+      const supabase = createClient()
+      const { data: { session } } = await supabase.auth.getSession()
+
+      if (!session) {
+        router.replace('/auth')
+        return
+      }
+
+      const { data: completions } = await supabase
+        .from('completions')
+        .select('module_id')
+        .eq('user_id', session.user.id)
+
+      const completedIds = new Set((completions ?? []).map((c: { module_id: string }) => c.module_id))
+      const next = MODULES.find(m => !completedIds.has(m.id))
+
+      // If all modules done, loop back to first (retake)
+      router.replace(`/train/${(next ?? MODULES[0]).id}`)
     }
+    init()
   }, [router])
 
   return (
