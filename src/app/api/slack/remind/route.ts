@@ -1,15 +1,67 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createServerClient } from '@/lib/supabaseServer'
+import { MODULES } from '@/data/modules'
 
 async function sendReminder(opts: { userName?: string; moduleId?: string }): Promise<{ ok: boolean; error?: string }> {
   const base     = process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000'
   const moduleId = opts.moduleId ?? process.env.SLACK_MODULE_ID ?? 'aml-financial-crime'
-  // Append ?redirect so re-auth lands the user back on their assigned module
+  const module   = MODULES.find(m => m.id === moduleId) ?? MODULES[0]
   const url      = `${base}/train/${moduleId}?redirect=/train/${moduleId}`
 
-  const greeting = opts.userName
-    ? `📋 *Reminder for ${opts.userName}: your compliance training is overdue*`
-    : `📋 *Your compliance training is ready*`
+  const isPersonal = !!opts.userName
+  const headerText = isPersonal
+    ? `${opts.userName}, your compliance training is overdue`
+    : `Today's compliance training`
+
+  // Trim the description so the card stays compact
+  const shortDescription = module.description.length > 160
+    ? module.description.slice(0, 160).trimEnd() + '…'
+    : module.description
+
+  const fallbackText = `${headerText} — ${module.title}`
+
+  const blocks = [
+    {
+      type: 'header',
+      text: { type: 'plain_text', text: headerText, emoji: true },
+    },
+    {
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: `*${module.title}*\n${shortDescription}`,
+      },
+    },
+    {
+      type: 'context',
+      elements: [
+        {
+          type: 'mrkdwn',
+          text: '⏱  Around 10 minutes  ·  3 AI-generated scenarios  ·  Mapped to Gibraltar regulation',
+        },
+      ],
+    },
+    {
+      type: 'actions',
+      elements: [
+        {
+          type: 'button',
+          text: { type: 'plain_text', text: 'Start training', emoji: true },
+          url,
+          style: 'primary',
+        },
+      ],
+    },
+    {
+      type: 'context',
+      elements: [
+        {
+          type: 'mrkdwn',
+          text: '_ConPly · Gibraltar Compliance Training_',
+        },
+      ],
+    },
+  ]
 
   const res = await fetch('https://slack.com/api/chat.postMessage', {
     method: 'POST',
@@ -19,7 +71,10 @@ async function sendReminder(opts: { userName?: string; moduleId?: string }): Pro
     },
     body: JSON.stringify({
       channel: process.env.SLACK_CHANNEL_ID,
-      text: `${greeting}\nStart today's module now — it takes around 10 minutes.\n👉 ${url}`,
+      text:    fallbackText, // shown in notifications and screen readers
+      blocks,
+      unfurl_links: false,
+      unfurl_media: false,
     }),
   })
 
