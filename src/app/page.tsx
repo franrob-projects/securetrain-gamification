@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { Nav } from '@/components/marketing/Nav'
 import { AuthRedirect } from '@/components/marketing/AuthRedirect'
 import { RockSilhouette } from '@/components/marketing/RockSilhouette'
+import { LoomEmbed } from '@/components/marketing/LoomEmbed'
 import { getAllPosts } from '@/lib/blog'
 
 export const metadata: Metadata = {
@@ -86,6 +87,11 @@ export default function HomePage() {
               </Link>
             </div>
           </div>
+        </section>
+
+        {/* Product walkthrough video */}
+        <section className="max-w-4xl mx-auto px-6 pb-24 -mt-8">
+          <LoomEmbed videoId="cfe3ae0c9a66438c8db3514a07a625e6" title="ConPly product walkthrough" />
         </section>
 
         {/* Trust strip — Gibraltar regulators */}
