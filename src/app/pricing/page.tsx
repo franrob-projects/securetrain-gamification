@@ -11,9 +11,9 @@ export const metadata: Metadata = {
 const TIERS = [
   {
     name: 'Starter',
-    price: '£99',
+    price: '£249',
     cadence: '/month',
-    description: 'For small Gibraltar firms getting their compliance training in order.',
+    description: 'For small Gibraltar firms — boutique DLT providers, B2B iGaming suppliers, and early-stage operators.',
     cta: 'Request access',
     featured: false,
     features: [
@@ -27,9 +27,9 @@ const TIERS = [
   },
   {
     name: 'Team',
-    price: '£299',
+    price: '£749',
     cadence: '/month',
-    description: 'For mid-sized crypto and iGaming operators who need a real audit trail.',
+    description: 'For mid-sized crypto and iGaming operators who need a real audit trail and admin oversight.',
     cta: 'Request access',
     featured: true,
     features: [
@@ -38,14 +38,14 @@ const TIERS = [
       'Admin compliance dashboard',
       'Per-user reminders via Slack',
       'Per-user training history',
-      'Priority email support',
+      'Priority support (4hr response)',
     ],
   },
   {
     name: 'Enterprise',
     price: 'Custom',
     cadence: '',
-    description: 'For larger licence holders, multi-entity groups, and firms needing custom regulation modules.',
+    description: 'For larger licence holders, multi-entity groups, and firms needing custom regulation modules or dedicated onboarding.',
     cta: 'Talk to us',
     featured: false,
     features: [
@@ -99,8 +99,9 @@ export default function PricingPage() {
             Simple pricing for<br />Gibraltar firms
           </h1>
           <p className="text-base max-w-xl mx-auto" style={{ color: 'var(--muted)' }}>
-            Per-firm pricing. No per-user games. Cancel any time.
-            All plans include the full set of Gibraltar compliance modules.
+            Per-firm pricing. Billed monthly, cancel any time. All plans include
+            the full set of Gibraltar compliance modules and the audit trail
+            your regulator expects.
           </p>
         </section>
 
