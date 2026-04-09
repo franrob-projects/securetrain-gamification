@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import { Nav } from '@/components/marketing/Nav'
+import { Footer } from '@/components/marketing/Footer'
 import { AuthRedirect } from '@/components/marketing/AuthRedirect'
 import { RockSilhouette } from '@/components/marketing/RockSilhouette'
 import { LoomEmbed } from '@/components/marketing/LoomEmbed'
@@ -95,7 +96,7 @@ export default function HomePage() {
         <TrustMarquee />
 
         {/* How it works */}
-        <section className="max-w-6xl mx-auto px-6 py-24">
+        <section id="how-it-works" className="max-w-6xl mx-auto px-6 py-24">
           <div className="text-center mb-14">
             <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: 'var(--accent)' }}>
               How it works
@@ -132,34 +133,36 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Features */}
-        <section className="max-w-6xl mx-auto px-6 pb-24">
-          <div className="text-center mb-14">
-            <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: 'var(--accent)' }}>
-              What you get
-            </p>
-            <h2 className="text-3xl font-bold" style={{ color: 'var(--text)' }}>
-              Everything a Gibraltar regulator expects
-            </h2>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-            {FEATURES.map(f => (
-              <div key={f.title} className="rounded-xl p-6"
-                style={{ background: '#1e1b38', border: '1px solid #2e2a52' }}>
-                <h3 className="text-base font-semibold mb-2" style={{ color: 'var(--text)' }}>{f.title}</h3>
-                <p className="text-sm leading-relaxed" style={{ color: 'var(--muted)' }}>{f.body}</p>
-              </div>
-            ))}
+        {/* Features — tinted band for visual rhythm */}
+        <section className="border-y" style={{ borderColor: 'var(--border)', background: 'rgba(91,84,184,0.04)' }}>
+          <div className="max-w-6xl mx-auto px-6 py-24">
+            <div className="text-center mb-14">
+              <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: 'var(--accent)' }}>
+                What you get
+              </p>
+              <h2 className="text-3xl font-bold" style={{ color: 'var(--text)' }}>
+                Everything a Gibraltar regulator expects
+              </h2>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              {FEATURES.map(f => (
+                <div key={f.title} className="rounded-xl p-6 transition-colors"
+                  style={{ background: '#1e1b38', border: '1px solid #2e2a52' }}>
+                  <h3 className="text-base font-semibold mb-2" style={{ color: 'var(--text)' }}>{f.title}</h3>
+                  <p className="text-sm leading-relaxed" style={{ color: 'var(--muted)' }}>{f.body}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
 
         {/* Blog section */}
-        <section className="max-w-6xl mx-auto px-6 pb-24">
-          <div className="mb-8">
+        <section className="max-w-6xl mx-auto px-6 py-24">
+          <div className="text-center mb-14">
             <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: 'var(--accent)' }}>
               From the blog
             </p>
-            <h2 className="text-2xl font-bold" style={{ color: 'var(--text)' }}>
+            <h2 className="text-3xl font-bold" style={{ color: 'var(--text)' }}>
               Stay ahead of Gibraltar regulation
             </h2>
           </div>
@@ -210,19 +213,7 @@ export default function HomePage() {
         </section>
       </main>
 
-      {/* Footer */}
-      <footer className="border-t px-6 py-8" style={{ borderColor: 'var(--border)' }}>
-        <div className="max-w-6xl mx-auto flex items-center justify-between flex-wrap gap-4">
-          <p className="text-xs" style={{ color: 'var(--muted)' }}>
-            © {new Date().getFullYear()} ConPly. Gibraltar compliance training.
-          </p>
-          <div className="flex gap-6">
-            <Link href="/pricing" className="text-xs" style={{ color: 'var(--muted)' }}>Pricing</Link>
-            <Link href="/blog" className="text-xs" style={{ color: 'var(--muted)' }}>Blog</Link>
-            <Link href="/auth" className="text-xs" style={{ color: 'var(--muted)' }}>Log in</Link>
-          </div>
-        </div>
-      </footer>
+      <Footer />
 
       {/* JSON-LD */}
       <script

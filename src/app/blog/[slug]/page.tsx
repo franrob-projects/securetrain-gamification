@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import { getAllPosts, getPostHtml } from '@/lib/blog'
 import { Nav } from '@/components/marketing/Nav'
+import { Footer } from '@/components/marketing/Footer'
 
 export async function generateStaticParams() {
   return getAllPosts().map(post => ({ slug: post.slug }))
@@ -111,6 +112,8 @@ export default async function PostPage({
           </Link>
         </div>
       </main>
+
+      <Footer />
 
       <script
         type="application/ld+json"

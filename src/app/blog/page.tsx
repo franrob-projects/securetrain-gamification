@@ -2,6 +2,7 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 import { getAllPosts } from '@/lib/blog'
 import { Nav } from '@/components/marketing/Nav'
+import { Footer } from '@/components/marketing/Footer'
 
 export const metadata: Metadata = {
   title: 'Compliance Blog',
@@ -123,14 +124,7 @@ export default async function BlogPage({
         )}
       </main>
 
-      <footer className="border-t px-6 py-8 mt-16" style={{ borderColor: 'var(--border)' }}>
-        <div className="max-w-6xl mx-auto flex items-center justify-between flex-wrap gap-4">
-          <p className="text-xs" style={{ color: 'var(--muted)' }}>
-            © {new Date().getFullYear()} ConPly. Gibraltar compliance training.
-          </p>
-          <Link href="/" className="text-xs" style={{ color: 'var(--muted)' }}>← Back to home</Link>
-        </div>
-      </footer>
+      <Footer />
     </div>
   )
 }

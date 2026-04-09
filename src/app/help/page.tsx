@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import { Nav } from '@/components/marketing/Nav'
+import { Footer } from '@/components/marketing/Footer'
 
 export const metadata: Metadata = {
   title: 'Help & Setup Guide',
@@ -225,18 +226,7 @@ export default function HelpPage() {
         </div>
       </main>
 
-      <footer className="border-t px-6 py-8 mt-16" style={{ borderColor: 'var(--border)' }}>
-        <div className="max-w-6xl mx-auto flex items-center justify-between flex-wrap gap-4">
-          <p className="text-xs" style={{ color: 'var(--muted)' }}>
-            © {new Date().getFullYear()} ConPly. Gibraltar compliance training.
-          </p>
-          <div className="flex gap-6">
-            <Link href="/" className="text-xs" style={{ color: 'var(--muted)' }}>Home</Link>
-            <Link href="/pricing" className="text-xs" style={{ color: 'var(--muted)' }}>Pricing</Link>
-            <Link href="/blog" className="text-xs" style={{ color: 'var(--muted)' }}>Blog</Link>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   )
 }

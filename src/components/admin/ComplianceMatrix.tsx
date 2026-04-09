@@ -256,18 +256,25 @@ export function ComplianceMatrix() {
 
   return (
     <div>
-      {/* Header row with Add button */}
-      <div className="flex items-center justify-between mb-6">
+      {/* Seed data banner — full width when present */}
+      {!isRealData && (
+        <div className="mb-5 px-4 py-3 rounded-lg flex items-center gap-2 text-xs"
+          style={{ background: 'rgba(217,119,6,0.10)', color: '#d97706', border: '1px solid rgba(217,119,6,0.25)' }}>
+          <span className="text-base leading-none">⚠</span>
+          <span>Showing seed data. Click <strong>Add team member</strong> to start tracking real users.</span>
+        </div>
+      )}
+
+      {/* Toolbar row */}
+      <div className="flex items-end justify-between mb-6 gap-4 flex-wrap">
         <div>
-          {!isRealData && (
-            <p className="text-xs px-3 py-1.5 rounded-full inline-block"
-              style={{ background: 'rgba(217,119,6,0.12)', color: '#d97706', border: '1px solid rgba(217,119,6,0.3)' }}>
-              Showing seed data — add real team members to replace this view
-            </p>
-          )}
+          <h2 className="text-lg font-semibold mb-1" style={{ color: 'var(--text)' }}>Team compliance</h2>
+          <p className="text-xs" style={{ color: 'var(--muted)' }}>
+            {displayTeam.length} {displayTeam.length === 1 ? 'team member' : 'team members'} · {isRealData ? 'live data' : 'demo data'}
+          </p>
         </div>
         <button onClick={() => setShowAdd(true)}
-          className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold text-white"
+          className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold text-white transition-colors"
           style={{ background: 'var(--brand)' }}>
           <Plus className="w-4 h-4" />
           Add team member
@@ -381,7 +388,7 @@ export function ComplianceMatrix() {
       )}
 
       <p className="mt-3 text-xs" style={{ color: 'rgba(139,135,168,0.5)' }}>
-        {isRealData ? 'Live data' : 'Seed data'} · {displayTeam.length} team members · RG = Responsible Gambling · SM = Senior Manager
+        RG = Responsible Gambling · SM = Senior Manager · Click the bell icon next to overdue users to send a Slack reminder
       </p>
 
       {showAddForm && (
