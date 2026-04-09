@@ -6,8 +6,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const posts = getAllPosts()
 
   const staticRoutes: MetadataRoute.Sitemap = [
-    { url: base,         lastModified: new Date(), changeFrequency: 'weekly',  priority: 1.0 },
-    { url: `${base}/blog`, lastModified: new Date(), changeFrequency: 'daily',   priority: 0.9 },
+    { url: base,            lastModified: new Date(), changeFrequency: 'weekly', priority: 1.0 },
+    { url: `${base}/pricing`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.9 },
+    { url: `${base}/blog`,    lastModified: new Date(), changeFrequency: 'daily',  priority: 0.9 },
   ]
 
   const postRoutes: MetadataRoute.Sitemap = posts.map(post => ({

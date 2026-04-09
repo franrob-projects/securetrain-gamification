@@ -9,6 +9,13 @@ export function Nav() {
       </Link>
       <div className="flex items-center gap-6">
         <Link
+          href="/pricing"
+          className="text-sm transition-colors"
+          style={{ color: 'var(--muted)' }}
+        >
+          Pricing
+        </Link>
+        <Link
           href="/blog"
           className="text-sm transition-colors"
           style={{ color: 'var(--muted)' }}

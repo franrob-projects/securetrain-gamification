@@ -79,17 +79,83 @@ export default function HomePage() {
                 style={{ background: 'var(--brand)' }}>
                 Request access
               </Link>
-              <Link href="/blog"
+              <Link href="/pricing"
                 className="px-6 py-3 rounded-xl font-semibold transition-colors"
                 style={{ color: 'var(--accent)', border: '1px solid var(--border)' }}>
-                Read the blog →
+                See pricing →
               </Link>
             </div>
           </div>
         </section>
 
+        {/* Trust strip — Gibraltar regulators */}
+        <section className="border-y" style={{ borderColor: 'var(--border)', background: 'rgba(91,84,184,0.04)' }}>
+          <div className="max-w-6xl mx-auto px-6 py-10 text-center">
+            <p className="text-xs font-semibold uppercase tracking-widest mb-5" style={{ color: 'rgba(157,151,232,0.6)' }}>
+              Mapped to the actual Gibraltar regulatory framework
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-3 text-sm font-medium" style={{ color: 'var(--muted)' }}>
+              <span>Gibraltar Financial Services Commission</span>
+              <span style={{ color: 'rgba(139,135,168,0.3)' }}>•</span>
+              <span>Gibraltar Gambling Commissioner</span>
+              <span style={{ color: 'rgba(139,135,168,0.3)' }}>•</span>
+              <span>POCA 2015</span>
+              <span style={{ color: 'rgba(139,135,168,0.3)' }}>•</span>
+              <span>DLT Provider Regulations 2020</span>
+              <span style={{ color: 'rgba(139,135,168,0.3)' }}>•</span>
+              <span>Gambling Act 2025</span>
+            </div>
+          </div>
+        </section>
+
+        {/* How it works */}
+        <section className="max-w-6xl mx-auto px-6 py-24">
+          <div className="text-center mb-14">
+            <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: 'var(--accent)' }}>
+              How it works
+            </p>
+            <h2 className="text-3xl font-bold" style={{ color: 'var(--text)' }}>
+              Three steps. No setup overhead.
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            {[
+              {
+                step: '01',
+                title: 'Add your team',
+                body: 'Invite your staff from the admin dashboard. Assign a sector — Crypto, iGaming, or Both — and ConPly maps the right modules to each person.',
+              },
+              {
+                step: '02',
+                title: 'Slack delivers training daily',
+                body: 'Each working day, your team gets one Slack message with a direct link to that day\'s module. Three AI scenarios, scored, done in 10 minutes.',
+              },
+              {
+                step: '03',
+                title: 'Audit trail builds itself',
+                body: 'Every completion is recorded with a timestamp and score. Admins see a live compliance matrix, and any module can be exported as a PDF record.',
+              },
+            ].map(s => (
+              <div key={s.step} className="rounded-xl p-6"
+                style={{ background: '#1e1b38', border: '1px solid #2e2a52' }}>
+                <div className="text-3xl font-bold mb-3" style={{ color: 'rgba(157,151,232,0.4)' }}>{s.step}</div>
+                <h3 className="text-base font-semibold mb-2" style={{ color: 'var(--text)' }}>{s.title}</h3>
+                <p className="text-sm leading-relaxed" style={{ color: 'var(--muted)' }}>{s.body}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
         {/* Features */}
         <section className="max-w-6xl mx-auto px-6 pb-24">
+          <div className="text-center mb-14">
+            <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: 'var(--accent)' }}>
+              What you get
+            </p>
+            <h2 className="text-3xl font-bold" style={{ color: 'var(--text)' }}>
+              Everything a Gibraltar regulator expects
+            </h2>
+          </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             {FEATURES.map(f => (
               <div key={f.title} className="rounded-xl p-6"
@@ -165,6 +231,7 @@ export default function HomePage() {
             © {new Date().getFullYear()} ConPly. Gibraltar compliance training.
           </p>
           <div className="flex gap-6">
+            <Link href="/pricing" className="text-xs" style={{ color: 'var(--muted)' }}>Pricing</Link>
             <Link href="/blog" className="text-xs" style={{ color: 'var(--muted)' }}>Blog</Link>
             <Link href="/auth" className="text-xs" style={{ color: 'var(--muted)' }}>Log in</Link>
           </div>
