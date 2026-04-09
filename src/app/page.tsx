@@ -2,6 +2,7 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 import { Nav } from '@/components/marketing/Nav'
 import { AuthRedirect } from '@/components/marketing/AuthRedirect'
+import { RockSilhouette } from '@/components/marketing/RockSilhouette'
 import { getAllPosts } from '@/lib/blog'
 
 export const metadata: Metadata = {
@@ -46,29 +47,44 @@ export default function HomePage() {
 
       <main>
         {/* Hero */}
-        <section className="max-w-4xl mx-auto px-6 pt-24 pb-20 text-center">
-          <div className="inline-block text-xs font-semibold px-3 py-1 rounded-full mb-6"
-            style={{ background: 'rgba(91,84,184,0.15)', color: 'var(--accent)', border: '1px solid rgba(91,84,184,0.3)' }}>
-            Built for Gibraltar regulation
-          </div>
-          <h1 className="text-4xl sm:text-5xl font-bold leading-tight mb-6" style={{ color: 'var(--text)' }}>
-            Compliance training your<br />Gibraltar regulator will accept
-          </h1>
-          <p className="text-lg max-w-2xl mx-auto mb-10" style={{ color: 'var(--muted)' }}>
-            AI-generated scenarios mapped to POCA 2015, GFSC DLT Principles, and the Gambling Act 2025.
-            Delivered via Slack. Completed in under 10 minutes. Full audit trail included.
-          </p>
-          <div className="flex items-center justify-center gap-4 flex-wrap">
-            <Link href="/auth"
-              className="px-6 py-3 rounded-xl font-semibold text-white transition-colors"
-              style={{ background: 'var(--brand)' }}>
-              Request access
-            </Link>
-            <Link href="/blog"
-              className="px-6 py-3 rounded-xl font-semibold transition-colors"
-              style={{ color: 'var(--accent)', border: '1px solid var(--border)' }}>
-              Read the blog →
-            </Link>
+        <section className="relative overflow-hidden" style={{ minHeight: '520px' }}>
+          {/* Rock silhouette — sits behind everything */}
+          <RockSilhouette className="absolute bottom-0 left-0 w-full pointer-events-none" style={{ zIndex: 1 }} />
+          {/* Left fade — keeps text readable */}
+          <div className="absolute inset-0 pointer-events-none" style={{
+            zIndex: 2,
+            background: 'linear-gradient(to right, #0e0c1e 30%, rgba(14,12,30,0.5) 60%, transparent 100%)',
+          }} />
+          {/* Bottom fade — blends into next section */}
+          <div className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none" style={{
+            zIndex: 2,
+            background: 'linear-gradient(to top, #0e0c1e, transparent)',
+          }} />
+          {/* Hero content */}
+          <div className="relative max-w-4xl mx-auto px-6 pt-24 pb-32 text-center" style={{ zIndex: 3 }}>
+            <div className="inline-block text-xs font-semibold px-3 py-1 rounded-full mb-6"
+              style={{ background: 'rgba(91,84,184,0.15)', color: 'var(--accent)', border: '1px solid rgba(91,84,184,0.3)' }}>
+              Built for Gibraltar regulation
+            </div>
+            <h1 className="text-4xl sm:text-5xl font-bold leading-tight mb-6" style={{ color: 'var(--text)' }}>
+              Compliance training your<br />Gibraltar regulator will accept
+            </h1>
+            <p className="text-lg max-w-2xl mx-auto mb-10" style={{ color: 'var(--muted)' }}>
+              AI-generated scenarios mapped to POCA 2015, GFSC DLT Principles, and the Gambling Act 2025.
+              Delivered via Slack. Completed in under 10 minutes. Full audit trail included.
+            </p>
+            <div className="flex items-center justify-center gap-4 flex-wrap">
+              <Link href="/auth"
+                className="px-6 py-3 rounded-xl font-semibold text-white transition-colors"
+                style={{ background: 'var(--brand)' }}>
+                Request access
+              </Link>
+              <Link href="/blog"
+                className="px-6 py-3 rounded-xl font-semibold transition-colors"
+                style={{ color: 'var(--accent)', border: '1px solid var(--border)' }}>
+                Read the blog →
+              </Link>
+            </div>
           </div>
         </section>
 
