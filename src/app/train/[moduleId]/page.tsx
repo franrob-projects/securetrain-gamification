@@ -17,10 +17,18 @@ export default function TrainPage() {
   const [phase, setPhase] = useState<Phase>('intro')
   const [finalScore, setFinalScore] = useState(0)
   const [saving, setSaving] = useState(false)
+  const [sessionExpired, setSessionExpired] = useState(false)
 
   const module = MODULES.find(m => m.id === moduleId)
 
-  // Auth check re-enabled once Supabase is configured
+  useEffect(() => {
+    const checkAuth = async () => {
+      const supabase = createClient()
+      const { data: { session } } = await supabase.auth.getSession()
+      if (!session) router.replace('/auth')
+    }
+    checkAuth()
+  }, [router])
 
   const handleComplete = useCallback(async (score: number) => {
     setFinalScore(score)
@@ -29,12 +37,18 @@ export default function TrainPage() {
     try {
       const supabase = createClient()
       const { data: { session } } = await supabase.auth.getSession()
-      if (!session) { setSaving(false); return }
-      await fetch('/api/progress', {
+      if (!session) {
+        setSessionExpired(true)
+        return
+      }
+      const res = await fetch('/api/progress', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + session.access_token },
         body: JSON.stringify({ moduleId, score }),
       })
+      if (res.status === 401) {
+        setSessionExpired(true)
+      }
     } catch (e) {
       console.error('Failed to save progress', e)
     } finally {
@@ -106,6 +120,13 @@ export default function TrainPage() {
               </p>
             </div>
             {saving && <p className="text-xs" style={{ color: 'var(--muted)' }}>Saving progress...</p>}
+            {sessionExpired && (
+              <p className="text-xs" style={{ color: 'var(--muted)' }}>
+                Session expired —{' '}
+                <Link href="/auth" style={{ color: 'var(--accent)' }}>sign in again</Link>
+                {' '}to record this completion.
+              </p>
+            )}
           </div>
         )}
       </main>
