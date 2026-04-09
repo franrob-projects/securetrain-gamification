@@ -31,6 +31,18 @@
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
+/* Blog post prose */
+.prose-conply { color: var(--muted); line-height: 1.75; font-size: 0.9375rem; }
+.prose-conply h2 { color: var(--text); font-size: 1.125rem; font-weight: 700; margin: 2rem 0 0.75rem; }
+.prose-conply h3 { color: var(--text); font-size: 1rem; font-weight: 600; margin: 1.5rem 0 0.5rem; }
+.prose-conply p { margin: 0 0 1.25rem; }
+.prose-conply ul, .prose-conply ol { margin: 0 0 1.25rem 1.25rem; }
+.prose-conply li { margin-bottom: 0.375rem; }
+.prose-conply strong { color: var(--text); font-weight: 600; }
+.prose-conply a { color: var(--accent); text-decoration: underline; }
+.prose-conply hr { border: none; border-top: 1px solid var(--border); margin: 2rem 0; }
+.prose-conply code { font-size: 0.85em; background: rgba(91,84,184,0.15); color: var(--accent); padding: 0.1em 0.35em; border-radius: 4px; }
+
 body {
   font-family: 'Inter', system-ui, sans-serif;
   background: var(--bg);
