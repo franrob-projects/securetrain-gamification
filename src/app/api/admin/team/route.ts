@@ -82,10 +82,12 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'sector must be crypto, gambling, or both' }, { status: 400 })
   }
 
+  const cleanEmail = body.email.toLowerCase().trim()
+
   const { data, error } = await ctx.supabase
     .from('team_members')
     .insert({
-      email:      body.email.toLowerCase().trim(),
+      email:      cleanEmail,
       name:       body.name.trim(),
       job_title:  body.job_title?.trim() || null,
       sector:     body.sector,
@@ -101,5 +103,29 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: error.message }, { status: 500 })
   }
 
-  return NextResponse.json({ member: data })
+  // Send Supabase invite email — creates auth.users entry, fires the
+  // link_team_member_on_signup trigger, and emails them a sign-in link.
+  const base = process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000'
+  const { error: inviteError } = await ctx.supabase.auth.admin.inviteUserByEmail(cleanEmail, {
+    redirectTo: `${base}/`,
+    data: {
+      name:       body.name.trim(),
+      invited_by: ctx.user.email,
+    },
+  })
+
+  if (inviteError) {
+    // Most common reason: user already exists in auth.users from a prior signup.
+    // The team_member row is still created — they just won't get an invite email.
+    console.warn('[invite-email]', inviteError.message)
+    return NextResponse.json({
+      member: data,
+      invite: { sent: false, reason: inviteError.message },
+    })
+  }
+
+  return NextResponse.json({
+    member: data,
+    invite: { sent: true },
+  })
 }

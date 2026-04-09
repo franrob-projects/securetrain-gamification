@@ -1,9 +1,10 @@
 'use client'
 import { useState } from 'react'
-import { X } from 'lucide-react'
+import { CheckCircle2, Mail, X } from 'lucide-react'
 import { createClient } from '@/lib/supabase'
 
 type Sector = 'crypto' | 'gambling' | 'both'
+type Result = { name: string; email: string; inviteSent: boolean; inviteReason?: string } | null
 
 export function AddTeamMemberForm({
   onClose,
@@ -18,6 +19,7 @@ export function AddTeamMemberForm({
   const [sector, setSector]     = useState<Sector>('both')
   const [error, setError]       = useState<string | null>(null)
   const [submitting, setSubmitting] = useState(false)
+  const [result, setResult]     = useState<Result>(null)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -44,12 +46,68 @@ export function AddTeamMemberForm({
         return
       }
       onAdded()
-      onClose()
+      setResult({
+        name,
+        email,
+        inviteSent:    json.invite?.sent ?? false,
+        inviteReason:  json.invite?.reason,
+      })
     } catch {
       setError('Network error. Please try again.')
     } finally {
       setSubmitting(false)
     }
+  }
+
+  // Success state — render after the team member is added
+  if (result) {
+    return (
+      <div
+        className="fixed inset-0 z-50 flex items-center justify-center px-4"
+        style={{ background: 'rgba(14,12,30,0.75)' }}
+        onClick={onClose}
+      >
+        <div
+          className="rounded-xl w-full max-w-md p-6 text-center"
+          style={{ background: '#1e1b38', border: '1px solid #2e2a52' }}
+          onClick={e => e.stopPropagation()}
+        >
+          <div className="flex justify-center mb-5">
+            <div className="w-14 h-14 rounded-full flex items-center justify-center"
+              style={{ background: 'rgba(22,163,74,0.12)', border: '1px solid rgba(22,163,74,0.4)' }}>
+              <CheckCircle2 className="w-8 h-8" style={{ color: '#16a34a' }} />
+            </div>
+          </div>
+          <h2 className="text-lg font-semibold mb-2" style={{ color: 'var(--text)' }}>
+            {result.name} added
+          </h2>
+          {result.inviteSent ? (
+            <div className="space-y-2 mb-6">
+              <p className="text-sm flex items-center justify-center gap-2" style={{ color: 'var(--muted)' }}>
+                <Mail className="w-4 h-4" /> Invitation sent to {result.email}
+              </p>
+              <p className="text-xs" style={{ color: 'rgba(139,135,168,0.7)' }}>
+                They&apos;ll receive an email with a sign-in link. Their compliance tracking starts the moment they sign in.
+              </p>
+            </div>
+          ) : (
+            <div className="space-y-2 mb-6">
+              <p className="text-sm" style={{ color: 'var(--muted)' }}>
+                Added to your team list, but the invitation email could not be sent.
+              </p>
+              <p className="text-xs" style={{ color: 'rgba(139,135,168,0.7)' }}>
+                Reason: {result.inviteReason ?? 'unknown'}. They can still sign in manually at /auth using this email — their team_member row will link automatically.
+              </p>
+            </div>
+          )}
+          <button onClick={onClose}
+            className="w-full py-2.5 px-4 rounded-lg text-sm font-semibold text-white"
+            style={{ background: 'var(--brand)' }}>
+            Done
+          </button>
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -159,7 +217,7 @@ export function AddTeamMemberForm({
           </div>
 
           <p className="text-xs pt-2" style={{ color: 'rgba(139,135,168,0.6)' }}>
-            They&apos;ll be able to sign in with this email via the magic link on the auth page. Their training history will start tracking from their first sign-in.
+            They&apos;ll receive an invitation email with a sign-in link. Their training history starts tracking from their first sign-in.
           </p>
         </form>
       </div>

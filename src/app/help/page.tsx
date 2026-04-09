@@ -90,7 +90,10 @@ export default function HelpPage() {
                 <li><strong>Sector</strong> — Crypto, iGaming, or Both. This determines which modules are required for them.</li>
               </ul>
               <p>
-                Once added, they&apos;ll appear in the matrix immediately as <strong>Overdue</strong> (they have no completions yet). Tell them to visit <code>/auth</code> on your ConPly URL and sign in with the email you used. The first time they sign in, their account is automatically linked to the row you created and tracking begins.
+                Once added, they&apos;ll receive an invitation email from ConPly with a sign-in link. They click it, land on the platform, and start training immediately. Their row appears in the compliance matrix the moment you add them, marked as <strong>Overdue</strong> until they complete their first module.
+              </p>
+              <p>
+                If the email doesn&apos;t arrive (rare — check spam), they can also sign in manually at <code>/auth</code> using the same email address. Their team_member row links automatically on first sign-in.
               </p>
               <p>
                 <strong>Tip:</strong> If you have many team members, you can also click the bell icon next to any Overdue row to trigger an immediate Slack reminder for that specific person.

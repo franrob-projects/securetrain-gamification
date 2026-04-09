@@ -4,6 +4,7 @@ import { Nav } from '@/components/marketing/Nav'
 import { AuthRedirect } from '@/components/marketing/AuthRedirect'
 import { RockSilhouette } from '@/components/marketing/RockSilhouette'
 import { LoomEmbed } from '@/components/marketing/LoomEmbed'
+import { TrustMarquee } from '@/components/marketing/TrustMarquee'
 import { getAllPosts } from '@/lib/blog'
 
 export const metadata: Metadata = {
@@ -94,25 +95,8 @@ export default function HomePage() {
           <LoomEmbed videoId="cfe3ae0c9a66438c8db3514a07a625e6" title="ConPly product walkthrough" />
         </section>
 
-        {/* Trust strip — Gibraltar regulators */}
-        <section className="border-y" style={{ borderColor: 'var(--border)', background: 'rgba(91,84,184,0.04)' }}>
-          <div className="max-w-6xl mx-auto px-6 py-10 text-center">
-            <p className="text-xs font-semibold uppercase tracking-widest mb-5" style={{ color: 'rgba(157,151,232,0.6)' }}>
-              Mapped to the actual Gibraltar regulatory framework
-            </p>
-            <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-3 text-sm font-medium" style={{ color: 'var(--muted)' }}>
-              <span>Gibraltar Financial Services Commission</span>
-              <span style={{ color: 'rgba(139,135,168,0.3)' }}>•</span>
-              <span>Gibraltar Gambling Commissioner</span>
-              <span style={{ color: 'rgba(139,135,168,0.3)' }}>•</span>
-              <span>POCA 2015</span>
-              <span style={{ color: 'rgba(139,135,168,0.3)' }}>•</span>
-              <span>DLT Provider Regulations 2020</span>
-              <span style={{ color: 'rgba(139,135,168,0.3)' }}>•</span>
-              <span>Gambling Act 2025</span>
-            </div>
-          </div>
-        </section>
+        {/* Trust marquee — Gibraltar regulators */}
+        <TrustMarquee />
 
         {/* How it works */}
         <section className="max-w-6xl mx-auto px-6 py-24">
