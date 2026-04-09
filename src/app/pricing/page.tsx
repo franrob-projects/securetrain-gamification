@@ -4,7 +4,7 @@ import { Check } from 'lucide-react'
 import { Nav } from '@/components/marketing/Nav'
 
 export const metadata: Metadata = {
-  title: 'Pricing — ConPly',
+  title: 'Pricing',
   description: 'Simple per-firm pricing for Gibraltar compliance training. Starter, Team, and Enterprise plans for crypto and iGaming firms.',
 }
 

@@ -4,7 +4,7 @@ import { getAllPosts } from '@/lib/blog'
 import { Nav } from '@/components/marketing/Nav'
 
 export const metadata: Metadata = {
-  title: 'Compliance Blog — ConPly',
+  title: 'Compliance Blog',
   description: 'Practical guidance on Gibraltar compliance obligations for crypto and iGaming firms. POCA 2015, GFSC principles, Gambling Act 2025, and more.',
   openGraph: {
     title: 'Compliance Blog — ConPly',
