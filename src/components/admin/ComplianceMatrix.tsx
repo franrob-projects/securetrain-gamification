@@ -288,15 +288,19 @@ export function ComplianceMatrix() {
       {/* Stat cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         {[
-          { label: 'Team members',        value: displayTeam.length, color: 'var(--text)'  },
-          { label: 'Fully compliant',      value: compliantCount,    color: '#16a34a'      },
-          { label: 'Overdue',              value: overdueCount,      color: '#dc2626'      },
-          { label: 'Completions this week', value: thisWeekCount,    color: 'var(--accent)' },
+          { label: 'Team members',         value: displayTeam.length, color: 'var(--text)',   accent: 'rgba(91,84,184,0.08)',  borderAccent: 'var(--card-border)' },
+          { label: 'Fully compliant',      value: compliantCount,     color: '#16a34a',       accent: 'rgba(22,163,74,0.06)',  borderAccent: 'rgba(22,163,74,0.15)' },
+          { label: 'Overdue',              value: overdueCount,       color: '#dc2626',       accent: 'rgba(220,38,38,0.06)', borderAccent: 'rgba(220,38,38,0.15)' },
+          { label: 'Completions this week', value: thisWeekCount,     color: 'var(--accent)',  accent: 'rgba(91,84,184,0.06)',  borderAccent: 'rgba(91,84,184,0.2)' },
         ].map(card => (
-          <div key={card.label} className="rounded-xl px-5 py-4"
-            style={{ background: 'var(--card)', border: '1px solid var(--card-border)' }}>
-            <div className="text-3xl font-bold mb-1" style={{ color: card.color }}>{card.value}</div>
-            <div className="text-xs" style={{ color: 'var(--muted)' }}>{card.label}</div>
+          <div key={card.label} className="rounded-xl px-5 py-5 relative overflow-hidden"
+            style={{ background: 'var(--card)', border: `1px solid ${card.borderAccent}` }}>
+            <div className="absolute top-0 right-0 w-20 h-20 pointer-events-none"
+              style={{ background: `radial-gradient(circle at top right, ${card.accent}, transparent 70%)` }} />
+            <div className="relative">
+              <div className="text-3xl font-extrabold mb-1 tracking-tight" style={{ color: card.color }}>{card.value}</div>
+              <div className="text-xs font-medium" style={{ color: 'var(--muted)' }}>{card.label}</div>
+            </div>
           </div>
         ))}
       </div>

@@ -3,9 +3,12 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase'
 import { MODULES } from '@/data/modules'
-import { ModuleCard } from '@/components/training/ModuleCard'
 import { ComplianceMatrix } from '@/components/admin/ComplianceMatrix'
 import { ConplyLogo } from '@/components/ui/ConplyLogo'
+import { ThreatBadge } from '@/components/ui/ThreatBadge'
+import { SectorBadge } from '@/components/ui/SectorBadge'
+import { Clock } from 'lucide-react'
+import { formatDuration } from '@/lib/utils'
 
 export default function AdminPage() {
   const router = useRouter()
@@ -58,8 +61,30 @@ export default function AdminPage() {
         </div>
 
         {tab === 'modules' && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {MODULES.map(m => <ModuleCard key={m.id} module={m} />)}
+          <div>
+            <p className="text-xs mb-5" style={{ color: 'var(--muted)' }}>
+              All modules available to your team. Module assignment is based on each member&apos;s sector.
+            </p>
+            <div className="space-y-3">
+              {MODULES.map(m => (
+                <div key={m.id} className="rounded-xl p-5 flex flex-col sm:flex-row sm:items-center gap-4"
+                  style={{ background: 'var(--card)', border: '1px solid var(--card-border)' }}>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex flex-wrap items-center gap-2 mb-1.5">
+                      <h3 className="text-sm font-semibold" style={{ color: 'var(--text)' }}>{m.title}</h3>
+                    </div>
+                    <p className="text-xs leading-relaxed line-clamp-2" style={{ color: 'var(--muted)' }}>{m.description}</p>
+                  </div>
+                  <div className="flex items-center gap-3 flex-shrink-0">
+                    <SectorBadge sector={m.sector} />
+                    <ThreatBadge level={m.threatLevel} />
+                    <span className="flex items-center gap-1 text-xs" style={{ color: 'var(--muted)' }}>
+                      <Clock className="w-3 h-3" /> {formatDuration(m.durationMins)}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         )}
 
