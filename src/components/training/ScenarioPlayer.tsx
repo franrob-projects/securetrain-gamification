@@ -76,16 +76,25 @@ export function ScenarioPlayer({ module: m, onComplete }: { module: TrainingModu
   }
 
   if (loading && !scenarios[current]) return (
-    <div className="flex flex-col items-center gap-4 py-20">
-      <p
-        style={{
-          color: '#ffffff',
-          fontSize: '14px',
-          animation: 'pulse 1.5s ease-in-out infinite',
-        }}
-      >
-        Generating scenario from Gibraltar regulation...
-      </p>
+    <div className="flex flex-col items-center gap-5 py-20">
+      <div className="w-12 h-12 rounded-xl flex items-center justify-center"
+        style={{ background: 'rgba(91,84,184,0.12)', border: '1px solid rgba(91,84,184,0.25)' }}>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"
+          style={{ color: 'var(--accent)', animation: 'pulse 1.5s ease-in-out infinite' }}>
+          <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
+          <polyline points="14 2 14 8 20 8" />
+          <path d="M8 13h2" /><path d="M8 17h2" />
+          <path d="M14 13h2" /><path d="M14 17h2" />
+        </svg>
+      </div>
+      <div className="text-center">
+        <p className="text-sm font-medium mb-1" style={{ color: 'var(--text)' }}>
+          Generating scenario
+        </p>
+        <p className="text-xs" style={{ color: 'var(--muted)', animation: 'pulse 1.5s ease-in-out infinite' }}>
+          Retrieving Gibraltar regulation text...
+        </p>
+      </div>
     </div>
   )
 
@@ -182,9 +191,15 @@ export function ScenarioPlayer({ module: m, onComplete }: { module: TrainingModu
           <div className="flex-1">
             <p className="text-sm leading-relaxed" style={{ color: 'var(--text)' }}>{explanationBody}</p>
             {citation && (
-              <p style={{ fontSize: '12px', color: '#8b87a8', marginTop: '12px' }}>
-                {citation}
-              </p>
+              <div className="mt-3 pt-3 flex items-start gap-2" style={{ borderTop: `1px solid ${wasCorrect ? 'rgba(22,163,74,0.15)' : 'rgba(185,28,28,0.15)'}` }}>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                  className="flex-shrink-0 mt-0.5" style={{ color: '#8b87a8' }}>
+                  <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" /><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+                </svg>
+                <p style={{ fontSize: '12px', color: '#8b87a8' }}>
+                  {citation}
+                </p>
+              </div>
             )}
           </div>
         </motion.div>
