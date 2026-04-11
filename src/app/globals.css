@@ -52,9 +52,8 @@
   display: flex;
   align-items: center;
   flex-shrink: 0;
-  padding: 0 2.5rem;
+  padding: 0 0.5rem;
   white-space: nowrap;
-  border-right: 1px solid rgba(91,84,184,0.15);
 }
 .trust-marquee:hover .trust-marquee__track { animation-play-state: paused; }
 @keyframes trust-scroll {

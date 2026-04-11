@@ -10,21 +10,25 @@ const ITEMS = [
 ]
 
 export function TrustMarquee() {
-  // Render the list twice so the loop is seamless
   const loop = [...ITEMS, ...ITEMS]
 
   return (
     <section className="border-y" style={{ borderColor: 'var(--border)', background: 'rgba(91,84,184,0.04)' }}>
-      <div className="max-w-6xl mx-auto px-6 py-10">
-        <p className="text-xs font-semibold uppercase tracking-widest mb-6 text-center" style={{ color: 'rgba(157,151,232,0.6)' }}>
-          Mapped to the actual Gibraltar regulatory framework
-        </p>
-
+      <div className="py-8">
         <div className="trust-marquee" aria-hidden="false">
           <div className="trust-marquee__track">
             {loop.map((item, i) => (
               <div key={`${item}-${i}`} className="trust-marquee__item">
-                <span className="text-sm font-medium" style={{ color: 'var(--muted)' }}>{item}</span>
+                <span
+                  className="text-xs font-medium px-4 py-2 rounded-lg whitespace-nowrap"
+                  style={{
+                    color: 'var(--accent)',
+                    background: 'rgba(91,84,184,0.1)',
+                    border: '1px solid rgba(91,84,184,0.25)',
+                  }}
+                >
+                  {item}
+                </span>
               </div>
             ))}
           </div>
