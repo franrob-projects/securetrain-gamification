@@ -309,6 +309,20 @@ export default function HomePage() {
           </div>
         </section>
 
+        {/* Section divider — decorative dots */}
+        <div className="flex items-center justify-center gap-2 py-4">
+          <svg width="120" height="8" viewBox="0 0 120 8" fill="none">
+            <circle cx="4" cy="4" r="2" fill="rgba(91,84,184,0.15)" />
+            <circle cx="20" cy="4" r="2" fill="rgba(91,84,184,0.2)" />
+            <circle cx="36" cy="4" r="2.5" fill="rgba(91,84,184,0.3)" />
+            <circle cx="52" cy="4" r="3" fill="rgba(91,84,184,0.4)" />
+            <circle cx="68" cy="4" r="3" fill="rgba(91,84,184,0.4)" />
+            <circle cx="84" cy="4" r="2.5" fill="rgba(91,84,184,0.3)" />
+            <circle cx="100" cy="4" r="2" fill="rgba(91,84,184,0.2)" />
+            <circle cx="116" cy="4" r="2" fill="rgba(91,84,184,0.15)" />
+          </svg>
+        </div>
+
         {/* Features */}
         <section className="max-w-6xl mx-auto px-6 py-28">
           <div className="text-center mb-14">
@@ -406,39 +420,52 @@ export default function HomePage() {
         </section>
 
         {/* Pullout quote — conversion primer before CTA */}
-        <section className="max-w-4xl mx-auto px-6 py-16 text-center">
-          <div className="relative">
-            <div className="absolute -top-6 left-1/2 -translate-x-1/2 text-6xl leading-none select-none"
-              style={{ color: 'rgba(91,84,184,0.2)' }}>&ldquo;</div>
-            <blockquote className="text-xl sm:text-2xl font-semibold leading-relaxed pt-6" style={{ color: 'var(--text)' }}>
+        <section className="max-w-4xl mx-auto px-6 py-20 text-center">
+          <div className="relative rounded-2xl p-10 sm:p-14"
+            style={{ background: 'rgba(91,84,184,0.04)', border: '1px solid rgba(91,84,184,0.12)' }}>
+            <div className="absolute top-4 left-8 select-none pointer-events-none"
+              style={{ color: 'rgba(91,84,184,0.15)' }}>
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+              </svg>
+            </div>
+            <blockquote className="text-xl sm:text-2xl font-semibold leading-relaxed" style={{ color: 'var(--text)' }}>
               If a regulator asks to see your staff training records, you should be able to produce them in minutes — not days.
             </blockquote>
-            <p className="mt-4 text-sm" style={{ color: 'rgba(139,135,168,0.7)' }}>
-              The standard the GFSC and the Gambling Commissioner hold firms to
-            </p>
+            <div className="mt-6 flex items-center justify-center gap-3">
+              <div className="h-px w-8" style={{ background: 'rgba(91,84,184,0.3)' }} />
+              <p className="text-sm font-medium" style={{ color: 'var(--accent)' }}>
+                The standard the GFSC and the Gambling Commissioner hold firms to
+              </p>
+              <div className="h-px w-8" style={{ background: 'rgba(91,84,184,0.3)' }} />
+            </div>
           </div>
         </section>
 
         {/* CTA */}
         <section className="max-w-2xl mx-auto px-6 pb-24 text-center">
-          <div className="rounded-2xl p-8 sm:p-10" style={{ background: 'var(--card)', border: '1px solid var(--card-border)' }}>
-            <h2 className="text-2xl font-bold mb-3" style={{ color: 'var(--text)' }}>
-              Get your team compliant in days, not weeks
-            </h2>
-            <p className="text-sm mb-8 max-w-md mx-auto" style={{ color: '#a9a5c4' }}>
-              Onboard your staff and send the first training module within 24 hours. No implementation project, no content to write.
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-              <a href={CONTACT_EMAIL}
-                className="w-full sm:w-auto px-8 py-4 rounded-xl font-semibold text-white transition-colors inline-block text-center"
-                style={{ background: 'var(--brand)' }}>
-                Get in touch
-              </a>
-              <Link href="/pricing"
-                className="w-full sm:w-auto px-8 py-4 rounded-xl font-semibold transition-colors inline-block text-center"
-                style={{ color: 'var(--accent)', border: '1px solid var(--border)' }}>
-                View pricing
-              </Link>
+          <div className="rounded-2xl p-8 sm:p-12 relative overflow-hidden" style={{ background: 'var(--card)', border: '1px solid var(--card-border)' }}>
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-80 h-40 pointer-events-none"
+              style={{ background: 'radial-gradient(ellipse, rgba(91,84,184,0.1), transparent 70%)' }} />
+            <div className="relative">
+              <h2 className="text-2xl sm:text-3xl font-bold mb-4" style={{ color: 'var(--text)', letterSpacing: '-0.02em' }}>
+                Get your team compliant in days, not weeks
+              </h2>
+              <p className="text-sm mb-8 max-w-md mx-auto leading-relaxed" style={{ color: '#a9a5c4' }}>
+                Onboard your staff and send the first training module within 24 hours. No implementation project, no content to write.
+              </p>
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+                <a href={CONTACT_EMAIL}
+                  className="w-full sm:w-auto px-8 py-4 rounded-xl font-semibold text-white transition-colors inline-block text-center"
+                  style={{ background: 'var(--brand)' }}>
+                  Get in touch
+                </a>
+                <Link href="/pricing"
+                  className="w-full sm:w-auto px-8 py-4 rounded-xl font-semibold transition-colors inline-block text-center"
+                  style={{ color: 'var(--accent)', border: '1px solid var(--border)' }}>
+                  View pricing
+                </Link>
+              </div>
             </div>
           </div>
         </section>
