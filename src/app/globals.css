@@ -89,6 +89,12 @@ input:focus-visible {
 footer a { transition: color 0.2s ease; }
 footer a:hover { color: var(--text) !important; }
 
+/* CTA button hover glow */
+.cta-primary { transition: background 0.2s ease, box-shadow 0.2s ease; }
+.cta-primary:hover { box-shadow: 0 0 20px -4px rgba(91,84,184,0.4); }
+.cta-outline { transition: border-color 0.2s ease, color 0.2s ease; }
+.cta-outline:hover { border-color: rgba(91,84,184,0.5) !important; color: var(--text) !important; }
+
 /* Card hover — softer transition for marketing cards */
 .card-hover { border: 1px solid var(--card-border); transition: border-color 0.3s ease, box-shadow 0.3s ease; }
 .card-hover:hover { border-color: rgba(91,84,184,0.4); box-shadow: 0 0 24px -8px rgba(91,84,184,0.15); }

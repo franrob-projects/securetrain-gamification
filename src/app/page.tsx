@@ -86,12 +86,12 @@ export default function HomePage() {
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
               <a href={CONTACT_EMAIL}
-                className="w-full sm:w-auto text-center px-8 py-4 rounded-xl font-semibold text-white transition-colors"
+                className="cta-primary w-full sm:w-auto text-center px-8 py-4 rounded-xl font-semibold text-white"
                 style={{ background: 'var(--brand)' }}>
                 Get in touch
               </a>
               <Link href="#how-it-works"
-                className="w-full sm:w-auto text-center px-8 py-4 rounded-xl font-semibold transition-colors"
+                className="cta-outline w-full sm:w-auto text-center px-8 py-4 rounded-xl font-semibold"
                 style={{ color: 'var(--accent)', border: '1px solid var(--border)' }}>
                 How it works →
               </Link>
