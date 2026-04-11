@@ -44,14 +44,15 @@ export default function HelpPage() {
         <div className="flex gap-12 flex-col lg:flex-row">
           {/* Sticky table of contents */}
           <aside className="lg:w-56 flex-shrink-0">
-            <nav className="lg:sticky lg:top-8">
-              <p className="text-[11px] font-medium uppercase tracking-[0.15em] mb-3" style={{ color: 'var(--muted)' }}>
+            <nav className="lg:sticky lg:top-8 rounded-xl p-5" style={{ background: 'var(--card)', border: '1px solid var(--card-border)' }}>
+              <p className="text-[11px] font-medium uppercase tracking-[0.15em] mb-4" style={{ color: 'var(--accent)' }}>
                 On this page
               </p>
-              <ul className="space-y-2">
+              <ul className="space-y-1">
                 {SECTIONS.map(s => (
                   <li key={s.id}>
-                    <a href={`#${s.id}`} className="text-sm transition-colors" style={{ color: 'var(--muted)' }}>
+                    <a href={`#${s.id}`} className="help-toc-link text-sm block px-2.5 py-1.5 rounded-lg"
+                      style={{ color: 'var(--muted)' }}>
                       {s.label}
                     </a>
                   </li>
