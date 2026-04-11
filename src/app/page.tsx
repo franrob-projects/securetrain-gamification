@@ -65,21 +65,23 @@ export default function HomePage() {
           }} />
           {/* Hero content */}
           <div className="relative max-w-4xl mx-auto px-6 pt-24 pb-32 text-center" style={{ zIndex: 3 }}>
-            <h1 className="text-4xl sm:text-5xl font-bold leading-tight mb-6" style={{ color: 'var(--text)' }}>
-              Compliance training your<br />Gibraltar regulator will accept
+            <h1 className="text-3xl sm:text-5xl font-bold leading-tight mb-6" style={{ color: 'var(--text)' }}>
+              Compliance training your{' '}
+              <br className="hidden sm:block" />
+              Gibraltar regulator will accept
             </h1>
             <p className="text-lg max-w-2xl mx-auto mb-10" style={{ color: 'var(--muted)' }}>
               AI-generated scenarios mapped to POCA 2015, GFSC DLT Principles, and the Gambling Act 2025.
               Delivered via Slack. Completed in under 10 minutes. Full audit trail included.
             </p>
-            <div className="flex items-center justify-center gap-4 flex-wrap">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
               <Link href="/auth"
-                className="px-6 py-3 rounded-xl font-semibold text-white transition-colors"
+                className="w-full sm:w-auto text-center px-6 py-3 rounded-xl font-semibold text-white transition-colors"
                 style={{ background: 'var(--brand)' }}>
                 Request access
               </Link>
               <Link href="/pricing"
-                className="px-6 py-3 rounded-xl font-semibold transition-colors"
+                className="w-full sm:w-auto text-center px-6 py-3 rounded-xl font-semibold transition-colors"
                 style={{ color: 'var(--accent)', border: '1px solid var(--border)' }}>
                 See pricing →
               </Link>

@@ -96,8 +96,10 @@ export default function PricingPage() {
           <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: 'var(--accent)' }}>
             Pricing
           </p>
-          <h1 className="text-4xl sm:text-5xl font-bold leading-tight mb-5" style={{ color: 'var(--text)' }}>
-            Simple pricing for<br />Gibraltar firms
+          <h1 className="text-3xl sm:text-5xl font-bold leading-tight mb-5" style={{ color: 'var(--text)' }}>
+            Simple pricing for{' '}
+            <br className="hidden sm:block" />
+            Gibraltar firms
           </h1>
           <p className="text-base max-w-xl mx-auto" style={{ color: 'var(--muted)' }}>
             Per-firm pricing. Billed monthly, cancel any time. All plans include
