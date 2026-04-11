@@ -198,6 +198,17 @@ export default function PricingPage() {
           </div>
         </section>
 
+        {/* Section divider */}
+        <div className="flex items-center justify-center py-4">
+          <div className="h-px flex-1 max-w-24" style={{ background: 'linear-gradient(to right, transparent, rgba(91,84,184,0.3))' }} />
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"
+            className="mx-4" style={{ color: 'rgba(91,84,184,0.3)' }}>
+            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+          </svg>
+          <div className="h-px flex-1 max-w-24" style={{ background: 'linear-gradient(to left, transparent, rgba(91,84,184,0.3))' }} />
+        </div>
+
         {/* Modules overview */}
         <section id="modules" className="max-w-4xl mx-auto px-6 pb-24">
           <div className="text-center mb-10">
@@ -210,23 +221,27 @@ export default function PricingPage() {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {[
-              { title: 'AML & Financial Crime Prevention',           sector: 'All firms',  reg: 'POCA 2015' },
-              { title: 'DLT Regulatory Principles',                  sector: 'Crypto',     reg: 'GFSC DLT Principles' },
-              { title: 'Responsible Gambling & Social Responsibility', sector: 'iGaming',   reg: 'Gambling Act 2025' },
-              { title: 'Senior Manager & Director Responsibilities',  sector: 'All firms',  reg: 'GFSC Fit & Proper Test' },
-              { title: 'Sanctions Screening & POCA Compliance',       sector: 'All firms',  reg: 'POCA 2015, HM Treasury' },
-              { title: 'Market Integrity & Market Abuse',             sector: 'Crypto',     reg: 'GFSC Market Conduct' },
-              { title: 'KYC & Customer Due Diligence',                sector: 'All firms',  reg: 'GFSC AML/CFT Guidance' },
-              { title: 'Data Protection & GDPR',                      sector: 'All firms',  reg: 'Gibraltar DPA / UK GDPR' },
-            ].map(m => (
-              <div key={m.title} className="rounded-lg px-5 py-4 flex items-start justify-between gap-4"
+              { title: 'AML & Financial Crime Prevention',           sector: 'All firms',  reg: 'POCA 2015',                 icon: 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z' },
+              { title: 'DLT Regulatory Principles',                  sector: 'Crypto',     reg: 'GFSC DLT Principles',        icon: 'M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71' },
+              { title: 'Responsible Gambling & Social Responsibility', sector: 'iGaming',   reg: 'Gambling Act 2025',          icon: 'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2' },
+              { title: 'Senior Manager & Director Responsibilities',  sector: 'All firms',  reg: 'GFSC Fit & Proper Test',    icon: 'M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2' },
+              { title: 'Sanctions Screening & POCA Compliance',       sector: 'All firms',  reg: 'POCA 2015, HM Treasury',    icon: 'M18.36 6.64a9 9 0 1 1-12.73 0' },
+              { title: 'Market Integrity & Market Abuse',             sector: 'Crypto',     reg: 'GFSC Market Conduct',        icon: 'M22 12h-4l-3 9L9 3l-3 9H2' },
+              { title: 'KYC & Customer Due Diligence',                sector: 'All firms',  reg: 'GFSC AML/CFT Guidance',     icon: 'M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4' },
+              { title: 'Data Protection & GDPR',                      sector: 'All firms',  reg: 'Gibraltar DPA / UK GDPR',   icon: 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z' },
+            ].map((m, i) => (
+              <div key={m.title} className="rounded-xl px-5 py-4 flex items-start gap-4"
                 style={{ background: 'var(--card)', border: '1px solid var(--card-border)' }}>
-                <div>
+                <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5"
+                  style={{ background: 'rgba(91,84,184,0.08)', border: '1px solid rgba(91,84,184,0.15)' }}>
+                  <span className="text-xs font-bold" style={{ color: 'var(--accent)' }}>{i + 1}</span>
+                </div>
+                <div className="flex-1 min-w-0">
                   <h3 className="text-sm font-semibold mb-1" style={{ color: 'var(--text)' }}>{m.title}</h3>
                   <p className="text-xs" style={{ color: 'rgba(139,135,168,0.7)' }}>{m.reg}</p>
                 </div>
                 <span className="text-xs font-medium px-2 py-0.5 rounded-full flex-shrink-0 mt-0.5"
-                  style={{ background: 'rgba(91,84,184,0.15)', color: 'var(--accent)' }}>
+                  style={{ background: m.sector === 'Crypto' ? 'rgba(122,116,204,0.15)' : m.sector === 'iGaming' ? 'rgba(157,151,232,0.15)' : 'rgba(91,84,184,0.1)', color: 'var(--accent)' }}>
                   {m.sector}
                 </span>
               </div>
@@ -236,18 +251,22 @@ export default function PricingPage() {
 
         {/* Final CTA */}
         <section className="max-w-2xl mx-auto px-6 pb-24 text-center">
-          <div className="rounded-2xl p-10" style={{ background: 'var(--card)', border: '1px solid var(--card-border)' }}>
-            <h2 className="text-2xl font-bold mb-3" style={{ color: 'var(--text)' }}>
-              Not sure which plan fits?
-            </h2>
-            <p className="text-sm mb-8" style={{ color: 'var(--muted)' }}>
-              Tell us about your firm and we&apos;ll recommend the right tier — and set up a trial if it makes sense.
-            </p>
-            <a href={CONTACT_EMAIL}
-              className="px-6 py-3 rounded-xl font-semibold text-white transition-colors inline-block"
-              style={{ background: 'var(--brand)' }}>
-              Get in touch
-            </a>
+          <div className="rounded-2xl p-10 sm:p-12 relative overflow-hidden" style={{ background: 'var(--card)', border: '1px solid var(--card-border)' }}>
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-72 h-36 pointer-events-none"
+              style={{ background: 'radial-gradient(ellipse, rgba(91,84,184,0.08), transparent 70%)' }} />
+            <div className="relative">
+              <h2 className="text-2xl font-bold mb-3" style={{ color: 'var(--text)' }}>
+                Not sure which plan fits?
+              </h2>
+              <p className="text-sm mb-8 leading-relaxed" style={{ color: 'var(--muted)' }}>
+                Tell us about your firm and we&apos;ll recommend the right tier — and set up a trial if it makes sense.
+              </p>
+              <a href={CONTACT_EMAIL}
+                className="px-8 py-3.5 rounded-xl font-semibold text-white transition-colors inline-block"
+                style={{ background: 'var(--brand)' }}>
+                Get in touch
+              </a>
+            </div>
           </div>
         </section>
       </main>
