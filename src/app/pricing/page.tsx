@@ -113,47 +113,58 @@ export default function PricingPage() {
 
         {/* Tier cards */}
         <section className="max-w-6xl mx-auto px-6 pb-20">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 items-start">
             {TIERS.map(tier => (
               <div
                 key={tier.name}
-                className="rounded-2xl p-7 flex flex-col"
+                className="rounded-2xl flex flex-col relative overflow-hidden"
                 style={{
-                  background: tier.featured ? 'rgba(91,84,184,0.12)' : 'var(--card)',
+                  background: tier.featured ? 'rgba(91,84,184,0.08)' : 'var(--card)',
                   border: tier.featured ? '1px solid rgba(91,84,184,0.5)' : '1px solid var(--card-border)',
                 }}
               >
+                {/* Featured glow */}
                 {tier.featured && (
-                  <div className="text-[11px] font-medium uppercase tracking-[0.15em] mb-3"
-                    style={{ color: 'var(--accent)' }}>
-                    Most popular
-                  </div>
+                  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-60 h-40 pointer-events-none"
+                    style={{ background: 'radial-gradient(ellipse, rgba(91,84,184,0.12), transparent 70%)' }} />
                 )}
-                <h2 className="text-lg font-bold mb-1" style={{ color: 'var(--text)' }}>{tier.name}</h2>
-                <p className="text-xs mb-5" style={{ color: 'var(--muted)' }}>{tier.description}</p>
 
-                <div className="mb-6">
-                  <span className="text-4xl font-bold" style={{ color: 'var(--text)' }}>{tier.price}</span>
-                  <span className="text-sm" style={{ color: 'var(--muted)' }}>{tier.cadence}</span>
+                <div className="p-7 flex flex-col flex-1 relative">
+                  {tier.featured && (
+                    <div className="text-[11px] font-medium uppercase tracking-[0.15em] mb-3 flex items-center gap-2"
+                      style={{ color: 'var(--accent)' }}>
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                      </svg>
+                      Most popular
+                    </div>
+                  )}
+                  <h2 className="text-lg font-bold mb-1" style={{ color: 'var(--text)' }}>{tier.name}</h2>
+                  <p className="text-xs mb-5 leading-relaxed" style={{ color: 'var(--muted)' }}>{tier.description}</p>
+
+                  <div className="mb-6 pb-6" style={{ borderBottom: '1px solid var(--card-border)' }}>
+                    <span className="text-4xl font-extrabold tracking-tight" style={{ color: 'var(--text)' }}>{tier.price}</span>
+                    <span className="text-sm" style={{ color: 'var(--muted)' }}>{tier.cadence}</span>
+                  </div>
+
+                  <ul className="space-y-3 mb-7 flex-1">
+                    {tier.features.map(f => (
+                      <li key={f} className="flex items-start gap-2.5 text-sm" style={{ color: 'var(--muted)' }}>
+                        <Check className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color: tier.featured ? '#4ade80' : 'var(--accent)' }} />
+                        <span>{f}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <a href={tier.mailto}
+                    className="block text-center py-3.5 rounded-xl text-sm font-semibold transition-colors"
+                    style={tier.featured
+                      ? { background: 'var(--brand)', color: '#fff' }
+                      : { background: 'transparent', color: 'var(--accent)', border: '1px solid var(--border)' }
+                    }>
+                    {tier.cta}
+                  </a>
                 </div>
-
-                <ul className="space-y-2.5 mb-7 flex-1">
-                  {tier.features.map(f => (
-                    <li key={f} className="flex items-start gap-2 text-sm" style={{ color: 'var(--muted)' }}>
-                      <Check className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color: 'var(--accent)' }} />
-                      <span>{f}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                <a href={tier.mailto}
-                  className="block text-center py-3 rounded-xl text-sm font-semibold transition-colors"
-                  style={tier.featured
-                    ? { background: 'var(--brand)', color: '#fff' }
-                    : { background: 'transparent', color: 'var(--accent)', border: '1px solid var(--border)' }
-                  }>
-                  {tier.cta}
-                </a>
               </div>
             ))}
           </div>
@@ -161,15 +172,27 @@ export default function PricingPage() {
 
         {/* FAQ */}
         <section className="max-w-3xl mx-auto px-6 pb-24">
-          <h2 className="text-2xl font-bold text-center mb-10" style={{ color: 'var(--text)' }}>
-            Common questions
-          </h2>
-          <div className="space-y-4">
-            {FAQ.map(item => (
-              <div key={item.q} className="rounded-xl p-6"
-                style={{ background: 'var(--card)', border: '1px solid var(--card-border)' }}>
-                <h3 className="text-sm font-semibold mb-2" style={{ color: 'var(--text)' }}>{item.q}</h3>
-                <p className="text-sm leading-relaxed" style={{ color: 'var(--muted)' }}>{item.a}</p>
+          <div className="text-center mb-10">
+            <p className="text-[11px] font-medium uppercase tracking-[0.15em] mb-3" style={{ color: 'var(--accent)' }}>
+              FAQ
+            </p>
+            <h2 className="text-2xl font-bold" style={{ color: 'var(--text)' }}>
+              Common questions
+            </h2>
+          </div>
+          <div className="space-y-0 rounded-xl overflow-hidden" style={{ border: '1px solid var(--card-border)' }}>
+            {FAQ.map((item, i) => (
+              <div key={item.q} className="px-6 py-5"
+                style={{
+                  background: 'var(--card)',
+                  borderTop: i > 0 ? '1px solid var(--card-border)' : undefined,
+                }}>
+                <h3 className="text-sm font-semibold mb-2 flex items-start gap-3" style={{ color: 'var(--text)' }}>
+                  <span className="flex-shrink-0 w-5 h-5 rounded flex items-center justify-center text-xs font-bold mt-0.5"
+                    style={{ background: 'rgba(91,84,184,0.12)', color: 'var(--accent)' }}>?</span>
+                  {item.q}
+                </h3>
+                <p className="text-sm leading-relaxed pl-8" style={{ color: 'var(--muted)' }}>{item.a}</p>
               </div>
             ))}
           </div>
