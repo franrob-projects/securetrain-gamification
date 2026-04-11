@@ -108,24 +108,37 @@ export function ScenarioPlayer({ module: m, onComplete }: { module: TrainingModu
 
   return (
     <div className="space-y-6">
-      {/* Animated progress bar */}
+      {/* Progress bar with step indicators */}
       <div className="flex items-center gap-3">
-        <div className="flex-1 h-1 rounded-full overflow-hidden" style={{ background: 'var(--border)' }}>
-          <div
-            style={{
-              width: `${progressPct}%`,
-              height: '100%',
-              background: 'var(--brand)',
-              transition: 'width 500ms ease-in-out',
-            }}
-          />
+        <div className="flex-1 flex items-center gap-1.5">
+          {Array.from({ length: TOTAL }).map((_, i) => (
+            <div key={i} className="flex-1 h-1.5 rounded-full overflow-hidden" style={{ background: 'var(--border)' }}>
+              <div
+                style={{
+                  width: i < current ? '100%' : i === current && answered ? '100%' : i === current ? '50%' : '0%',
+                  height: '100%',
+                  background: i < current || (i === current && answered) ? 'var(--brand)' : 'rgba(91,84,184,0.4)',
+                  transition: 'width 500ms ease-in-out',
+                  borderRadius: 'inherit',
+                }}
+              />
+            </div>
+          ))}
         </div>
-        <span className="text-xs whitespace-nowrap" style={{ color: 'var(--muted)' }}>{current + 1} / {TOTAL}</span>
+        <span className="text-xs font-medium whitespace-nowrap px-2 py-1 rounded-md" style={{ color: 'var(--accent)', background: 'rgba(91,84,184,0.1)' }}>
+          {current + 1} / {TOTAL}
+        </span>
       </div>
 
       {/* Scenario */}
-      <div className="rounded-xl p-5" style={{ border: '1px solid var(--border)', background: 'var(--surface)' }}>
-        <p className="text-xs font-medium uppercase tracking-wider mb-3" style={{ color: 'var(--muted)' }}>Scenario</p>
+      <div className="rounded-xl p-6" style={{ border: '1px solid var(--border)', background: 'var(--surface)' }}>
+        <div className="flex items-center gap-2 mb-3">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--accent)' }}>
+            <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
+            <polyline points="14 2 14 8 20 8" />
+          </svg>
+          <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--accent)' }}>Scenario</p>
+        </div>
         <p className="text-sm leading-relaxed" style={{ color: 'var(--text)' }}>{s.scenario}</p>
       </div>
 

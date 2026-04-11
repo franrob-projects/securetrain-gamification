@@ -132,10 +132,49 @@ export default function TrainPage() {
 
       <main className="max-w-2xl mx-auto px-6 py-10">
         {phase === 'intro' && (
-          <div className="space-y-6">
-            <ThreatBadge level={module.threatLevel} />
-            <h1 className="text-2xl font-bold" style={{ color: 'var(--text)' }}>{module.title}</h1>
-            <p className="text-sm" style={{ color: 'var(--muted)' }}>{truncDesc}</p>
+          <div className="space-y-8">
+            {/* Module header with visual treatment */}
+            <div className="rounded-2xl p-8 relative overflow-hidden"
+              style={{ background: 'var(--card)', border: '1px solid var(--card-border)' }}>
+              <div className="absolute top-0 right-0 w-48 h-48 pointer-events-none"
+                style={{ background: 'radial-gradient(circle at top right, rgba(91,84,184,0.1), transparent 70%)' }} />
+              <div className="relative">
+                <ThreatBadge level={module.threatLevel} />
+                <h1 className="text-2xl font-bold mt-4 mb-3" style={{ color: 'var(--text)' }}>{module.title}</h1>
+                <p className="text-sm leading-relaxed" style={{ color: 'var(--muted)' }}>{truncDesc}</p>
+              </div>
+            </div>
+
+            {/* What to expect */}
+            <div className="grid grid-cols-3 gap-3">
+              {[
+                { icon: (
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" style={{ color: 'var(--accent)' }}>
+                    <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" strokeLinecap="round" strokeLinejoin="round" />
+                    <polyline points="14 2 14 8 20 8" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                ), label: '3 scenarios' },
+                { icon: (
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" style={{ color: 'var(--accent)' }}>
+                    <circle cx="12" cy="12" r="10" strokeLinecap="round" />
+                    <polyline points="12 6 12 12 16 14" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                ), label: '~10 minutes' },
+                { icon: (
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" style={{ color: 'var(--accent)' }}>
+                    <path d="M9 11l3 3L22 4" strokeLinecap="round" strokeLinejoin="round" />
+                    <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                ), label: 'PDF record' },
+              ].map((item, i) => (
+                <div key={i} className="rounded-xl px-3 py-4 text-center"
+                  style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}>
+                  <div className="flex justify-center mb-2">{item.icon}</div>
+                  <span className="text-xs font-medium" style={{ color: 'var(--muted)' }}>{item.label}</span>
+                </div>
+              ))}
+            </div>
+
             <button onClick={() => setPhase('training')}
               className="w-full py-3.5 px-6 rounded-xl font-semibold transition-colors text-white"
               style={{ background: 'var(--brand)' }}
@@ -151,48 +190,87 @@ export default function TrainPage() {
         )}
 
         {phase === 'complete' && (
-          <div className="space-y-8">
-            {/* Primary confirmation */}
+          <div className="space-y-6">
+            {/* Completion certificate card */}
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.3, ease: 'easeOut' }}
-              className="text-center space-y-3"
+              className="rounded-2xl overflow-hidden"
+              style={{ border: '1px solid var(--card-border)' }}
             >
-              <div className="flex justify-center">
-                <div className="w-16 h-16 rounded-full flex items-center justify-center"
-                  style={{ background: 'rgba(22,163,74,0.12)', border: '1px solid rgba(22,163,74,0.4)' }}>
-                  <CheckCircle2 className="w-9 h-9" style={{ color: '#16a34a' }} />
+              {/* Certificate header band */}
+              <div className="px-8 py-6 text-center relative overflow-hidden"
+                style={{ background: finalScore >= 66 ? 'rgba(22,163,74,0.08)' : 'rgba(217,119,6,0.08)', borderBottom: `1px solid ${finalScore >= 66 ? 'rgba(22,163,74,0.2)' : 'rgba(217,119,6,0.2)'}` }}>
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-80 h-40 pointer-events-none"
+                  style={{ background: `radial-gradient(ellipse, ${finalScore >= 66 ? 'rgba(22,163,74,0.08)' : 'rgba(217,119,6,0.08)'}, transparent 70%)` }} />
+                <div className="relative">
+                  <div className="flex justify-center mb-3">
+                    <div className="w-14 h-14 rounded-full flex items-center justify-center"
+                      style={{ background: finalScore >= 66 ? 'rgba(22,163,74,0.15)' : 'rgba(217,119,6,0.15)', border: `1px solid ${finalScore >= 66 ? 'rgba(22,163,74,0.4)' : 'rgba(217,119,6,0.4)'}` }}>
+                      <CheckCircle2 className="w-7 h-7" style={{ color: finalScore >= 66 ? '#16a34a' : '#d97706' }} />
+                    </div>
+                  </div>
+                  <h1 className="text-2xl font-bold" style={{ color: 'var(--text)' }}>
+                    {finalScore >= 66 ? 'Module passed' : 'Module completed'}
+                  </h1>
+                  <p className="text-sm mt-1" style={{ color: 'var(--muted)' }}>{module.title}</p>
                 </div>
               </div>
-              <h1 className="text-3xl font-bold" style={{ color: 'var(--text)' }}>Module completed</h1>
-              {completedAt && (
-                <p className="text-sm" style={{ color: 'var(--muted)' }}>
-                  Completed {completedAt.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })} at {completedAt.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}
+
+              {/* Certificate body */}
+              <div className="px-8 py-6" style={{ background: 'var(--card)' }}>
+                {/* Score display */}
+                <div className="flex items-center justify-center gap-8 py-4 mb-4"
+                  style={{ borderBottom: '1px solid var(--card-border)' }}>
+                  <div className="text-center">
+                    <div className="text-4xl font-bold tracking-tight" style={{ color: finalScore >= 66 ? '#16a34a' : '#d97706' }}>{finalScore}%</div>
+                    <div className="text-xs mt-1" style={{ color: 'var(--muted)' }}>Score</div>
+                  </div>
+                  <div className="w-px h-12" style={{ background: 'var(--card-border)' }} />
+                  <div className="text-center">
+                    <div className="text-4xl font-bold tracking-tight" style={{ color: 'var(--text)' }}>{correctCount}/{TOTAL}</div>
+                    <div className="text-xs mt-1" style={{ color: 'var(--muted)' }}>Correct</div>
+                  </div>
+                </div>
+
+                {/* Details */}
+                <div className="space-y-2 text-sm mb-6">
+                  {completedAt && (
+                    <div className="flex justify-between">
+                      <span style={{ color: 'var(--muted)' }}>Date</span>
+                      <span style={{ color: 'var(--text)' }}>
+                        {completedAt.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })} at {completedAt.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}
+                      </span>
+                    </div>
+                  )}
+                  <div className="flex justify-between">
+                    <span style={{ color: 'var(--muted)' }}>User</span>
+                    <span style={{ color: 'var(--text)' }}>{userEmail || '\u2014'}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span style={{ color: 'var(--muted)' }}>Status</span>
+                    <span className="font-medium" style={{ color: finalScore >= 66 ? '#16a34a' : '#d97706' }}>
+                      {finalScore >= 66 ? 'Passed' : 'Did not pass'}
+                    </span>
+                  </div>
+                </div>
+
+                <p className="text-xs text-center mb-6" style={{ color: 'rgba(139,135,168,0.6)' }}>
+                  This completion has been recorded in your compliance audit trail.
                 </p>
-              )}
-              <p className="text-sm" style={{ color: 'var(--muted)' }}>{module.title}</p>
+
+                {/* PDF download */}
+                <button onClick={downloadPdf}
+                  className="w-full py-3 px-6 rounded-xl font-semibold transition-colors text-white flex items-center justify-center gap-2"
+                  style={{ background: 'var(--brand)' }}
+                  onMouseOver={e => (e.currentTarget.style.background = 'var(--brand-hover)')}
+                  onMouseOut={e => (e.currentTarget.style.background = 'var(--brand)')}>
+                  <Download className="w-4 h-4" />
+                  Download completion record
+                </button>
+              </div>
             </motion.div>
-
-            {/* Secondary score */}
-            <div className="text-center pt-2">
-              <p className="text-base" style={{ color: 'var(--text)' }}>
-                You answered <span className="font-semibold">{correctCount}</span> of {TOTAL} scenarios correctly
-              </p>
-              <p className="text-xs mt-3" style={{ color: 'var(--muted)' }}>
-                This completion has been recorded in your compliance audit trail.
-              </p>
-            </div>
-
-            {/* PDF download */}
-            <button onClick={downloadPdf}
-              className="w-full py-3 px-6 rounded-xl font-semibold transition-colors text-white flex items-center justify-center gap-2"
-              style={{ background: 'var(--brand)' }}
-              onMouseOver={e => (e.currentTarget.style.background = 'var(--brand-hover)')}
-              onMouseOut={e => (e.currentTarget.style.background = 'var(--brand)')}>
-              <Download className="w-4 h-4" />
-              Download completion record
-            </button>
 
             {/* Tertiary actions */}
             <div className="flex items-center justify-center gap-6 pt-2">
@@ -208,7 +286,7 @@ export default function TrainPage() {
               </Link>
             </div>
 
-            {saving && <p className="text-xs text-center" style={{ color: 'var(--muted)' }}>Saving progress…</p>}
+            {saving && <p className="text-xs text-center" style={{ color: 'var(--muted)' }}>Saving progress...</p>}
             {sessionExpired && (
               <p className="text-xs text-center" style={{ color: 'var(--muted)' }}>
                 Session expired —{' '}
