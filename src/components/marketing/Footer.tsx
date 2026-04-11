@@ -113,8 +113,8 @@ export function Footer() {
           <p className="text-xs" style={{ color: 'rgba(139,135,168,0.7)' }}>
             © {new Date().getFullYear()} ConPly. All rights reserved.
           </p>
-          <a href="mailto:hello@conply.gi" className="text-xs transition-colors" style={{ color: 'var(--muted)' }}>
-            hello@conply.gi
+          <a href="mailto:francisroberts@live.com" className="text-xs transition-colors" style={{ color: 'var(--muted)' }}>
+            francisroberts@live.com
           </a>
         </div>
       </div>

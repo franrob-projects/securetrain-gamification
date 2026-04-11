@@ -16,7 +16,7 @@ const TIERS = [
     cadence: '/month',
     description: 'For small Gibraltar firms — boutique DLT providers, B2B iGaming suppliers, and early-stage operators.',
     cta: 'Get in touch',
-    mailto: 'mailto:hello@conply.gi?subject=ConPly%20Starter%20enquiry',
+    mailto: 'mailto:francisroberts@live.com?subject=ConPly%20Starter%20enquiry',
     featured: false,
     features: [
       'Up to 10 staff members',
@@ -33,7 +33,7 @@ const TIERS = [
     cadence: '/month',
     description: 'For mid-sized crypto and iGaming operators who need a real audit trail and admin oversight.',
     cta: 'Get in touch',
-    mailto: 'mailto:hello@conply.gi?subject=ConPly%20Team%20enquiry',
+    mailto: 'mailto:francisroberts@live.com?subject=ConPly%20Team%20enquiry',
     featured: true,
     features: [
       'Up to 50 staff members',
@@ -50,7 +50,7 @@ const TIERS = [
     cadence: '',
     description: 'For larger licence holders, multi-entity groups, and firms needing custom regulation modules or dedicated onboarding.',
     cta: 'Talk to us',
-    mailto: 'mailto:hello@conply.gi?subject=ConPly%20Enterprise%20enquiry',
+    mailto: 'mailto:francisroberts@live.com?subject=ConPly%20Enterprise%20enquiry',
     featured: false,
     features: [
       'Unlimited staff members',
