@@ -11,11 +11,11 @@ export const metadata: Metadata = {
 const SECTIONS = [
   { id: 'getting-started',    label: 'Getting started'              },
   { id: 'invite-team',        label: 'Inviting team members'        },
-  { id: 'slack',              label: 'Slack reminders'              },
-  { id: 'admin',              label: 'Admin access'                 },
   { id: 'training-flow',      label: 'How training works'           },
   { id: 'records',            label: 'Compliance records & audits' },
   { id: 'sectors',            label: 'Sectors & module mapping'     },
+  { id: 'security',           label: 'Security & data'              },
+  { id: 'technical',          label: 'Technical setup'              },
   { id: 'faq',                label: 'FAQ'                          },
 ] as const
 
@@ -80,7 +80,7 @@ export default function HelpPage() {
             <section id="invite-team">
               <h2>Inviting team members</h2>
               <p>
-                Open the admin dashboard at <code>/admin</code> and switch to the <strong>Team Compliance</strong> tab.
+                Open the admin dashboard and switch to the <strong>Team Compliance</strong> tab.
                 Click <strong>Add team member</strong> in the top right.
               </p>
               <p>You&apos;ll be asked for:</p>
@@ -94,77 +94,33 @@ export default function HelpPage() {
                 Once added, they&apos;ll receive an invitation email from ConPly with a sign-in link. They click it, land on the platform, and start training immediately. Their row appears in the compliance matrix the moment you add them, marked as <strong>Overdue</strong> until they complete their first module.
               </p>
               <p>
-                If the email doesn&apos;t arrive (rare — check spam), they can also sign in manually at <code>/auth</code> using the same email address. Their team_member row links automatically on first sign-in.
-              </p>
-              <p>
-                <strong>Tip:</strong> If you have many team members, you can also click the bell icon next to any Overdue row to trigger an immediate Slack reminder for that specific person.
-              </p>
-            </section>
-
-            <section id="slack">
-              <h2>Slack reminders</h2>
-              <p>
-                ConPly posts a single reminder message to your nominated Slack channel each working day at 09:00 UTC. The message contains a direct link to the day&apos;s training module.
-              </p>
-              <p>To enable this, you need three things in your environment configuration:</p>
-              <ul>
-                <li><code>SLACK_BOT_TOKEN</code> — a bot token from your Slack workspace</li>
-                <li><code>SLACK_CHANNEL_ID</code> — the ID of the channel that should receive reminders</li>
-                <li><code>SLACK_MODULE_ID</code> — the default module to link to (optional; defaults to AML)</li>
-              </ul>
-              <p>
-                For paying customers we configure this for you. If you want to wire it up yourself, create a Slack app, give it the <code>chat:write</code> permission, install it to your workspace, invite the bot to the target channel, and add the three values to your environment.
-              </p>
-              <p>
-                The cron is enforced via Vercel and uses an automatically rotated <code>CRON_SECRET</code> — no action required from you.
-              </p>
-            </section>
-
-            <section id="admin">
-              <h2>Admin access</h2>
-              <p>
-                The first user to sign up to ConPly does <em>not</em> automatically become an admin. Admin access is set explicitly in the database to prevent accidental privilege escalation.
-              </p>
-              <p>
-                To promote yourself, sign in with your email at <code>/auth</code> at least once so your row exists in the <code>users</code> table. Then run the following in your Supabase SQL editor:
-              </p>
-              <pre><code>{`UPDATE public.users
-  SET role = 'admin'
-  WHERE email = 'you@yourfirm.com';`}</code></pre>
-              <p>
-                After running this, refresh <code>/admin</code> and you&apos;ll see the dashboard with the Modules and Team Compliance tabs.
-              </p>
-              <p>
-                Subsequent admins can be promoted the same way. There is no UI for it on purpose — admin role changes should leave a trail in your database.
+                <strong>Tip:</strong> Click the bell icon next to any Overdue row to send an immediate Slack reminder to that person.
               </p>
             </section>
 
             <section id="training-flow">
               <h2>How training works</h2>
               <p>
-                For each module, ConPly generates three unique multiple-choice scenarios using Claude, grounded in real Gibraltar regulation. The user selects an answer, sees an explanation referencing the relevant statute, and progresses to the next scenario. After three, they get a score.
+                For each module, ConPly&apos;s AI agents retrieve relevant sections of Gibraltar regulation, then generate three unique multiple-choice scenarios grounded in that text. The user selects an answer, sees an explanation citing the specific statute, and progresses to the next scenario. After three, they get a score.
               </p>
-              <p>The pass mark is 66% (2 out of 3). Below that, the user can retry the module immediately.</p>
+              <p>The pass mark is 66% (2 out of 3). Below that, the user can retry the module immediately. Each retry generates entirely new scenarios.</p>
               <p>
-                Every completion writes a row to the <code>completions</code> table with the user ID, module ID, score, and timestamp. This is what the admin compliance matrix and individual training history pages render.
-              </p>
-              <p>
-                Users can view their own training history at <code>/progress</code> — it shows all 8 modules with their completion status, average score, and a download button for individual completion records.
+                Users can view their own training history at any time — it shows all 8 modules with their completion status, scores, and a download button for individual completion records.
               </p>
             </section>
 
             <section id="records">
               <h2>Compliance records &amp; audits</h2>
               <p>
-                Every completed module produces a downloadable PDF record containing the user&apos;s email, the module name, the completion date and time, the score, and a footer identifying ConPly as the issuer. These PDFs are designed to be the kind of evidence a regulator asks for during a supervisory visit.
+                Every completed module produces a downloadable PDF record containing the user&apos;s email, the module name, the completion date and time, the score, and a footer identifying ConPly as the issuer. These are designed to be the evidence a regulator asks for during a supervisory visit.
               </p>
               <p>Records can be downloaded from two places:</p>
               <ul>
-                <li><strong>The user&apos;s own progress page</strong> at <code>/progress</code> — they can self-serve their own records</li>
-                <li><strong>Immediately after completing a module</strong> — the results screen has a Download completion record button</li>
+                <li><strong>The user&apos;s own progress page</strong> — staff can self-serve their own records</li>
+                <li><strong>Immediately after completing a module</strong> — the results screen has a Download button</li>
               </ul>
               <p>
-                For full firm-level compliance records, admins can also see every completion across the team in the compliance matrix at <code>/admin</code>. We&apos;re actively working on bulk export — for now, you can download per-user records via the user&apos;s own progress page.
+                Admins can see every completion across the team in the compliance matrix. Bulk export is on the roadmap — for now, you can download individual records per user.
               </p>
             </section>
 
@@ -174,12 +130,61 @@ export default function HelpPage() {
                 When you add a team member, you assign them to one of three sectors. ConPly uses this to decide which of the 8 modules are required for them:
               </p>
               <ul>
-                <li><strong>Crypto</strong> — required: AML, DLT Regulatory Principles, Senior Manager, Sanctions, Market Integrity, KYC, Data Protection (7 modules)</li>
-                <li><strong>iGaming</strong> — required: AML, Responsible Gambling, Senior Manager, Sanctions, KYC, Data Protection (6 modules)</li>
-                <li><strong>Both</strong> — required: all 8 modules</li>
+                <li><strong>Crypto</strong> — AML, DLT Regulatory Principles, Senior Manager, Sanctions, Market Integrity, KYC, Data Protection (7 modules)</li>
+                <li><strong>iGaming</strong> — AML, Responsible Gambling, Senior Manager, Sanctions, KYC, Data Protection (6 modules)</li>
+                <li><strong>Both</strong> — all 8 modules</li>
               </ul>
               <p>
-                The compliance matrix shows a dash <code>—</code> in cells where a module isn&apos;t required for that user&apos;s sector, a green tick when they&apos;ve completed it, and a red cross when they haven&apos;t.
+                The compliance matrix shows a dash in cells where a module isn&apos;t required for that user&apos;s sector, a green tick when they&apos;ve completed it, and a red cross when they haven&apos;t.
+              </p>
+            </section>
+
+            <section id="security">
+              <h2>Security &amp; data</h2>
+              <p>
+                ConPly takes the security of your staff training data seriously. Here is how your data is handled:
+              </p>
+              <ul>
+                <li><strong>Hosting</strong> — ConPly is hosted on Vercel (edge network) with a Supabase database (EU region). All data stays within EU-regulated infrastructure.</li>
+                <li><strong>Encryption</strong> — all data is encrypted in transit (TLS 1.2+) and at rest (AES-256). Database connections use SSL.</li>
+                <li><strong>Access control</strong> — your staff training data is isolated per firm. Only your admin users can see your team&apos;s data. ConPly staff access production data only for support purposes and only with your consent.</li>
+                <li><strong>GDPR</strong> — ConPly processes personal data (name, email, training completion records) under a legitimate interest basis for the purpose of delivering compliance training services. Data subjects can request access, correction, or deletion by contacting us.</li>
+                <li><strong>Data retention</strong> — training completion records are retained for the duration of your subscription plus 90 days to allow for regulator transitions. After cancellation, data is deleted on request.</li>
+                <li><strong>AI processing</strong> — scenarios are generated by Anthropic&apos;s Claude API. The prompts contain module topics and regulation text only — no personal data is sent to the AI model.</li>
+              </ul>
+              <p>
+                If you require a data processing agreement (DPA) or have specific security questions, <a href="mailto:hello@conply.gi">contact us</a>.
+              </p>
+            </section>
+
+            <section id="technical">
+              <h2>Technical setup</h2>
+              <p>
+                This section is for technical administrators setting up ConPly&apos;s infrastructure. If you&apos;re a compliance officer using the platform, you can skip this — we handle the setup for paying customers during onboarding.
+              </p>
+
+              <h3>Slack reminders</h3>
+              <p>
+                ConPly posts a daily reminder message to your nominated Slack channel at 09:00 UTC on working days. To enable this, you need:
+              </p>
+              <ul>
+                <li><code>SLACK_BOT_TOKEN</code> — a bot token from your Slack workspace</li>
+                <li><code>SLACK_CHANNEL_ID</code> — the ID of the target channel</li>
+                <li><code>SLACK_MODULE_ID</code> — the default module to link to (optional; defaults to AML)</li>
+              </ul>
+              <p>
+                Create a Slack app with the <code>chat:write</code> permission, install it to your workspace, invite the bot to the channel, and set the environment variables.
+              </p>
+
+              <h3>Admin access</h3>
+              <p>
+                Admin access is set explicitly in the database to prevent accidental privilege escalation. Sign in at least once so your user row exists, then run this SQL in the Supabase SQL editor:
+              </p>
+              <pre><code>{`UPDATE public.users
+  SET role = 'admin'
+  WHERE email = 'you@yourfirm.com';`}</code></pre>
+              <p>
+                Subsequent admins can be promoted the same way. There is no self-serve UI for admin promotion on purpose — role changes should leave a trail in the database.
               </p>
             </section>
 
@@ -188,39 +193,39 @@ export default function HelpPage() {
 
               <h3>Can a user retake a module they&apos;ve already passed?</h3>
               <p>
-                Yes. Each scenario is freshly generated by Claude, so retaking a module produces three different scenarios. Both attempts are recorded; the most recent score is what shows in the compliance matrix.
+                Yes. Each scenario is freshly generated, so retaking a module produces three new scenarios. Both attempts are recorded; the most recent score is what shows in the compliance matrix.
               </p>
 
               <h3>What happens if a staff member changes role or sector?</h3>
               <p>
-                For now, contact us and we&apos;ll update the row directly. A self-serve UI for editing team members is on the roadmap.
+                Contact us and we&apos;ll update their record. A self-serve UI for editing team members is on the roadmap.
               </p>
 
               <h3>What if a team member leaves?</h3>
               <p>
-                Their completion records are preserved (they remain in the audit trail) but you can mark them as inactive so they no longer appear as Overdue. This is currently a manual database change — let us know and we&apos;ll sort it.
+                Their completion records are preserved in the audit trail. We can mark them as inactive so they no longer appear as Overdue. Let us know and we&apos;ll sort it.
               </p>
 
               <h3>Can we use our own logo or brand the platform?</h3>
               <p>
-                Custom branding is part of the Enterprise tier. Get in touch and we&apos;ll discuss what you need.
+                Custom branding is part of the Enterprise tier. <a href="mailto:hello@conply.gi">Get in touch</a> and we&apos;ll discuss what you need.
               </p>
 
               <h3>Is the regulation content kept up to date?</h3>
               <p>
-                Yes. Every scenario is grounded in real Gibraltar statute via our retrieval system. When new regulation comes into force (e.g. amendments to the Gambling Act 2025 or new GFSC guidance), we update the underlying source documents and the change is reflected in scenarios immediately — no module rebuild required.
+                Yes. Scenarios are grounded in real Gibraltar statute via our retrieval system. When new regulation comes into force, we update the source documents and the change is reflected in generated scenarios immediately.
               </p>
 
               <h3>How do I cancel?</h3>
               <p>
-                Email us. There&apos;s no contractual minimum on the Starter or Team tiers — cancel any time and you&apos;ll be billed only for the current month. Your audit trail remains accessible for 90 days after cancellation in case you need to produce records during a regulator transition.
+                <a href="mailto:hello@conply.gi">Email us</a>. There&apos;s no contractual minimum on the Starter or Team tiers — cancel any time. Your audit trail remains accessible for 90 days after cancellation in case you need to produce records during a regulator transition.
               </p>
             </section>
 
             <hr />
 
             <p>
-              Still stuck? <Link href="/auth">Get in touch</Link> and we&apos;ll help you get up and running.
+              Still stuck? <a href="mailto:hello@conply.gi">Email us at hello@conply.gi</a> and we&apos;ll help you get up and running.
             </p>
           </article>
         </div>

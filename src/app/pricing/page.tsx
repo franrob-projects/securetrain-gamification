@@ -15,7 +15,8 @@ const TIERS = [
     price: '£249',
     cadence: '/month',
     description: 'For small Gibraltar firms — boutique DLT providers, B2B iGaming suppliers, and early-stage operators.',
-    cta: 'Request access',
+    cta: 'Get in touch',
+    mailto: 'mailto:hello@conply.gi?subject=ConPly%20Starter%20enquiry',
     featured: false,
     features: [
       'Up to 10 staff members',
@@ -31,7 +32,8 @@ const TIERS = [
     price: '£749',
     cadence: '/month',
     description: 'For mid-sized crypto and iGaming operators who need a real audit trail and admin oversight.',
-    cta: 'Request access',
+    cta: 'Get in touch',
+    mailto: 'mailto:hello@conply.gi?subject=ConPly%20Team%20enquiry',
     featured: true,
     features: [
       'Up to 50 staff members',
@@ -48,6 +50,7 @@ const TIERS = [
     cadence: '',
     description: 'For larger licence holders, multi-entity groups, and firms needing custom regulation modules or dedicated onboarding.',
     cta: 'Talk to us',
+    mailto: 'mailto:hello@conply.gi?subject=ConPly%20Enterprise%20enquiry',
     featured: false,
     features: [
       'Unlimited staff members',
@@ -143,14 +146,14 @@ export default function PricingPage() {
                   ))}
                 </ul>
 
-                <Link href="/auth"
+                <a href={tier.mailto}
                   className="block text-center py-3 rounded-xl text-sm font-semibold transition-colors"
                   style={tier.featured
                     ? { background: 'var(--brand)', color: '#fff' }
                     : { background: 'transparent', color: 'var(--accent)', border: '1px solid var(--border)' }
                   }>
                   {tier.cta}
-                </Link>
+                </a>
               </div>
             ))}
           </div>
@@ -172,6 +175,42 @@ export default function PricingPage() {
           </div>
         </section>
 
+        {/* Modules overview */}
+        <section id="modules" className="max-w-4xl mx-auto px-6 pb-24">
+          <div className="text-center mb-10">
+            <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: 'var(--accent)' }}>
+              What&apos;s included
+            </p>
+            <h2 className="text-2xl font-bold" style={{ color: 'var(--text)' }}>
+              8 Gibraltar compliance modules
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {[
+              { title: 'AML & Financial Crime Prevention',           sector: 'All firms',  reg: 'POCA 2015' },
+              { title: 'DLT Regulatory Principles',                  sector: 'Crypto',     reg: 'GFSC DLT Principles' },
+              { title: 'Responsible Gambling & Social Responsibility', sector: 'iGaming',   reg: 'Gambling Act 2025' },
+              { title: 'Senior Manager & Director Responsibilities',  sector: 'All firms',  reg: 'GFSC Fit & Proper Test' },
+              { title: 'Sanctions Screening & POCA Compliance',       sector: 'All firms',  reg: 'POCA 2015, HM Treasury' },
+              { title: 'Market Integrity & Market Abuse',             sector: 'Crypto',     reg: 'GFSC Market Conduct' },
+              { title: 'KYC & Customer Due Diligence',                sector: 'All firms',  reg: 'GFSC AML/CFT Guidance' },
+              { title: 'Data Protection & GDPR',                      sector: 'All firms',  reg: 'Gibraltar DPA / UK GDPR' },
+            ].map(m => (
+              <div key={m.title} className="rounded-lg px-5 py-4 flex items-start justify-between gap-4"
+                style={{ background: '#1e1b38', border: '1px solid #2e2a52' }}>
+                <div>
+                  <h3 className="text-sm font-semibold mb-1" style={{ color: 'var(--text)' }}>{m.title}</h3>
+                  <p className="text-xs" style={{ color: 'rgba(139,135,168,0.7)' }}>{m.reg}</p>
+                </div>
+                <span className="text-xs font-medium px-2 py-0.5 rounded-full flex-shrink-0 mt-0.5"
+                  style={{ background: 'rgba(91,84,184,0.15)', color: 'var(--accent)' }}>
+                  {m.sector}
+                </span>
+              </div>
+            ))}
+          </div>
+        </section>
+
         {/* Final CTA */}
         <section className="max-w-2xl mx-auto px-6 pb-24 text-center">
           <div className="rounded-2xl p-10" style={{ background: '#1e1b38', border: '1px solid #2e2a52' }}>
@@ -181,11 +220,11 @@ export default function PricingPage() {
             <p className="text-sm mb-8" style={{ color: 'var(--muted)' }}>
               Tell us about your firm and we&apos;ll recommend the right tier — and set up a trial if it makes sense.
             </p>
-            <Link href="/auth"
+            <a href="mailto:hello@conply.gi?subject=ConPly%20enquiry"
               className="px-6 py-3 rounded-xl font-semibold text-white transition-colors inline-block"
               style={{ background: 'var(--brand)' }}>
               Get in touch
-            </Link>
+            </a>
           </div>
         </section>
       </main>

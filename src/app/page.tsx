@@ -83,11 +83,11 @@ export default function HomePage() {
               Delivered in Slack, done in 10 minutes, with PDF records for every session.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
-              <Link href="/auth"
+              <a href="mailto:hello@conply.gi?subject=ConPly%20enquiry"
                 className="w-full sm:w-auto text-center px-7 py-3.5 rounded-xl font-semibold text-white transition-colors"
                 style={{ background: 'var(--brand)' }}>
-                Request access
-              </Link>
+                Get in touch
+              </a>
               <Link href="#how-it-works"
                 className="w-full sm:w-auto text-center px-7 py-3.5 rounded-xl font-semibold transition-colors"
                 style={{ color: 'var(--accent)', border: '1px solid var(--border)' }}>
@@ -215,35 +215,60 @@ export default function HomePage() {
                   ))}
                 </div>
               </div>
-              <div className="rounded-xl p-6 space-y-4" style={{ background: '#1e1b38', border: '1px solid #2e2a52' }}>
-                <p className="text-xs font-semibold uppercase tracking-widest" style={{ color: 'var(--muted)' }}>
-                  Example scenario output
-                </p>
-                <div className="rounded-lg p-4" style={{ background: 'var(--bg)', border: '1px solid #2e2a52' }}>
-                  <p className="text-sm leading-relaxed mb-3" style={{ color: 'var(--text)' }}>
-                    Sarah, the MLRO at a Gibraltar-licensed DLT firm, receives an internal report that a customer has made
-                    three large deposits from different bank accounts within 48 hours. What should she do first?
+              <div className="space-y-4">
+                {/* Crypto scenario */}
+                <div className="rounded-xl p-5 space-y-3" style={{ background: '#1e1b38', border: '1px solid #2e2a52' }}>
+                  <p className="text-xs font-semibold uppercase tracking-widest" style={{ color: 'var(--accent)' }}>
+                    DLT / Crypto scenario
                   </p>
-                  <div className="space-y-2">
-                    {['A. Contact the customer directly', 'B. File an internal SAR and assess', 'C. Freeze the account immediately', 'D. Wait for the next scheduled review'].map((opt, i) => (
-                      <div key={opt} className="px-3 py-2 rounded-lg text-xs"
-                        style={{
-                          background: i === 1 ? 'rgba(22,163,74,0.1)' : 'transparent',
-                          border: `1px solid ${i === 1 ? 'rgba(22,163,74,0.4)' : '#2e2a52'}`,
-                          color: i === 1 ? '#4ade80' : '#a9a5c4',
-                        }}>
-                        {opt}
-                      </div>
-                    ))}
+                  <div className="rounded-lg p-4" style={{ background: 'var(--bg)', border: '1px solid #2e2a52' }}>
+                    <p className="text-sm leading-relaxed mb-3" style={{ color: 'var(--text)' }}>
+                      Sarah, the MLRO at a Gibraltar-licensed DLT firm, receives an internal report that a customer has made
+                      three large deposits from different bank accounts within 48 hours. What should she do first?
+                    </p>
+                    <div className="space-y-1.5">
+                      {['A. Contact the customer directly', 'B. File an internal SAR and assess', 'C. Freeze the account immediately', 'D. Wait for the next scheduled review'].map((opt, i) => (
+                        <div key={opt} className="px-3 py-1.5 rounded-lg text-xs"
+                          style={{
+                            background: i === 1 ? 'rgba(22,163,74,0.1)' : 'transparent',
+                            border: `1px solid ${i === 1 ? 'rgba(22,163,74,0.4)' : '#2e2a52'}`,
+                            color: i === 1 ? '#4ade80' : '#a9a5c4',
+                          }}>
+                          {opt}
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                </div>
-                <div className="rounded-lg p-4" style={{ background: 'rgba(22,163,74,0.06)', border: '1px solid rgba(22,163,74,0.2)' }}>
-                  <p className="text-xs leading-relaxed" style={{ color: '#a9a5c4' }}>
-                    The nominated officer must first assess the internal report to determine whether a SAR to the GFIU is warranted.
-                    Contacting the customer risks tipping off under section 37. Freezing requires a formal basis.
-                  </p>
-                  <p className="text-xs mt-3" style={{ color: '#8b87a8' }}>
+                  <p className="text-xs" style={{ color: '#8b87a8' }}>
                     Regulation reference: POCA 2015, Section 28 — Nominated officer reporting obligations.
+                  </p>
+                </div>
+
+                {/* iGaming scenario */}
+                <div className="rounded-xl p-5 space-y-3" style={{ background: '#1e1b38', border: '1px solid #2e2a52' }}>
+                  <p className="text-xs font-semibold uppercase tracking-widest" style={{ color: 'var(--accent)' }}>
+                    iGaming scenario
+                  </p>
+                  <div className="rounded-lg p-4" style={{ background: 'var(--bg)', border: '1px solid #2e2a52' }}>
+                    <p className="text-sm leading-relaxed mb-3" style={{ color: 'var(--text)' }}>
+                      A player at a Gibraltar-licensed iGaming platform requests to reverse a self-exclusion after 3 months,
+                      claiming they made the decision impulsively. The minimum exclusion period has not yet elapsed. What is the correct response?
+                    </p>
+                    <div className="space-y-1.5">
+                      {['A. Reverse the exclusion as a goodwill gesture', 'B. Decline — the minimum period must complete', 'C. Offer a reduced exclusion period instead', 'D. Escalate to the player\'s bank'].map((opt, i) => (
+                        <div key={opt} className="px-3 py-1.5 rounded-lg text-xs"
+                          style={{
+                            background: i === 1 ? 'rgba(22,163,74,0.1)' : 'transparent',
+                            border: `1px solid ${i === 1 ? 'rgba(22,163,74,0.4)' : '#2e2a52'}`,
+                            color: i === 1 ? '#4ade80' : '#a9a5c4',
+                          }}>
+                          {opt}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  <p className="text-xs" style={{ color: '#8b87a8' }}>
+                    Regulation reference: Gibraltar Gambling Commissioner, Social Responsibility Codes — Self-exclusion obligations.
                   </p>
                 </div>
               </div>
@@ -277,20 +302,6 @@ export default function HomePage() {
                 </div>
               )
             })}
-          </div>
-        </section>
-
-        {/* Pullout quote — breaks the card rhythm */}
-        <section className="max-w-4xl mx-auto px-6 py-16 text-center">
-          <div className="relative">
-            <div className="absolute -top-6 left-1/2 -translate-x-1/2 text-6xl leading-none select-none"
-              style={{ color: 'rgba(91,84,184,0.2)' }}>&ldquo;</div>
-            <blockquote className="text-xl sm:text-2xl font-semibold leading-relaxed pt-6" style={{ color: 'var(--text)' }}>
-              If a regulator asks to see your staff training records, you should be able to produce them in minutes — not days.
-            </blockquote>
-            <p className="mt-4 text-sm" style={{ color: 'rgba(139,135,168,0.7)' }}>
-              The standard the GFSC and the Gambling Commissioner hold firms to
-            </p>
           </div>
         </section>
 
@@ -341,8 +352,22 @@ export default function HomePage() {
           </div>
         </section>
 
+        {/* Pullout quote — conversion primer before CTA */}
+        <section className="max-w-4xl mx-auto px-6 py-16 text-center">
+          <div className="relative">
+            <div className="absolute -top-6 left-1/2 -translate-x-1/2 text-6xl leading-none select-none"
+              style={{ color: 'rgba(91,84,184,0.2)' }}>&ldquo;</div>
+            <blockquote className="text-xl sm:text-2xl font-semibold leading-relaxed pt-6" style={{ color: 'var(--text)' }}>
+              If a regulator asks to see your staff training records, you should be able to produce them in minutes — not days.
+            </blockquote>
+            <p className="mt-4 text-sm" style={{ color: 'rgba(139,135,168,0.7)' }}>
+              The standard the GFSC and the Gambling Commissioner hold firms to
+            </p>
+          </div>
+        </section>
+
         {/* CTA */}
-        <section className="max-w-2xl mx-auto px-6 py-24 text-center">
+        <section className="max-w-2xl mx-auto px-6 pb-24 text-center">
           <div className="rounded-2xl p-8 sm:p-10" style={{ background: '#1e1b38', border: '1px solid #2e2a52' }}>
             <h2 className="text-2xl font-bold mb-3" style={{ color: 'var(--text)' }}>
               Get your team compliant in days, not weeks
@@ -351,11 +376,11 @@ export default function HomePage() {
               Onboard your staff and send the first training module within 24 hours. No implementation project, no content to write.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-              <Link href="/auth"
+              <a href="mailto:hello@conply.gi?subject=ConPly%20enquiry"
                 className="w-full sm:w-auto px-7 py-3.5 rounded-xl font-semibold text-white transition-colors inline-block text-center"
                 style={{ background: 'var(--brand)' }}>
-                Request access
-              </Link>
+                Get in touch
+              </a>
               <Link href="/pricing"
                 className="w-full sm:w-auto px-7 py-3.5 rounded-xl font-semibold transition-colors inline-block text-center"
                 style={{ color: 'var(--accent)', border: '1px solid var(--border)' }}>

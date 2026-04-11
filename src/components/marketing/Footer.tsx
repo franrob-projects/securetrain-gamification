@@ -4,13 +4,19 @@ import { ConplyLogo } from '@/components/ui/ConplyLogo'
 const PRODUCT = [
   { label: 'How it works',      href: '/#how-it-works' },
   { label: 'Pricing',           href: '/pricing'       },
-  { label: 'Request access',    href: '/auth'          },
+  { label: 'Modules',           href: '/pricing#modules' },
 ]
 
 const RESOURCES = [
   { label: 'Blog',              href: '/blog'          },
   { label: 'Help & setup',      href: '/help'          },
-  { label: 'Sign in',           href: '/auth'          },
+  { label: 'Log in',            href: '/auth'          },
+]
+
+const LEGAL = [
+  { label: 'Privacy policy',    href: '/privacy'       },
+  { label: 'Terms of service',  href: '/terms'         },
+  { label: 'Security',          href: '/help#security' },
 ]
 
 const REGULATION = [
@@ -24,7 +30,7 @@ export function Footer() {
   return (
     <footer className="border-t mt-24" style={{ borderColor: 'var(--border)', background: 'rgba(91,84,184,0.03)' }}>
       <div className="max-w-6xl mx-auto px-6 py-14">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-10 mb-12">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-10 mb-12">
           {/* Brand */}
           <div className="col-span-2 md:col-span-1">
             <div className="mb-4">
@@ -69,6 +75,23 @@ export function Footer() {
             </ul>
           </div>
 
+          {/* Legal */}
+          <div>
+            <h3 className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: 'var(--text)' }}>
+              Legal
+            </h3>
+            <ul className="space-y-2.5">
+              {LEGAL.map(link => (
+                <li key={link.label}>
+                  <Link href={link.href} className="text-sm transition-colors"
+                    style={{ color: 'var(--muted)' }}>
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
           {/* Regulation */}
           <div>
             <h3 className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: 'var(--text)' }}>
@@ -90,9 +113,9 @@ export function Footer() {
           <p className="text-xs" style={{ color: 'rgba(139,135,168,0.7)' }}>
             © {new Date().getFullYear()} ConPly. All rights reserved.
           </p>
-          <p className="text-xs" style={{ color: 'rgba(139,135,168,0.5)' }}>
-            Gibraltar compliance training · Built for crypto and iGaming firms
-          </p>
+          <a href="mailto:hello@conply.gi" className="text-xs transition-colors" style={{ color: 'var(--muted)' }}>
+            hello@conply.gi
+          </a>
         </div>
       </div>
     </footer>

@@ -11,6 +11,8 @@ const LINKS = [
   { href: '/help',    label: 'Help'    },
 ]
 
+const CONTACT_EMAIL = 'mailto:hello@conply.gi?subject=ConPly%20enquiry'
+
 export function Nav() {
   const pathname = usePathname()
   const [open, setOpen] = useState(false)
@@ -25,7 +27,7 @@ export function Nav() {
           <ConplyLogo size="sm" />
         </Link>
 
-        {/* Desktop links */}
+        {/* Desktop */}
         <div className="hidden md:flex items-center gap-6">
           {LINKS.map(link => {
             const active = isActive(link.href)
@@ -53,13 +55,13 @@ export function Nav() {
           >
             Log in
           </Link>
-          <Link
-            href="/auth"
+          <a
+            href={CONTACT_EMAIL}
             className="text-sm font-semibold px-4 py-2 rounded-lg transition-colors text-white"
             style={{ background: 'var(--brand)' }}
           >
-            Request access
-          </Link>
+            Get in touch
+          </a>
         </div>
 
         {/* Mobile hamburger */}
@@ -102,14 +104,14 @@ export function Nav() {
             Log in
           </Link>
           <div className="pt-3">
-            <Link
-              href="/auth"
+            <a
+              href={CONTACT_EMAIL}
               onClick={() => setOpen(false)}
               className="block text-center px-4 py-2.5 rounded-lg text-sm font-semibold text-white transition-colors"
               style={{ background: 'var(--brand)' }}
             >
-              Request access
-            </Link>
+              Get in touch
+            </a>
           </div>
         </div>
       )}
