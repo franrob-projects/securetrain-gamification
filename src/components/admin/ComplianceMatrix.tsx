@@ -306,20 +306,20 @@ export function ComplianceMatrix() {
       </div>
 
       {/* Compliance matrix */}
-      <div className="rounded-lg overflow-x-auto" style={{ border: '1px solid var(--border)' }}>
+      <div className="rounded-xl overflow-x-auto" style={{ border: '1px solid var(--border)' }}>
         <table className="text-sm border-collapse" style={{ minWidth: '900px', width: '100%' }}>
           <thead>
-            <tr style={{ background: 'var(--surface)', borderBottom: '1px solid var(--border)' }}>
-              <th className="px-4 py-3 text-left font-medium" style={{ color: 'var(--text)', minWidth: '150px' }}>Name</th>
-              <th className="px-4 py-3 text-left font-medium" style={{ color: 'var(--muted)', minWidth: '130px' }}>Role</th>
-              <th className="px-4 py-3 text-left font-medium" style={{ color: 'var(--muted)', minWidth: '70px' }}>Sector</th>
+            <tr style={{ background: 'rgba(91,84,184,0.06)', borderBottom: '1px solid var(--border)' }}>
+              <th className="px-4 py-3.5 text-left font-semibold text-xs uppercase tracking-wider" style={{ color: 'var(--accent)', minWidth: '150px' }}>Name</th>
+              <th className="px-4 py-3.5 text-left font-semibold text-xs uppercase tracking-wider" style={{ color: 'var(--muted)', minWidth: '130px' }}>Role</th>
+              <th className="px-4 py-3.5 text-left font-semibold text-xs uppercase tracking-wider" style={{ color: 'var(--muted)', minWidth: '70px' }}>Sector</th>
               {MATRIX_MODULES.map(m => (
-                <th key={m.id} className="px-2 py-3 text-center font-medium" style={{ color: 'var(--muted)', minWidth: '66px' }}>
-                  <span className="text-xs">{m.label}</span>
+                <th key={m.id} className="px-2 py-3.5 text-center font-semibold text-xs uppercase tracking-wider" style={{ color: 'var(--muted)', minWidth: '66px' }}>
+                  {m.label}
                 </th>
               ))}
-              <th className="px-4 py-3 text-center font-medium" style={{ color: 'var(--muted)', minWidth: '50px' }}>%</th>
-              <th className="px-4 py-3 text-center font-medium" style={{ color: 'var(--muted)', minWidth: '130px' }}>Status</th>
+              <th className="px-4 py-3.5 text-center font-semibold text-xs uppercase tracking-wider" style={{ color: 'var(--muted)', minWidth: '50px' }}>%</th>
+              <th className="px-4 py-3.5 text-center font-semibold text-xs uppercase tracking-wider" style={{ color: 'var(--muted)', minWidth: '130px' }}>Status</th>
             </tr>
           </thead>
           <tbody>
@@ -330,7 +330,7 @@ export function ComplianceMatrix() {
               const pct      = Math.round((done.length / required.length) * 100)
 
               return (
-                <tr key={member.id} style={{ borderTop: '1px solid var(--border)' }}>
+                <tr key={member.id} style={{ borderTop: '1px solid var(--border)', background: i % 2 === 0 ? 'transparent' : 'rgba(91,84,184,0.02)' }}>
                   <td className="px-4 py-3 font-medium" style={{ color: 'var(--text)' }}>{member.name}</td>
                   <td className="px-4 py-3" style={{ color: 'var(--muted)' }}>{member.role}</td>
                   <td className="px-4 py-3"><SectorLabel sector={member.sector} /></td>
