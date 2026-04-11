@@ -28,7 +28,9 @@ const REGULATION = [
 
 export function Footer() {
   return (
-    <footer className="border-t mt-24" style={{ borderColor: 'var(--border)', background: 'rgba(91,84,184,0.03)' }}>
+    <footer className="mt-24" style={{ background: 'rgba(91,84,184,0.03)' }}>
+      {/* Gradient top border */}
+      <div className="h-px" style={{ background: 'linear-gradient(to right, transparent, rgba(91,84,184,0.4), transparent)' }} />
       <div className="max-w-6xl mx-auto px-6 py-14">
         <div className="grid grid-cols-2 md:grid-cols-5 gap-10 mb-12">
           {/* Brand */}
