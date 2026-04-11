@@ -102,6 +102,11 @@ export default function HomePage() {
           </div>
         </section>
 
+        {/* Gradient accent line */}
+        <div className="h-px" style={{
+          background: 'linear-gradient(to right, transparent, rgba(91,84,184,0.4), transparent)',
+        }} />
+
         {/* Trust marquee */}
         <TrustMarquee />
 
@@ -130,7 +135,7 @@ export default function HomePage() {
               Three steps. No setup overhead.
             </h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-0">
             {[
               {
                 step: '01',
@@ -147,12 +152,21 @@ export default function HomePage() {
                 title: 'Compliance records build automatically',
                 body: 'Every completion is recorded with a timestamp and score. Admins see a live compliance matrix. Any module can be exported as a PDF record for regulators.',
               },
-            ].map(s => (
-              <div key={s.step} className="rounded-xl p-6"
-                style={{ background: '#1e1b38', border: '1px solid #2e2a52' }}>
-                <div className="text-3xl font-bold mb-3" style={{ color: 'rgba(157,151,232,0.7)' }}>{s.step}</div>
-                <h3 className="text-base font-semibold mb-2" style={{ color: 'var(--text)' }}>{s.title}</h3>
-                <p className="text-sm leading-relaxed" style={{ color: '#a9a5c4' }}>{s.body}</p>
+            ].map((s, i) => (
+              <div key={s.step} className="flex items-stretch">
+                <div className="rounded-xl p-6 flex-1"
+                  style={{ background: '#1e1b38', border: '1px solid #2e2a52' }}>
+                  <div className="text-3xl font-bold mb-3" style={{ color: 'rgba(157,151,232,0.7)' }}>{s.step}</div>
+                  <h3 className="text-base font-semibold mb-2" style={{ color: 'var(--text)' }}>{s.title}</h3>
+                  <p className="text-sm leading-relaxed" style={{ color: '#a9a5c4' }}>{s.body}</p>
+                </div>
+                {i < 2 && (
+                  <div className="hidden md:flex items-center px-3" style={{ color: 'rgba(157,151,232,0.35)' }}>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                  </div>
+                )}
               </div>
             ))}
           </div>
@@ -184,6 +198,20 @@ export default function HomePage() {
                 </div>
               )
             })}
+          </div>
+        </section>
+
+        {/* Pullout quote — breaks the card rhythm */}
+        <section className="max-w-4xl mx-auto px-6 py-16 text-center">
+          <div className="relative">
+            <div className="absolute -top-6 left-1/2 -translate-x-1/2 text-6xl leading-none select-none"
+              style={{ color: 'rgba(91,84,184,0.2)' }}>&ldquo;</div>
+            <blockquote className="text-xl sm:text-2xl font-semibold leading-relaxed pt-6" style={{ color: 'var(--text)' }}>
+              If a regulator asks to see your staff training records, you should be able to produce them in minutes — not days.
+            </blockquote>
+            <p className="mt-4 text-sm" style={{ color: 'rgba(139,135,168,0.7)' }}>
+              The standard the GFSC and the Gambling Commissioner hold firms to
+            </p>
           </div>
         </section>
 
