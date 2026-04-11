@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { getAllPosts } from '@/lib/blog'
 import { Nav } from '@/components/marketing/Nav'
 import { Footer } from '@/components/marketing/Footer'
+import { BlogCover } from '@/components/marketing/BlogCover'
 
 export const metadata: Metadata = {
   title: 'Compliance Blog',
@@ -79,14 +80,7 @@ export default async function BlogPage({
             {posts.map(post => (
               <div key={post.slug} className="rounded-xl flex flex-col overflow-hidden"
                 style={{ background: '#1e1b38', border: '1px solid #2e2a52' }}>
-                {/* Cover placeholder */}
-                <div className="h-36 flex items-center justify-center"
-                  style={{ background: 'rgba(91,84,184,0.08)', borderBottom: '1px solid #2e2a52' }}>
-                  <span className="text-xs font-semibold uppercase tracking-widest"
-                    style={{ color: 'rgba(157,151,232,0.4)' }}>
-                    ConPly
-                  </span>
-                </div>
+                <BlogCover tags={post.tags} className="h-36" />
 
                 <div className="p-5 flex flex-col gap-3 flex-1">
                   <div className="flex gap-2 flex-wrap">

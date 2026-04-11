@@ -7,6 +7,7 @@ import { AuthRedirect } from '@/components/marketing/AuthRedirect'
 import { RockSilhouette } from '@/components/marketing/RockSilhouette'
 import { LoomEmbed } from '@/components/marketing/LoomEmbed'
 import { TrustMarquee } from '@/components/marketing/TrustMarquee'
+import { BlogCover } from '@/components/marketing/BlogCover'
 import { getAllPosts } from '@/lib/blog'
 
 export const metadata: Metadata = {
@@ -321,9 +322,11 @@ export default function HomePage() {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-8">
               {recentPosts.map(post => (
-                <div key={post.slug} className="rounded-xl p-5 flex flex-col gap-3 card-hover"
+                <div key={post.slug} className="rounded-xl flex flex-col overflow-hidden card-hover"
                   style={{ background: '#1e1b38' }}
                 >
+                  <BlogCover tags={post.tags} className="h-28" />
+                  <div className="p-5 flex flex-col gap-3 flex-1">
                   <span className="text-xs font-medium px-2 py-0.5 rounded-full w-fit"
                     style={{ background: 'rgba(91,84,184,0.2)', color: 'var(--accent)' }}>
                     {post.tags[0]}
@@ -340,6 +343,7 @@ export default function HomePage() {
                       style={{ color: 'var(--accent)' }}>
                       Read →
                     </Link>
+                  </div>
                   </div>
                 </div>
               ))}

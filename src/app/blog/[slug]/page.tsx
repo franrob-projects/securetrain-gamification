@@ -4,6 +4,7 @@ import type { Metadata } from 'next'
 import { getAllPosts, getPostHtml } from '@/lib/blog'
 import { Nav } from '@/components/marketing/Nav'
 import { Footer } from '@/components/marketing/Footer'
+import { BlogCover } from '@/components/marketing/BlogCover'
 
 export async function generateStaticParams() {
   return getAllPosts().map(post => ({ slug: post.slug }))
@@ -76,6 +77,9 @@ export default async function PostPage({
           <span>/</span>
           <span className="line-clamp-1" style={{ color: 'var(--text)' }}>{post.meta.title}</span>
         </nav>
+
+        {/* Cover image */}
+        <BlogCover tags={post.meta.tags} className="h-48 rounded-xl mb-10" />
 
         {/* Post header */}
         <div className="mb-10">
