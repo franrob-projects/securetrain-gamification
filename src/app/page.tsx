@@ -26,8 +26,8 @@ const FEATURES = [
   },
   {
     icon: Brain,
-    title: 'AI-generated scenarios',
-    body: 'Three unique, realistic scenarios per session. No two users see the same questions. No slide decks — just decision-making under realistic conditions.',
+    title: 'Regulated AI agents',
+    body: 'Purpose-built AI agents retrieve real Gibraltar regulation text and generate unique scenarios grounded in actual statute. Every explanation cites the specific section. No hallucinated law.',
   },
   {
     icon: MessageSquare,
@@ -79,7 +79,7 @@ export default function HomePage() {
               Your regulator gets the audit trail.
             </h1>
             <p className="text-base sm:text-lg max-w-2xl mx-auto mb-10" style={{ color: '#a9a5c4' }}>
-              AI-generated compliance training mapped to Gibraltar law.
+              Regulated AI agents generate training scenarios grounded in real Gibraltar statute.
               Delivered in Slack, done in 10 minutes, with PDF records for every session.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
@@ -169,6 +169,85 @@ export default function HomePage() {
                 )}
               </div>
             ))}
+          </div>
+        </section>
+
+        {/* Regulated AI — how the agents work */}
+        <section className="border-y" style={{ borderColor: 'var(--border)', background: 'rgba(91,84,184,0.04)' }}>
+          <div className="max-w-6xl mx-auto px-6 py-24">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: 'var(--accent)' }}>
+                  Powered by regulated AI
+                </p>
+                <h2 className="text-2xl sm:text-3xl font-bold mb-4" style={{ color: 'var(--text)' }}>
+                  AI agents that only speak from the law
+                </h2>
+                <p className="text-sm leading-relaxed mb-8" style={{ color: '#a9a5c4' }}>
+                  ConPly doesn&apos;t use generic AI prompts. Purpose-built agents retrieve the actual text of Gibraltar regulation
+                  and generate training scenarios constrained to what the law says — not what a language model guesses it says.
+                </p>
+                <div className="space-y-5">
+                  {[
+                    {
+                      label: 'Retrieve',
+                      text: 'Agents pull the relevant sections from POCA 2015, GFSC Principles, the Gambling Act, and other source documents before generating anything.',
+                    },
+                    {
+                      label: 'Generate',
+                      text: 'Scenarios are built from retrieved regulation text. Each session produces three unique, realistic situations with four options and a scored answer.',
+                    },
+                    {
+                      label: 'Cite',
+                      text: 'Every explanation ends with a specific regulation reference — the Act, the section, the principle. No vague "best practice" hand-waving.',
+                    },
+                  ].map((item, i) => (
+                    <div key={item.label} className="flex gap-4">
+                      <div className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold"
+                        style={{ background: 'rgba(91,84,184,0.15)', color: 'var(--accent)', border: '1px solid rgba(91,84,184,0.3)' }}>
+                        {i + 1}
+                      </div>
+                      <div>
+                        <h3 className="text-sm font-semibold mb-1" style={{ color: 'var(--text)' }}>{item.label}</h3>
+                        <p className="text-sm leading-relaxed" style={{ color: '#a9a5c4' }}>{item.text}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="rounded-xl p-6 space-y-4" style={{ background: '#1e1b38', border: '1px solid #2e2a52' }}>
+                <p className="text-xs font-semibold uppercase tracking-widest" style={{ color: 'var(--muted)' }}>
+                  Example scenario output
+                </p>
+                <div className="rounded-lg p-4" style={{ background: 'var(--bg)', border: '1px solid #2e2a52' }}>
+                  <p className="text-sm leading-relaxed mb-3" style={{ color: 'var(--text)' }}>
+                    Sarah, the MLRO at a Gibraltar-licensed DLT firm, receives an internal report that a customer has made
+                    three large deposits from different bank accounts within 48 hours. What should she do first?
+                  </p>
+                  <div className="space-y-2">
+                    {['A. Contact the customer directly', 'B. File an internal SAR and assess', 'C. Freeze the account immediately', 'D. Wait for the next scheduled review'].map((opt, i) => (
+                      <div key={opt} className="px-3 py-2 rounded-lg text-xs"
+                        style={{
+                          background: i === 1 ? 'rgba(22,163,74,0.1)' : 'transparent',
+                          border: `1px solid ${i === 1 ? 'rgba(22,163,74,0.4)' : '#2e2a52'}`,
+                          color: i === 1 ? '#4ade80' : '#a9a5c4',
+                        }}>
+                        {opt}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div className="rounded-lg p-4" style={{ background: 'rgba(22,163,74,0.06)', border: '1px solid rgba(22,163,74,0.2)' }}>
+                  <p className="text-xs leading-relaxed" style={{ color: '#a9a5c4' }}>
+                    The nominated officer must first assess the internal report to determine whether a SAR to the GFIU is warranted.
+                    Contacting the customer risks tipping off under section 37. Freezing requires a formal basis.
+                  </p>
+                  <p className="text-xs mt-3" style={{ color: '#8b87a8' }}>
+                    Regulation reference: POCA 2015, Section 28 — Nominated officer reporting obligations.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
