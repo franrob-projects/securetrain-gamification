@@ -94,23 +94,30 @@ export default function HomePage() {
                 How it works →
               </Link>
             </div>
+
+            {/* Video — embedded in hero, no separate heading */}
+            <div className="mt-12 max-w-3xl mx-auto">
+              <LoomEmbed videoId="cfe3ae0c9a66438c8db3514a07a625e6" title="ConPly product walkthrough" />
+            </div>
           </div>
         </section>
 
         {/* Trust marquee */}
         <TrustMarquee />
 
-        {/* Product walkthrough video */}
-        <section className="max-w-4xl mx-auto px-6 py-24">
-          <div className="text-center mb-8">
-            <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: 'var(--accent)' }}>
-              See it in action
-            </p>
-            <h2 className="text-2xl sm:text-3xl font-bold" style={{ color: 'var(--text)' }}>
-              Watch how a training session works
-            </h2>
+        {/* Metrics strip */}
+        <section className="border-b" style={{ borderColor: 'var(--border)', background: 'rgba(91,84,184,0.06)' }}>
+          <div className="max-w-6xl mx-auto px-6 py-12">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+              {METRICS.map(m => (
+                <div key={m.label} className="text-center">
+                  <div className="text-4xl font-bold mb-2" style={{ color: 'var(--text)' }}>{m.value}</div>
+                  <div className="text-sm font-medium mb-1" style={{ color: '#a9a5c4' }}>{m.label}</div>
+                  <div className="text-xs" style={{ color: 'rgba(139,135,168,0.7)' }}>{m.sub}</div>
+                </div>
+              ))}
+            </div>
           </div>
-          <LoomEmbed videoId="cfe3ae0c9a66438c8db3514a07a625e6" title="ConPly product walkthrough" />
         </section>
 
         {/* How it works */}
@@ -148,21 +155,6 @@ export default function HomePage() {
                 <p className="text-sm leading-relaxed" style={{ color: '#a9a5c4' }}>{s.body}</p>
               </div>
             ))}
-          </div>
-        </section>
-
-        {/* Metrics strip */}
-        <section className="border-y" style={{ borderColor: 'var(--border)', background: 'rgba(91,84,184,0.06)' }}>
-          <div className="max-w-6xl mx-auto px-6 py-16">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-              {METRICS.map(m => (
-                <div key={m.label} className="text-center">
-                  <div className="text-4xl font-bold mb-2" style={{ color: 'var(--text)' }}>{m.value}</div>
-                  <div className="text-sm font-medium mb-1" style={{ color: '#a9a5c4' }}>{m.label}</div>
-                  <div className="text-xs" style={{ color: 'rgba(139,135,168,0.7)' }}>{m.sub}</div>
-                </div>
-              ))}
-            </div>
           </div>
         </section>
 
