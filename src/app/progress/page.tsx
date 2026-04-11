@@ -123,20 +123,20 @@ export default function ProgressPage() {
 
         {/* Stat cards */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
-          <div className="rounded-xl px-5 py-4" style={{ background: '#1e1b38', border: '1px solid #2e2a52' }}>
+          <div className="rounded-xl px-5 py-4" style={{ background: 'var(--card)', border: '1px solid var(--card-border)' }}>
             <div className="text-3xl font-bold mb-1" style={{ color: 'var(--text)' }}>
               {uniqueCompleted}<span className="text-base font-normal" style={{ color: 'var(--muted)' }}> / {totalModules}</span>
             </div>
             <div className="text-xs" style={{ color: 'var(--muted)' }}>Modules completed</div>
           </div>
-          <div className="rounded-xl px-5 py-4" style={{ background: '#1e1b38', border: '1px solid #2e2a52' }}>
+          <div className="rounded-xl px-5 py-4" style={{ background: 'var(--card)', border: '1px solid var(--card-border)' }}>
             <div className="text-3xl font-bold mb-1"
               style={{ color: avgScore >= 66 ? '#16a34a' : avgScore > 0 ? '#d97706' : 'var(--muted)' }}>
               {completions.length > 0 ? `${avgScore}%` : '—'}
             </div>
             <div className="text-xs" style={{ color: 'var(--muted)' }}>Average score</div>
           </div>
-          <div className="rounded-xl px-5 py-4" style={{ background: '#1e1b38', border: '1px solid #2e2a52' }}>
+          <div className="rounded-xl px-5 py-4" style={{ background: 'var(--card)', border: '1px solid var(--card-border)' }}>
             <div className="text-base font-semibold mb-1 truncate" style={{ color: 'var(--text)' }}>
               {latest ? formatDateShort(latest.created_at) : '—'}
             </div>
@@ -147,7 +147,7 @@ export default function ProgressPage() {
         {/* Empty state */}
         {completions.length === 0 ? (
           <div className="rounded-xl p-10 text-center"
-            style={{ background: '#1e1b38', border: '1px solid #2e2a52' }}>
+            style={{ background: 'var(--card)', border: '1px solid var(--card-border)' }}>
             <p className="text-sm mb-4" style={{ color: 'var(--muted)' }}>You haven&apos;t completed any modules yet.</p>
             <Link href={`/train/${MODULES[0].id}`}
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm text-white"
@@ -165,7 +165,7 @@ export default function ProgressPage() {
               const completed = !!c
               return (
                 <div key={m.id} className="rounded-xl p-4 sm:p-5 flex items-start sm:items-center gap-3 sm:gap-4"
-                  style={{ background: '#1e1b38', border: '1px solid #2e2a52' }}>
+                  style={{ background: 'var(--card)', border: '1px solid var(--card-border)' }}>
                   {completed
                     ? <CheckCircle2 className="w-5 h-5 flex-shrink-0 mt-0.5 sm:mt-0" style={{ color: '#16a34a' }} />
                     : <Clock         className="w-5 h-5 flex-shrink-0 mt-0.5 sm:mt-0" style={{ color: 'var(--muted)' }} />}

@@ -11,8 +11,8 @@ export function LoomEmbed({
       style={{
         position: 'relative',
         paddingTop: '56.25%', // 16:9
-        background: '#1e1b38',
-        border: '1px solid #2e2a52',
+        background: 'var(--card)',
+        border: '1px solid var(--card-border)',
       }}
     >
       <iframe

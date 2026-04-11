@@ -4,6 +4,7 @@ import { getAllPosts } from '@/lib/blog'
 import { Nav } from '@/components/marketing/Nav'
 import { Footer } from '@/components/marketing/Footer'
 import { BlogCover } from '@/components/marketing/BlogCover'
+import { formatDate } from '@/lib/format'
 
 export const metadata: Metadata = {
   title: 'Compliance Blog',
@@ -21,10 +22,6 @@ const FILTERS = [
   { label: 'Crypto',    value: 'crypto'   },
   { label: 'AML',       value: 'aml'      },
 ]
-
-function formatDate(iso: string) {
-  return new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
-}
 
 export default async function BlogPage({
   searchParams,
@@ -63,7 +60,7 @@ export default async function BlogPage({
                   className="px-3 py-1.5 rounded-lg text-xs font-medium transition-colors"
                   style={active
                     ? { background: 'var(--brand)', color: '#fff' }
-                    : { background: '#1e1b38', color: 'var(--muted)', border: '1px solid #2e2a52' }
+                    : { background: 'var(--card)', color: 'var(--muted)', border: '1px solid var(--card-border)' }
                   }
                 >
                   {f.label}
@@ -79,7 +76,7 @@ export default async function BlogPage({
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {posts.map(post => (
               <div key={post.slug} className="rounded-xl flex flex-col overflow-hidden"
-                style={{ background: '#1e1b38', border: '1px solid #2e2a52' }}>
+                style={{ background: 'var(--card)', border: '1px solid var(--card-border)' }}>
                 <BlogCover tags={post.tags} className="h-36" />
 
                 <div className="p-5 flex flex-col gap-3 flex-1">
@@ -100,7 +97,7 @@ export default async function BlogPage({
                     {post.excerpt}
                   </p>
 
-                  <div className="flex items-center justify-between mt-auto pt-2" style={{ borderTop: '1px solid #2e2a52' }}>
+                  <div className="flex items-center justify-between mt-auto pt-2" style={{ borderTop: '1px solid var(--card-border)' }}>
                     <div className="flex flex-col gap-0.5">
                       <span className="text-xs" style={{ color: 'var(--muted)' }}>{formatDate(post.date)}</span>
                       <span className="text-xs" style={{ color: 'rgba(139,135,168,0.6)' }}>{post.readingTime}</span>

@@ -4,14 +4,13 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Menu, X } from 'lucide-react'
 import { ConplyLogo } from '@/components/ui/ConplyLogo'
+import { CONTACT_EMAIL } from '@/lib/constants'
 
 const LINKS = [
   { href: '/pricing', label: 'Pricing' },
   { href: '/blog',    label: 'Blog'    },
   { href: '/help',    label: 'Help'    },
 ]
-
-const CONTACT_EMAIL = 'mailto:hello@conply.gi?subject=ConPly%20enquiry'
 
 export function Nav() {
   const pathname = usePathname()

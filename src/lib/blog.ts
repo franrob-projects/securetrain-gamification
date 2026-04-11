@@ -24,9 +24,13 @@ export interface Post {
   content: string
 }
 
+// Module-level cache — blog content is static, so one read per cold start is enough
+let _postsCache: PostMeta[] | null = null
+
 export function getAllPosts(): PostMeta[] {
+  if (_postsCache) return _postsCache
   const files = fs.readdirSync(CONTENT_DIR).filter(f => f.endsWith('.mdx'))
-  return files
+  _postsCache = files
     .map(filename => {
       const raw = fs.readFileSync(path.join(CONTENT_DIR, filename), 'utf-8')
       const { data, content } = matter(raw)
@@ -44,7 +48,11 @@ export function getAllPosts(): PostMeta[] {
       } satisfies PostMeta
     })
     .sort((a, b) => (a.date < b.date ? 1 : -1))
+  return _postsCache
 }
+
+// Per-slug HTML cache — avoids re-parsing the same post in generateMetadata + page render
+const _htmlCache = new Map<string, { meta: PostMeta; html: string }>()
 
 export function getPostBySlug(slug: string): Post | null {
   const filepath = path.join(CONTENT_DIR, `${slug}.mdx`)
@@ -69,14 +77,17 @@ export function getPostBySlug(slug: string): Post | null {
 }
 
 export async function getPostHtml(slug: string): Promise<{ meta: PostMeta; html: string } | null> {
+  const cached = _htmlCache.get(slug)
+  if (cached) return cached
+
   const post = getPostBySlug(slug)
   if (!post) return null
   const processed = await remark().use(remarkHtml, { sanitize: false }).process(post.content)
-  return { meta: post.meta, html: processed.toString() }
+  const result = { meta: post.meta, html: processed.toString() }
+  _htmlCache.set(slug, result)
+  return result
 }
 
 export function getAllTags(): string[] {
-  const posts = getAllPosts()
-  const tags = posts.flatMap(p => p.tags)
-  return [...new Set(tags)].sort()
+  return [...new Set(getAllPosts().flatMap(p => p.tags))].sort()
 }

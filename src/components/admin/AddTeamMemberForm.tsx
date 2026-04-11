@@ -69,7 +69,7 @@ export function AddTeamMemberForm({
       >
         <div
           className="rounded-xl w-full max-w-md p-6 text-center"
-          style={{ background: '#1e1b38', border: '1px solid #2e2a52' }}
+          style={{ background: 'var(--card)', border: '1px solid var(--card-border)' }}
           onClick={e => e.stopPropagation()}
         >
           <div className="flex justify-center mb-5">
@@ -118,7 +118,7 @@ export function AddTeamMemberForm({
     >
       <div
         className="rounded-xl w-full max-w-md p-6"
-        style={{ background: '#1e1b38', border: '1px solid #2e2a52' }}
+        style={{ background: 'var(--card)', border: '1px solid var(--card-border)' }}
         onClick={e => e.stopPropagation()}
       >
         <div className="flex items-center justify-between mb-5">

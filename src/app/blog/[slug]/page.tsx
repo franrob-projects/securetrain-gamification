@@ -5,6 +5,7 @@ import { getAllPosts, getPostHtml } from '@/lib/blog'
 import { Nav } from '@/components/marketing/Nav'
 import { Footer } from '@/components/marketing/Footer'
 import { BlogCover } from '@/components/marketing/BlogCover'
+import { formatDate } from '@/lib/format'
 
 export async function generateStaticParams() {
   return getAllPosts().map(post => ({ slug: post.slug }))
@@ -33,10 +34,6 @@ export async function generateMetadata({
     twitter: { card: 'summary_large_image', title: post.meta.title, description: post.meta.excerpt },
     alternates: { canonical: `${base}/blog/${slug}` },
   }
-}
-
-function formatDate(iso: string) {
-  return new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
 }
 
 export default async function PostPage({

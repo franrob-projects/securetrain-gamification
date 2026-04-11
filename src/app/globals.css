@@ -14,19 +14,8 @@
   --muted:       #8b87a8;
   --accent:      #9d97e8;
   --text:        #ffffff;
-
-  /* legacy aliases used by existing pages */
-  --navy:        #0e0c1e;
-  --navy-mid:    #1a1730;
-  --navy-light:  #1a1730;
-  --card-bg:     #1a1730;
-  --border-gold: rgba(91,84,184,0.35);
-  --gold:        #5B54B8;
-  --gold-light:  #7A74CC;
-  --gold-pale:   #9d97e8;
-  --text-1:      #ffffff;
-  --text-2:      #8b87a8;
-  --text-3:      #8b87a8;
+  --card:        #1e1b38;
+  --card-border: #2e2a52;
 }
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -77,10 +66,9 @@
 .prose-conply code { font-size: 0.85em; background: rgba(91,84,184,0.15); color: var(--accent); padding: 0.1em 0.35em; border-radius: 4px; }
 .prose-conply pre { background: rgba(91,84,184,0.08); border: 1px solid #2e2a52; border-radius: 8px; padding: 1rem; overflow-x: auto; margin: 0 0 1.25rem; font-size: 0.8125rem; }
 .prose-conply pre code { background: transparent; color: var(--text); padding: 0; font-size: inherit; }
-.prose-conply h3 { margin-top: 1.5rem; }
 
 /* Card hover — used on marketing cards in server components */
-.card-hover { border: 1px solid #2e2a52; transition: border-color 0.2s; }
+.card-hover { border: 1px solid var(--card-border); transition: border-color 0.2s; }
 .card-hover:hover { border-color: rgba(91,84,184,0.5); }
 
 body {

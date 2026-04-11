@@ -57,7 +57,7 @@ export function BlogCover({ tags, className }: { tags: string[]; className?: str
       className={`flex items-center justify-center relative overflow-hidden ${className ?? ''}`}
       style={{
         background: style.gradient,
-        borderBottom: '1px solid #2e2a52',
+        borderBottom: '1px solid var(--card-border)',
       }}
     >
       {/* Large faded icon */}

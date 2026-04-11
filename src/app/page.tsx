@@ -9,14 +9,12 @@ import { LoomEmbed } from '@/components/marketing/LoomEmbed'
 import { TrustMarquee } from '@/components/marketing/TrustMarquee'
 import { BlogCover } from '@/components/marketing/BlogCover'
 import { getAllPosts } from '@/lib/blog'
+import { formatDate } from '@/lib/format'
+import { CONTACT_EMAIL } from '@/lib/constants'
 
 export const metadata: Metadata = {
   title: 'ConPly — Gibraltar Compliance Training',
   description: 'AI-powered, role-specific compliance training for Gibraltar-regulated crypto and iGaming firms. Mapped to POCA 2015, GFSC principles, and the Gambling Act 2025.',
-}
-
-function formatDate(iso: string) {
-  return new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
 }
 
 const FEATURES = [
@@ -84,7 +82,7 @@ export default function HomePage() {
               Delivered in Slack, done in 10 minutes, with PDF records for every session.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
-              <a href="mailto:hello@conply.gi?subject=ConPly%20enquiry"
+              <a href={CONTACT_EMAIL}
                 className="w-full sm:w-auto text-center px-7 py-3.5 rounded-xl font-semibold text-white transition-colors"
                 style={{ background: 'var(--brand)' }}>
                 Get in touch
@@ -156,7 +154,7 @@ export default function HomePage() {
             ].map((s, i) => (
               <div key={s.step} className="flex items-stretch">
                 <div className="rounded-xl p-6 flex-1"
-                  style={{ background: '#1e1b38', border: '1px solid #2e2a52' }}>
+                  style={{ background: 'var(--card)', border: '1px solid var(--card-border)' }}>
                   <div className="text-3xl font-bold mb-3" style={{ color: 'rgba(157,151,232,0.7)' }}>{s.step}</div>
                   <h3 className="text-base font-semibold mb-2" style={{ color: 'var(--text)' }}>{s.title}</h3>
                   <p className="text-sm leading-relaxed" style={{ color: '#a9a5c4' }}>{s.body}</p>
@@ -218,11 +216,11 @@ export default function HomePage() {
               </div>
               <div className="space-y-4">
                 {/* Crypto scenario */}
-                <div className="rounded-xl p-5 space-y-3" style={{ background: '#1e1b38', border: '1px solid #2e2a52' }}>
+                <div className="rounded-xl p-5 space-y-3" style={{ background: 'var(--card)', border: '1px solid var(--card-border)' }}>
                   <p className="text-xs font-semibold uppercase tracking-widest" style={{ color: 'var(--accent)' }}>
                     DLT / Crypto scenario
                   </p>
-                  <div className="rounded-lg p-4" style={{ background: 'var(--bg)', border: '1px solid #2e2a52' }}>
+                  <div className="rounded-lg p-4" style={{ background: 'var(--bg)', border: '1px solid var(--card-border)' }}>
                     <p className="text-sm leading-relaxed mb-3" style={{ color: 'var(--text)' }}>
                       Sarah, the MLRO at a Gibraltar-licensed DLT firm, receives an internal report that a customer has made
                       three large deposits from different bank accounts within 48 hours. What should she do first?
@@ -246,11 +244,11 @@ export default function HomePage() {
                 </div>
 
                 {/* iGaming scenario */}
-                <div className="rounded-xl p-5 space-y-3" style={{ background: '#1e1b38', border: '1px solid #2e2a52' }}>
+                <div className="rounded-xl p-5 space-y-3" style={{ background: 'var(--card)', border: '1px solid var(--card-border)' }}>
                   <p className="text-xs font-semibold uppercase tracking-widest" style={{ color: 'var(--accent)' }}>
                     iGaming scenario
                   </p>
-                  <div className="rounded-lg p-4" style={{ background: 'var(--bg)', border: '1px solid #2e2a52' }}>
+                  <div className="rounded-lg p-4" style={{ background: 'var(--bg)', border: '1px solid var(--card-border)' }}>
                     <p className="text-sm leading-relaxed mb-3" style={{ color: 'var(--text)' }}>
                       A player at a Gibraltar-licensed iGaming platform requests to reverse a self-exclusion after 3 months,
                       claiming they made the decision impulsively. The minimum exclusion period has not yet elapsed. What is the correct response?
@@ -292,7 +290,7 @@ export default function HomePage() {
               const Icon = f.icon
               return (
                 <div key={f.title} className="rounded-xl p-6 card-hover"
-                  style={{ background: '#1e1b38' }}
+                  style={{ background: 'var(--card)' }}
                 >
                   <div className="w-9 h-9 rounded-lg flex items-center justify-center mb-4"
                     style={{ background: 'rgba(91,84,184,0.12)', border: '1px solid rgba(91,84,184,0.25)' }}>
@@ -323,7 +321,7 @@ export default function HomePage() {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-8">
               {recentPosts.map(post => (
                 <div key={post.slug} className="rounded-xl flex flex-col overflow-hidden card-hover"
-                  style={{ background: '#1e1b38' }}
+                  style={{ background: 'var(--card)' }}
                 >
                   <BlogCover tags={post.tags} className="h-28" />
                   <div className="p-5 flex flex-col gap-3 flex-1">
@@ -337,7 +335,7 @@ export default function HomePage() {
                   <p className="text-xs leading-relaxed line-clamp-2 flex-1" style={{ color: '#a9a5c4' }}>
                     {post.excerpt}
                   </p>
-                  <div className="flex items-center justify-between mt-auto pt-3" style={{ borderTop: '1px solid #2e2a52' }}>
+                  <div className="flex items-center justify-between mt-auto pt-3" style={{ borderTop: '1px solid var(--card-border)' }}>
                     <span className="text-xs" style={{ color: 'rgba(139,135,168,0.7)' }}>{formatDate(post.date)}</span>
                     <Link href={`/blog/${post.slug}`} className="text-xs font-semibold"
                       style={{ color: 'var(--accent)' }}>
@@ -372,7 +370,7 @@ export default function HomePage() {
 
         {/* CTA */}
         <section className="max-w-2xl mx-auto px-6 pb-24 text-center">
-          <div className="rounded-2xl p-8 sm:p-10" style={{ background: '#1e1b38', border: '1px solid #2e2a52' }}>
+          <div className="rounded-2xl p-8 sm:p-10" style={{ background: 'var(--card)', border: '1px solid var(--card-border)' }}>
             <h2 className="text-2xl font-bold mb-3" style={{ color: 'var(--text)' }}>
               Get your team compliant in days, not weeks
             </h2>
@@ -380,7 +378,7 @@ export default function HomePage() {
               Onboard your staff and send the first training module within 24 hours. No implementation project, no content to write.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-              <a href="mailto:hello@conply.gi?subject=ConPly%20enquiry"
+              <a href={CONTACT_EMAIL}
                 className="w-full sm:w-auto px-7 py-3.5 rounded-xl font-semibold text-white transition-colors inline-block text-center"
                 style={{ background: 'var(--brand)' }}>
                 Get in touch

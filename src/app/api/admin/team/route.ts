@@ -49,6 +49,8 @@ export async function GET(req: NextRequest) {
       .from('completions')
       .select('user_id, module_id, created_at')
       .in('user_id', userIds)
+      .order('created_at', { ascending: false })
+      .limit(500)
 
     for (const c of (completions ?? []) as CompletionRow[]) {
       if (!completionsByUser[c.user_id]) completionsByUser[c.user_id] = []

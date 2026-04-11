@@ -12,7 +12,7 @@ export function ModuleCard({ module: m }: { module: TrainingModule }) {
   return (
     <div
       className={`rounded-xl flex flex-col overflow-hidden transition-all group ${locked ? 'opacity-60' : ''}`}
-      style={{ background: '#1e1b38', border: '1px solid #2e2a52', borderTop: '2px solid #2e2a52', transition: 'border-top-color 0.2s ease' }}
+      style={{ background: 'var(--card)', border: '1px solid var(--card-border)', borderTop: '2px solid #2e2a52', transition: 'border-top-color 0.2s ease' }}
       onMouseOver={e => { if (!locked) (e.currentTarget as HTMLDivElement).style.borderTopColor = '#5B54B8' }}
       onMouseOut={e => { (e.currentTarget as HTMLDivElement).style.borderTopColor = '#2e2a52' }}
     >

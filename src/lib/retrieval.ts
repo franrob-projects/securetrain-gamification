@@ -14,12 +14,14 @@ export interface RetrievedChunk {
 // Gracefully degrades to [] if OPENAI_API_KEY is missing, pgvector isn't
 // enabled, or the embeddings call fails — the scenario API will then
 // fall back to non-RAG generation.
+// Singleton — avoids re-parsing env and allocating a new HTTP client per request
+const openai = process.env.OPENAI_API_KEY ? new OpenAI() : null
+
 export async function retrieveRelevantChunks(query: string, count = 5): Promise<RetrievedChunk[]> {
-  if (!process.env.OPENAI_API_KEY) return []
+  if (!openai) return []
 
   try {
-    const openai = new OpenAI()
-    const embRes = await openai.embeddings.create({
+    const embRes = await openai!.embeddings.create({
       model: 'text-embedding-3-small',
       input: query,
     })

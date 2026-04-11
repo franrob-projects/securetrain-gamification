@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { CheckCircle2, XCircle, Minus, Bell, Plus } from 'lucide-react'
 import { createClient } from '@/lib/supabase'
 import { AddTeamMemberForm } from './AddTeamMemberForm'
@@ -196,6 +196,10 @@ export function ComplianceMatrix() {
   const [pendingId, setPending]   = useState<string | null>(null)
   const [realMembers, setReal]    = useState<TeamMember[] | null>(null)
   const [showAddForm, setShowAdd] = useState(false)
+  const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  // Clean up toast timer on unmount
+  useEffect(() => () => { if (toastTimer.current) clearTimeout(toastTimer.current) }, [])
 
   const fetchMembers = async () => {
     try {
@@ -240,7 +244,7 @@ export function ComplianceMatrix() {
       setToast({ type: 'error', message: `Could not send reminder to ${member.name}` })
     } finally {
       setPending(null)
-      setTimeout(() => setToast(null), 3000)
+      toastTimer.current = setTimeout(() => setToast(null), 3000)
     }
   }
 
@@ -290,7 +294,7 @@ export function ComplianceMatrix() {
           { label: 'Completions this week', value: thisWeekCount,    color: 'var(--accent)' },
         ].map(card => (
           <div key={card.label} className="rounded-xl px-5 py-4"
-            style={{ background: '#1e1b38', border: '1px solid #2e2a52' }}>
+            style={{ background: 'var(--card)', border: '1px solid var(--card-border)' }}>
             <div className="text-3xl font-bold mb-1" style={{ color: card.color }}>{card.value}</div>
             <div className="text-xs" style={{ color: 'var(--muted)' }}>{card.label}</div>
           </div>

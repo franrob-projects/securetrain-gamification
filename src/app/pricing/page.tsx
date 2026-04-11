@@ -1,8 +1,8 @@
-import Link from 'next/link'
 import type { Metadata } from 'next'
 import { Check } from 'lucide-react'
 import { Nav } from '@/components/marketing/Nav'
 import { Footer } from '@/components/marketing/Footer'
+import { CONTACT_EMAIL } from '@/lib/constants'
 
 export const metadata: Metadata = {
   title: 'Pricing',
@@ -119,8 +119,8 @@ export default function PricingPage() {
                 key={tier.name}
                 className="rounded-2xl p-7 flex flex-col"
                 style={{
-                  background: tier.featured ? 'rgba(91,84,184,0.12)' : '#1e1b38',
-                  border: tier.featured ? '1px solid rgba(91,84,184,0.5)' : '1px solid #2e2a52',
+                  background: tier.featured ? 'rgba(91,84,184,0.12)' : 'var(--card)',
+                  border: tier.featured ? '1px solid rgba(91,84,184,0.5)' : '1px solid var(--card-border)',
                 }}
               >
                 {tier.featured && (
@@ -167,7 +167,7 @@ export default function PricingPage() {
           <div className="space-y-4">
             {FAQ.map(item => (
               <div key={item.q} className="rounded-xl p-6"
-                style={{ background: '#1e1b38', border: '1px solid #2e2a52' }}>
+                style={{ background: 'var(--card)', border: '1px solid var(--card-border)' }}>
                 <h3 className="text-sm font-semibold mb-2" style={{ color: 'var(--text)' }}>{item.q}</h3>
                 <p className="text-sm leading-relaxed" style={{ color: 'var(--muted)' }}>{item.a}</p>
               </div>
@@ -197,7 +197,7 @@ export default function PricingPage() {
               { title: 'Data Protection & GDPR',                      sector: 'All firms',  reg: 'Gibraltar DPA / UK GDPR' },
             ].map(m => (
               <div key={m.title} className="rounded-lg px-5 py-4 flex items-start justify-between gap-4"
-                style={{ background: '#1e1b38', border: '1px solid #2e2a52' }}>
+                style={{ background: 'var(--card)', border: '1px solid var(--card-border)' }}>
                 <div>
                   <h3 className="text-sm font-semibold mb-1" style={{ color: 'var(--text)' }}>{m.title}</h3>
                   <p className="text-xs" style={{ color: 'rgba(139,135,168,0.7)' }}>{m.reg}</p>
@@ -213,14 +213,14 @@ export default function PricingPage() {
 
         {/* Final CTA */}
         <section className="max-w-2xl mx-auto px-6 pb-24 text-center">
-          <div className="rounded-2xl p-10" style={{ background: '#1e1b38', border: '1px solid #2e2a52' }}>
+          <div className="rounded-2xl p-10" style={{ background: 'var(--card)', border: '1px solid var(--card-border)' }}>
             <h2 className="text-2xl font-bold mb-3" style={{ color: 'var(--text)' }}>
               Not sure which plan fits?
             </h2>
             <p className="text-sm mb-8" style={{ color: 'var(--muted)' }}>
               Tell us about your firm and we&apos;ll recommend the right tier — and set up a trial if it makes sense.
             </p>
-            <a href="mailto:hello@conply.gi?subject=ConPly%20enquiry"
+            <a href={CONTACT_EMAIL}
               className="px-6 py-3 rounded-xl font-semibold text-white transition-colors inline-block"
               style={{ background: 'var(--brand)' }}>
               Get in touch

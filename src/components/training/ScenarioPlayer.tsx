@@ -49,7 +49,13 @@ export function ScenarioPlayer({ module: m, onComplete }: { module: TrainingModu
     }
   }, [m.title, m.topics])
 
-  useEffect(() => { fetchScenario() }, [fetchScenario])
+  // Prefetch all 3 scenarios in parallel on mount to eliminate inter-question wait
+  useEffect(() => {
+    fetchScenario()
+    fetchScenario()
+    fetchScenario()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   function handleAnswer(idx: number) {
     if (selected !== null) return
