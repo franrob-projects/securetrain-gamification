@@ -123,24 +123,47 @@ export default function ProgressPage() {
 
         {/* Stat cards */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
-          <div className="rounded-xl px-5 py-4" style={{ background: 'var(--card)', border: '1px solid var(--card-border)' }}>
-            <div className="text-3xl font-bold mb-1" style={{ color: 'var(--text)' }}>
-              {uniqueCompleted}<span className="text-base font-normal" style={{ color: 'var(--muted)' }}> / {totalModules}</span>
+          <div className="rounded-xl px-5 py-5 relative overflow-hidden" style={{ background: 'var(--card)', border: '1px solid var(--card-border)' }}>
+            <div className="absolute top-0 right-0 w-24 h-24 pointer-events-none"
+              style={{ background: 'radial-gradient(circle at top right, rgba(91,84,184,0.08), transparent 70%)' }} />
+            <div className="relative">
+              {/* Progress ring */}
+              <div className="flex items-center gap-4">
+                <svg width="48" height="48" viewBox="0 0 48 48" className="flex-shrink-0">
+                  <circle cx="24" cy="24" r="20" fill="none" stroke="var(--border)" strokeWidth="3" />
+                  <circle cx="24" cy="24" r="20" fill="none" stroke="var(--brand)" strokeWidth="3"
+                    strokeDasharray={`${(uniqueCompleted / totalModules) * 125.6} 125.6`}
+                    strokeLinecap="round"
+                    transform="rotate(-90 24 24)"
+                    style={{ transition: 'stroke-dasharray 0.5s ease' }} />
+                </svg>
+                <div>
+                  <div className="text-2xl font-bold" style={{ color: 'var(--text)' }}>
+                    {uniqueCompleted}<span className="text-sm font-normal" style={{ color: 'var(--muted)' }}> / {totalModules}</span>
+                  </div>
+                  <div className="text-xs" style={{ color: 'var(--muted)' }}>Modules completed</div>
+                </div>
+              </div>
             </div>
-            <div className="text-xs" style={{ color: 'var(--muted)' }}>Modules completed</div>
           </div>
-          <div className="rounded-xl px-5 py-4" style={{ background: 'var(--card)', border: '1px solid var(--card-border)' }}>
-            <div className="text-3xl font-bold mb-1"
-              style={{ color: avgScore >= 66 ? '#16a34a' : avgScore > 0 ? '#d97706' : 'var(--muted)' }}>
-              {completions.length > 0 ? `${avgScore}%` : '—'}
+          <div className="rounded-xl px-5 py-5 relative overflow-hidden" style={{ background: 'var(--card)', border: `1px solid ${avgScore >= 66 ? 'rgba(22,163,74,0.15)' : 'var(--card-border)'}` }}>
+            <div className="absolute top-0 right-0 w-24 h-24 pointer-events-none"
+              style={{ background: `radial-gradient(circle at top right, ${avgScore >= 66 ? 'rgba(22,163,74,0.06)' : 'rgba(217,119,6,0.06)'}, transparent 70%)` }} />
+            <div className="relative">
+              <div className="text-3xl font-extrabold mb-1 tracking-tight"
+                style={{ color: avgScore >= 66 ? '#16a34a' : avgScore > 0 ? '#d97706' : 'var(--muted)' }}>
+                {completions.length > 0 ? `${avgScore}%` : '\u2014'}
+              </div>
+              <div className="text-xs font-medium" style={{ color: 'var(--muted)' }}>Average score</div>
             </div>
-            <div className="text-xs" style={{ color: 'var(--muted)' }}>Average score</div>
           </div>
-          <div className="rounded-xl px-5 py-4" style={{ background: 'var(--card)', border: '1px solid var(--card-border)' }}>
-            <div className="text-base font-semibold mb-1 truncate" style={{ color: 'var(--text)' }}>
-              {latest ? formatDateShort(latest.created_at) : '—'}
+          <div className="rounded-xl px-5 py-5 relative overflow-hidden" style={{ background: 'var(--card)', border: '1px solid var(--card-border)' }}>
+            <div className="relative">
+              <div className="text-base font-semibold mb-1 truncate" style={{ color: 'var(--text)' }}>
+                {latest ? formatDateShort(latest.created_at) : '\u2014'}
+              </div>
+              <div className="text-xs font-medium" style={{ color: 'var(--muted)' }}>Last completion</div>
             </div>
-            <div className="text-xs" style={{ color: 'var(--muted)' }}>Last completion</div>
           </div>
         </div>
 
@@ -165,7 +188,7 @@ export default function ProgressPage() {
               const completed = !!c
               return (
                 <div key={m.id} className="rounded-xl p-4 sm:p-5 flex items-start sm:items-center gap-3 sm:gap-4"
-                  style={{ background: 'var(--card)', border: '1px solid var(--card-border)' }}>
+                  style={{ background: 'var(--card)', border: '1px solid var(--card-border)', borderLeft: completed ? '3px solid #16a34a' : '3px solid var(--card-border)' }}>
                   {completed
                     ? <CheckCircle2 className="w-5 h-5 flex-shrink-0 mt-0.5 sm:mt-0" style={{ color: '#16a34a' }} />
                     : <Clock         className="w-5 h-5 flex-shrink-0 mt-0.5 sm:mt-0" style={{ color: 'var(--muted)' }} />}
