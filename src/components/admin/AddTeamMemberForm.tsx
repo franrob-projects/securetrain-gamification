@@ -68,7 +68,7 @@ export function AddTeamMemberForm({
         onClick={onClose}
       >
         <div
-          className="rounded-xl w-full max-w-md p-6 text-center"
+          className="rounded-2xl w-full max-w-md p-7 text-center"
           style={{ background: 'var(--card)', border: '1px solid var(--card-border)' }}
           onClick={e => e.stopPropagation()}
         >
@@ -117,14 +117,18 @@ export function AddTeamMemberForm({
       onClick={onClose}
     >
       <div
-        className="rounded-xl w-full max-w-md p-6"
+        className="rounded-2xl w-full max-w-md p-7 relative overflow-hidden"
         style={{ background: 'var(--card)', border: '1px solid var(--card-border)' }}
         onClick={e => e.stopPropagation()}
       >
-        <div className="flex items-center justify-between mb-5">
+        <div className="absolute top-0 right-0 w-32 h-32 pointer-events-none"
+          style={{ background: 'radial-gradient(circle at top right, rgba(91,84,184,0.06), transparent 70%)' }} />
+        <div className="flex items-center justify-between mb-5 relative">
           <h2 className="text-lg font-semibold" style={{ color: 'var(--text)' }}>Add team member</h2>
-          <button onClick={onClose} className="p-1 rounded transition-colors"
-            style={{ color: 'var(--muted)' }}>
+          <button onClick={onClose} className="p-1.5 rounded-lg transition-colors"
+            style={{ color: 'var(--muted)' }}
+            onMouseOver={e => (e.currentTarget.style.background = 'rgba(91,84,184,0.1)')}
+            onMouseOut={e => (e.currentTarget.style.background = 'transparent')}>
             <X className="w-4 h-4" />
           </button>
         </div>
