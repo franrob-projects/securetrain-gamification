@@ -65,52 +65,61 @@ export default async function PostPage({
         <Nav />
       </header>
 
-      <main className="max-w-2xl mx-auto px-6 py-16">
-        {/* Breadcrumb */}
-        <nav className="flex items-center gap-2 text-xs mb-10" style={{ color: 'var(--muted)' }}>
-          <Link href="/" style={{ color: 'var(--muted)' }}>Home</Link>
-          <span>/</span>
-          <Link href="/blog" style={{ color: 'var(--muted)' }}>Blog</Link>
-          <span>/</span>
-          <span className="line-clamp-1" style={{ color: 'var(--text)' }}>{post.meta.title}</span>
-        </nav>
-
-        {/* Cover image */}
-        <BlogCover tags={post.meta.tags} className="h-48 rounded-xl mb-10" />
-
-        {/* Post header */}
-        <div className="mb-10">
-          <div className="flex gap-2 flex-wrap mb-4">
-            {post.meta.tags.map(t => (
-              <span key={t} className="text-xs px-2 py-0.5 rounded-full"
-                style={{ background: 'rgba(91,84,184,0.15)', color: 'var(--accent)', border: '1px solid rgba(91,84,184,0.25)' }}>
-                {t}
-              </span>
-            ))}
-          </div>
-          <h1 className="text-2xl font-bold leading-snug mb-4" style={{ color: 'var(--text)' }}>
-            {post.meta.title}
-          </h1>
-          <div className="flex items-center gap-4 text-xs" style={{ color: 'var(--muted)' }}>
-            <span>{post.meta.author}</span>
-            <span>·</span>
-            <span>{formatDate(post.meta.date)}</span>
-            <span>·</span>
-            <span>{post.meta.readingTime}</span>
-          </div>
+      <main>
+        {/* Cover band */}
+        <div className="relative">
+          <BlogCover tags={post.meta.tags} className="h-48 sm:h-56" />
+          <div className="absolute inset-0 pointer-events-none"
+            style={{ background: 'linear-gradient(to top, var(--bg) 0%, transparent 60%)' }} />
         </div>
 
-        {/* Content */}
-        <div
-          className="prose-conply"
-          dangerouslySetInnerHTML={{ __html: post.html }}
-        />
+        <div className="max-w-2xl mx-auto px-6 -mt-12 relative" style={{ zIndex: 1 }}>
+          {/* Breadcrumb */}
+          <nav className="flex items-center gap-2 text-xs mb-8" style={{ color: 'var(--muted)' }}>
+            <Link href="/" style={{ color: 'var(--muted)' }}>Home</Link>
+            <span style={{ color: 'rgba(139,135,168,0.4)' }}>/</span>
+            <Link href="/blog" style={{ color: 'var(--muted)' }}>Blog</Link>
+            <span style={{ color: 'rgba(139,135,168,0.4)' }}>/</span>
+            <span className="line-clamp-1" style={{ color: 'var(--text)' }}>{post.meta.title}</span>
+          </nav>
 
-        {/* Back link */}
-        <div className="mt-16 pt-8" style={{ borderTop: '1px solid var(--border)' }}>
-          <Link href="/blog" className="text-sm font-semibold" style={{ color: 'var(--accent)' }}>
-            ← Back to blog
-          </Link>
+          {/* Post header */}
+          <div className="mb-12">
+            <div className="flex gap-2 flex-wrap mb-4">
+              {post.meta.tags.map(t => (
+                <span key={t} className="text-xs px-2 py-0.5 rounded-full"
+                  style={{ background: 'rgba(91,84,184,0.15)', color: 'var(--accent)', border: '1px solid rgba(91,84,184,0.25)' }}>
+                  {t}
+                </span>
+              ))}
+            </div>
+            <h1 className="text-2xl sm:text-3xl font-bold leading-snug mb-5" style={{ color: 'var(--text)', letterSpacing: '-0.015em' }}>
+              {post.meta.title}
+            </h1>
+            <div className="flex items-center gap-4 text-xs pb-6" style={{ color: 'var(--muted)', borderBottom: '1px solid var(--card-border)' }}>
+              <span className="font-medium" style={{ color: 'var(--accent)' }}>{post.meta.author}</span>
+              <span style={{ color: 'rgba(139,135,168,0.4)' }}>|</span>
+              <span>{formatDate(post.meta.date)}</span>
+              <span style={{ color: 'rgba(139,135,168,0.4)' }}>|</span>
+              <span>{post.meta.readingTime}</span>
+            </div>
+          </div>
+
+          {/* Content */}
+          <div
+            className="prose-conply"
+            dangerouslySetInnerHTML={{ __html: post.html }}
+          />
+
+          {/* Back link */}
+          <div className="mt-16 pt-8" style={{ borderTop: '1px solid var(--border)' }}>
+            <Link href="/blog" className="text-sm font-semibold flex items-center gap-1.5" style={{ color: 'var(--accent)' }}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M19 12H5M12 19l-7-7 7-7" />
+              </svg>
+              Back to blog
+            </Link>
+          </div>
         </div>
       </main>
 
