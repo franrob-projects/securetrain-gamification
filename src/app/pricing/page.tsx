@@ -96,10 +96,10 @@ export default function PricingPage() {
       <main>
         {/* Hero */}
         <section className="max-w-3xl mx-auto px-6 pt-24 pb-12 text-center">
-          <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: 'var(--accent)' }}>
+          <p className="text-[11px] font-medium uppercase tracking-[0.15em] mb-3" style={{ color: 'var(--accent)' }}>
             Pricing
           </p>
-          <h1 className="text-3xl sm:text-5xl font-bold leading-tight mb-5" style={{ color: 'var(--text)' }}>
+          <h1 className="text-3xl sm:text-5xl tracking-tight font-bold leading-tight mb-5" style={{ color: 'var(--text)' }}>
             Simple pricing for{' '}
             <br className="hidden sm:block" />
             Gibraltar firms
@@ -124,7 +124,7 @@ export default function PricingPage() {
                 }}
               >
                 {tier.featured && (
-                  <div className="text-xs font-semibold uppercase tracking-widest mb-3"
+                  <div className="text-[11px] font-medium uppercase tracking-[0.15em] mb-3"
                     style={{ color: 'var(--accent)' }}>
                     Most popular
                   </div>
@@ -178,7 +178,7 @@ export default function PricingPage() {
         {/* Modules overview */}
         <section id="modules" className="max-w-4xl mx-auto px-6 pb-24">
           <div className="text-center mb-10">
-            <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: 'var(--accent)' }}>
+            <p className="text-[11px] font-medium uppercase tracking-[0.15em] mb-2" style={{ color: 'var(--accent)' }}>
               What&apos;s included
             </p>
             <h2 className="text-2xl font-bold" style={{ color: 'var(--text)' }}>

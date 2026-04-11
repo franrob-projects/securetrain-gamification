@@ -42,7 +42,7 @@ export default async function BlogPage({
 
       <main className="max-w-6xl mx-auto px-6 py-16">
         <div className="mb-12">
-          <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: 'var(--accent)' }}>
+          <p className="text-[11px] font-medium uppercase tracking-[0.15em] mb-3" style={{ color: 'var(--accent)' }}>
             From the blog
           </p>
           <h1 className="text-3xl font-bold mb-8" style={{ color: 'var(--text)' }}>

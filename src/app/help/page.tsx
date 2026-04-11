@@ -29,7 +29,7 @@ export default function HelpPage() {
       <main className="max-w-5xl mx-auto px-6 py-16">
         {/* Page header */}
         <div className="mb-14">
-          <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: 'var(--accent)' }}>
+          <p className="text-[11px] font-medium uppercase tracking-[0.15em] mb-2" style={{ color: 'var(--accent)' }}>
             Help &amp; setup
           </p>
           <h1 className="text-3xl font-bold mb-3" style={{ color: 'var(--text)' }}>
@@ -45,7 +45,7 @@ export default function HelpPage() {
           {/* Sticky table of contents */}
           <aside className="lg:w-56 flex-shrink-0">
             <nav className="lg:sticky lg:top-8">
-              <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: 'var(--muted)' }}>
+              <p className="text-[11px] font-medium uppercase tracking-[0.15em] mb-3" style={{ color: 'var(--muted)' }}>
                 On this page
               </p>
               <ul className="space-y-2">

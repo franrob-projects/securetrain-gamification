@@ -62,6 +62,9 @@ export default function HomePage() {
       <main>
         {/* Hero */}
         <section className="relative overflow-hidden" style={{ minHeight: '480px' }}>
+          {/* Subtle glow behind hero content */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] pointer-events-none"
+            style={{ zIndex: 0, background: 'radial-gradient(ellipse, rgba(91,84,184,0.12) 0%, transparent 70%)' }} />
           <RockSilhouette className="absolute bottom-0 left-0 w-full pointer-events-none" style={{ zIndex: 1 }} />
           <div className="absolute inset-0 pointer-events-none" style={{
             zIndex: 2,
@@ -71,8 +74,8 @@ export default function HomePage() {
             zIndex: 2,
             background: 'linear-gradient(to top, var(--bg), transparent)',
           }} />
-          <div className="relative max-w-4xl mx-auto px-6 pt-20 pb-28 text-center" style={{ zIndex: 3 }}>
-            <h1 className="text-3xl sm:text-5xl font-bold leading-tight mb-5" style={{ color: 'var(--text)' }}>
+          <div className="relative max-w-4xl mx-auto px-6 pt-24 pb-32 text-center" style={{ zIndex: 3 }}>
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold leading-[1.1] mb-6" style={{ color: 'var(--text)', letterSpacing: '-0.02em' }}>
               Your team learns real scenarios.{' '}
               <br className="hidden sm:block" />
               Your regulator gets the audit trail.
@@ -83,12 +86,12 @@ export default function HomePage() {
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
               <a href={CONTACT_EMAIL}
-                className="w-full sm:w-auto text-center px-7 py-3.5 rounded-xl font-semibold text-white transition-colors"
+                className="w-full sm:w-auto text-center px-8 py-4 rounded-xl font-semibold text-white transition-colors"
                 style={{ background: 'var(--brand)' }}>
                 Get in touch
               </a>
               <Link href="#how-it-works"
-                className="w-full sm:w-auto text-center px-7 py-3.5 rounded-xl font-semibold transition-colors"
+                className="w-full sm:w-auto text-center px-8 py-4 rounded-xl font-semibold transition-colors"
                 style={{ color: 'var(--accent)', border: '1px solid var(--border)' }}>
                 How it works →
               </Link>
@@ -125,12 +128,12 @@ export default function HomePage() {
         </section>
 
         {/* How it works */}
-        <section id="how-it-works" className="max-w-6xl mx-auto px-6 py-24">
+        <section id="how-it-works" className="max-w-6xl mx-auto px-6 py-28">
           <div className="text-center mb-14">
-            <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: 'var(--accent)' }}>
+            <p className="text-[11px] font-medium uppercase tracking-[0.15em] mb-3" style={{ color: 'var(--accent)' }}>
               How it works
             </p>
-            <h2 className="text-2xl sm:text-3xl font-bold" style={{ color: 'var(--text)' }}>
+            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight" style={{ color: 'var(--text)' }}>
               Three steps. No setup overhead.
             </h2>
           </div>
@@ -173,10 +176,10 @@ export default function HomePage() {
 
         {/* Regulated AI — how the agents work */}
         <section className="border-y" style={{ borderColor: 'var(--border)', background: 'rgba(91,84,184,0.04)' }}>
-          <div className="max-w-6xl mx-auto px-6 py-24">
+          <div className="max-w-6xl mx-auto px-6 py-28">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: 'var(--accent)' }}>
+                <p className="text-[11px] font-medium uppercase tracking-[0.15em] mb-3" style={{ color: 'var(--accent)' }}>
                   Powered by regulated AI
                 </p>
                 <h2 className="text-2xl sm:text-3xl font-bold mb-4" style={{ color: 'var(--text)' }}>
@@ -276,12 +279,12 @@ export default function HomePage() {
         </section>
 
         {/* Features */}
-        <section className="max-w-6xl mx-auto px-6 py-24">
+        <section className="max-w-6xl mx-auto px-6 py-28">
           <div className="text-center mb-14">
-            <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: 'var(--accent)' }}>
+            <p className="text-[11px] font-medium uppercase tracking-[0.15em] mb-3" style={{ color: 'var(--accent)' }}>
               What you get
             </p>
-            <h2 className="text-2xl sm:text-3xl font-bold" style={{ color: 'var(--text)' }}>
+            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight" style={{ color: 'var(--text)' }}>
               Everything a Gibraltar regulator expects
             </h2>
           </div>
@@ -306,9 +309,9 @@ export default function HomePage() {
 
         {/* Blog section — tinted band */}
         <section className="border-y" style={{ borderColor: 'var(--border)', background: 'rgba(91,84,184,0.04)' }}>
-          <div className="max-w-6xl mx-auto px-6 py-24">
+          <div className="max-w-6xl mx-auto px-6 py-28">
             <div className="text-center mb-14">
-              <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: 'var(--accent)' }}>
+              <p className="text-[11px] font-medium uppercase tracking-[0.15em] mb-3" style={{ color: 'var(--accent)' }}>
                 From the blog
               </p>
               <h2 className="text-2xl sm:text-3xl font-bold mb-3" style={{ color: 'var(--text)' }}>
@@ -379,12 +382,12 @@ export default function HomePage() {
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
               <a href={CONTACT_EMAIL}
-                className="w-full sm:w-auto px-7 py-3.5 rounded-xl font-semibold text-white transition-colors inline-block text-center"
+                className="w-full sm:w-auto px-8 py-4 rounded-xl font-semibold text-white transition-colors inline-block text-center"
                 style={{ background: 'var(--brand)' }}>
                 Get in touch
               </a>
               <Link href="/pricing"
-                className="w-full sm:w-auto px-7 py-3.5 rounded-xl font-semibold transition-colors inline-block text-center"
+                className="w-full sm:w-auto px-8 py-4 rounded-xl font-semibold transition-colors inline-block text-center"
                 style={{ color: 'var(--accent)', border: '1px solid var(--border)' }}>
                 View pricing
               </Link>
