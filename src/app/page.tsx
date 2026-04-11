@@ -100,6 +100,19 @@ export default function HomePage() {
         {/* Trust marquee */}
         <TrustMarquee />
 
+        {/* Product walkthrough video */}
+        <section className="max-w-4xl mx-auto px-6 py-24">
+          <div className="text-center mb-8">
+            <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: 'var(--accent)' }}>
+              See it in action
+            </p>
+            <h2 className="text-2xl sm:text-3xl font-bold" style={{ color: 'var(--text)' }}>
+              Watch how a training session works
+            </h2>
+          </div>
+          <LoomEmbed videoId="cfe3ae0c9a66438c8db3514a07a625e6" title="ConPly product walkthrough" />
+        </section>
+
         {/* How it works */}
         <section id="how-it-works" className="max-w-6xl mx-auto px-6 py-24">
           <div className="text-center mb-14">
@@ -136,19 +149,6 @@ export default function HomePage() {
               </div>
             ))}
           </div>
-        </section>
-
-        {/* Product walkthrough video */}
-        <section className="max-w-4xl mx-auto px-6 pb-24">
-          <div className="text-center mb-8">
-            <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: 'var(--accent)' }}>
-              See it in action
-            </p>
-            <h2 className="text-2xl sm:text-3xl font-bold" style={{ color: 'var(--text)' }}>
-              Watch how a training session works
-            </h2>
-          </div>
-          <LoomEmbed videoId="cfe3ae0c9a66438c8db3514a07a625e6" title="ConPly product walkthrough" />
         </section>
 
         {/* Metrics strip */}
