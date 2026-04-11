@@ -14,20 +14,25 @@ export function TrustMarquee() {
 
   return (
     <section className="border-y" style={{ borderColor: 'var(--border)', background: 'rgba(91,84,184,0.04)' }}>
-      <div className="py-8">
+      <div className="py-6">
+        <p className="text-center text-[10px] font-semibold uppercase tracking-[0.2em] mb-4" style={{ color: 'rgba(139,135,168,0.5)' }}>
+          Mapped to Gibraltar regulation
+        </p>
         <div className="trust-marquee" aria-hidden="false">
           <div className="trust-marquee__track">
             {loop.map((item, i) => (
               <div key={`${item}-${i}`} className="trust-marquee__item">
-                <span
-                  className="text-xs font-medium px-4 py-2 rounded-lg whitespace-nowrap"
-                  style={{
-                    color: 'var(--accent)',
-                    background: 'rgba(91,84,184,0.1)',
-                    border: '1px solid rgba(91,84,184,0.25)',
-                  }}
-                >
-                  {item}
+                <span className="flex items-center gap-2">
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                    style={{ color: 'rgba(91,84,184,0.4)' }}>
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                  </svg>
+                  <span
+                    className="text-xs font-medium whitespace-nowrap"
+                    style={{ color: 'var(--accent)' }}
+                  >
+                    {item}
+                  </span>
                 </span>
               </div>
             ))}
