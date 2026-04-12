@@ -117,18 +117,20 @@ export default function HomePage() {
         {/* Trust marquee */}
         <TrustMarquee />
 
-        {/* Metrics strip */}
-        <section className="border-b" style={{ borderColor: 'var(--border)', background: 'rgba(91,84,184,0.06)' }}>
-          <div className="max-w-6xl mx-auto px-6 py-14">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-0 md:divide-x" style={{ borderColor: 'var(--border)' }}>
-              {METRICS.map((m, i) => (
-                <div key={m.label} className="text-center px-4 md:px-8" style={{ borderColor: 'rgba(42,37,80,0.6)' }}>
-                  <div className="text-5xl font-extrabold mb-2 tracking-tight" style={{ color: 'var(--text)', letterSpacing: '-0.03em' }}>{m.value}</div>
+        {/* Metrics strip — glass cards */}
+        <section className="max-w-5xl mx-auto px-6 py-16">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {METRICS.map(m => (
+              <div key={m.label} className="glass-card rounded-2xl p-6 text-center relative overflow-hidden">
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-20 h-12 pointer-events-none"
+                  style={{ background: 'radial-gradient(ellipse, rgba(91,84,184,0.15), transparent 70%)' }} />
+                <div className="relative">
+                  <div className="text-4xl sm:text-5xl font-extrabold mb-2 text-gradient" style={{ letterSpacing: '-0.03em' }}>{m.value}</div>
                   <div className="text-sm font-semibold mb-1" style={{ color: 'var(--accent)' }}>{m.label}</div>
-                  <div className="text-xs leading-relaxed" style={{ color: 'rgba(139,135,168,0.7)' }}>{m.sub}</div>
+                  <div className="text-xs leading-relaxed" style={{ color: 'rgba(139,135,168,0.6)' }}>{m.sub}</div>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
         </section>
 
@@ -328,49 +330,44 @@ export default function HomePage() {
           </svg>
         </div>
 
-        {/* Features */}
-        <section className="max-w-6xl mx-auto px-6 py-28">
-          <div className="text-center mb-14">
-            <p className="text-[11px] font-medium uppercase tracking-[0.15em] mb-3" style={{ color: 'var(--accent)' }}>
-              What you get
-            </p>
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight" style={{ color: 'var(--text)' }}>
-              Everything a Gibraltar regulator expects
-            </h2>
-          </div>
-          {/* Primary feature — full width */}
-          <div className="rounded-2xl p-8 sm:p-10 mb-5 card-hover relative overflow-hidden"
-            style={{ background: 'var(--card)' }}>
-            <div className="absolute top-0 right-0 w-60 h-60 pointer-events-none opacity-40"
-              style={{ background: 'radial-gradient(circle at top right, rgba(91,84,184,0.15), transparent 70%)' }} />
-            <div className="flex flex-col sm:flex-row gap-6 items-start relative">
-              <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
-                style={{ background: 'rgba(91,84,184,0.12)', border: '1px solid rgba(91,84,184,0.25)' }}>
-                <Shield className="w-6 h-6" style={{ color: 'var(--accent)' }} />
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold mb-2" style={{ color: 'var(--text)' }}>{FEATURES[0].title}</h3>
-                <p className="text-sm leading-relaxed max-w-2xl" style={{ color: '#a9a5c4' }}>{FEATURES[0].body}</p>
-              </div>
+        {/* Features — bento grid with glass cards */}
+        <section className="max-w-6xl mx-auto px-6 py-28 relative">
+          {/* Background glow */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] pointer-events-none"
+            style={{ background: 'radial-gradient(ellipse, rgba(91,84,184,0.08) 0%, transparent 60%)' }} />
+          <div className="relative">
+            <div className="text-center mb-16">
+              <p className="text-[11px] font-medium uppercase tracking-[0.15em] mb-3" style={{ color: 'var(--accent)' }}>
+                What you get
+              </p>
+              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight" style={{ color: 'var(--text)' }}>
+                Everything a Gibraltar regulator expects
+              </h2>
             </div>
-          </div>
-          {/* Secondary features — varied grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-            {FEATURES.slice(1).map((f, i) => {
-              const Icon = f.icon
-              return (
-                <div key={f.title} className="rounded-xl p-6 card-hover"
-                  style={{ background: i === 0 ? 'rgba(91,84,184,0.06)' : 'var(--card)', borderColor: i === 0 ? 'rgba(91,84,184,0.2)' : undefined }}
-                >
-                  <div className="w-9 h-9 rounded-lg flex items-center justify-center mb-4"
-                    style={{ background: 'rgba(91,84,184,0.12)', border: '1px solid rgba(91,84,184,0.25)' }}>
-                    <Icon className="w-4.5 h-4.5" style={{ color: 'var(--accent)', width: '18px', height: '18px' }} />
+            {/* Bento layout: 2 large + 2 small */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              {FEATURES.map((f, i) => {
+                const Icon = f.icon
+                const isLarge = i === 0 || i === 3
+                return (
+                  <div key={f.title} className={`glass-card rounded-2xl ${isLarge ? 'p-8 md:col-span-2' : 'p-7'} relative overflow-hidden`}>
+                    {/* Corner glow */}
+                    <div className="absolute top-0 right-0 w-40 h-40 pointer-events-none"
+                      style={{ background: `radial-gradient(circle at top right, rgba(91,84,184,${isLarge ? '0.12' : '0.08'}), transparent 70%)` }} />
+                    <div className={`relative ${isLarge ? 'flex flex-col sm:flex-row gap-6 items-start' : ''}`}>
+                      <div className={`${isLarge ? 'w-12 h-12' : 'w-10 h-10'} rounded-xl flex items-center justify-center flex-shrink-0 ${isLarge ? '' : 'mb-5'}`}
+                        style={{ background: 'rgba(91,84,184,0.12)', border: '1px solid rgba(91,84,184,0.25)' }}>
+                        <Icon style={{ color: 'var(--accent)', width: isLarge ? '24px' : '20px', height: isLarge ? '24px' : '20px' }} />
+                      </div>
+                      <div>
+                        <h3 className={`${isLarge ? 'text-lg' : 'text-base'} font-semibold mb-2`} style={{ color: 'var(--text)' }}>{f.title}</h3>
+                        <p className={`text-sm leading-relaxed ${isLarge ? 'max-w-2xl' : ''}`} style={{ color: '#a9a5c4' }}>{f.body}</p>
+                      </div>
+                    </div>
                   </div>
-                  <h3 className="text-base font-semibold mb-2" style={{ color: 'var(--text)' }}>{f.title}</h3>
-                  <p className="text-sm leading-relaxed" style={{ color: '#a9a5c4' }}>{f.body}</p>
-                </div>
-              )
-            })}
+                )
+              })}
+            </div>
           </div>
         </section>
 
@@ -447,27 +444,30 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* CTA */}
-        <section className="max-w-2xl mx-auto px-6 pb-24 text-center">
-          <div className="rounded-2xl p-8 sm:p-12 relative overflow-hidden" style={{ background: 'var(--card)', border: '1px solid var(--card-border)' }}>
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-80 h-40 pointer-events-none"
-              style={{ background: 'radial-gradient(ellipse, rgba(91,84,184,0.1), transparent 70%)' }} />
+        {/* CTA — dramatic glow */}
+        <section className="max-w-3xl mx-auto px-6 pb-28 text-center relative">
+          {/* Background glow behind the card */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[300px] pointer-events-none"
+            style={{ background: 'radial-gradient(ellipse, rgba(91,84,184,0.15), transparent 60%)' }} />
+          <div className="glass-card rounded-3xl p-10 sm:p-14 relative overflow-hidden glow-lg">
+            {/* Inner glow */}
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-24 pointer-events-none"
+              style={{ background: 'linear-gradient(to bottom, rgba(91,84,184,0.1), transparent)' }} />
             <div className="relative">
-              <h2 className="text-2xl sm:text-3xl font-bold mb-4" style={{ color: 'var(--text)', letterSpacing: '-0.02em' }}>
+              <h2 className="text-2xl sm:text-4xl font-extrabold mb-4 text-gradient" style={{ letterSpacing: '-0.03em' }}>
                 Get your team compliant in days, not weeks
               </h2>
-              <p className="text-sm mb-8 max-w-md mx-auto leading-relaxed" style={{ color: '#a9a5c4' }}>
+              <p className="text-sm sm:text-base mb-10 max-w-lg mx-auto leading-relaxed" style={{ color: '#a9a5c4' }}>
                 Onboard your staff and send the first training module within 24 hours. No implementation project, no content to write.
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
                 <a href={CONTACT_EMAIL}
-                  className="w-full sm:w-auto px-8 py-4 rounded-xl font-semibold text-white transition-colors inline-block text-center"
-                  style={{ background: 'var(--brand)' }}>
+                  className="cta-primary w-full sm:w-auto px-10 py-4 rounded-2xl font-semibold text-white inline-block text-center">
                   Get in touch
                 </a>
                 <Link href="/pricing"
-                  className="w-full sm:w-auto px-8 py-4 rounded-xl font-semibold transition-colors inline-block text-center"
-                  style={{ color: 'var(--accent)', border: '1px solid var(--border)' }}>
+                  className="cta-outline w-full sm:w-auto px-10 py-4 rounded-2xl font-semibold inline-block text-center"
+                  style={{ color: 'var(--accent)', border: '1px solid rgba(91,84,184,0.3)' }}>
                   View pricing
                 </Link>
               </div>
