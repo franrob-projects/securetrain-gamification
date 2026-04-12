@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Pacifico&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
 :root {
   --bg:          #0e0c1e;
@@ -14,8 +14,9 @@
   --muted:       #8b87a8;
   --accent:      #9d97e8;
   --text:        #ffffff;
-  --card:        #1e1b38;
-  --card-border: rgba(46,42,82,0.45);
+  --card:        rgba(30,27,56,0.6);
+  --card-solid:  #1e1b38;
+  --card-border: rgba(46,42,82,0.4);
 }
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -28,7 +29,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Subtle noise grain — adds texture to flat dark backgrounds */
+/* Noise grain overlay */
 body::after {
   content: '';
   position: fixed;
@@ -44,7 +45,56 @@ body::after {
   50%      { opacity: 0.4; }
 }
 
-/* Focus styles for keyboard navigation */
+/* Gradient text */
+.text-gradient {
+  background: linear-gradient(135deg, #ffffff 0%, #9d97e8 50%, #7A74CC 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Glassmorphism card */
+.glass-card {
+  background: rgba(30,27,56,0.5);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(91,84,184,0.15);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.glass-card:hover {
+  border-color: rgba(91,84,184,0.35);
+  box-shadow: 0 0 30px -8px rgba(91,84,184,0.15);
+}
+
+/* Dot grid background pattern */
+.dot-grid {
+  background-image: radial-gradient(circle, rgba(91,84,184,0.15) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Animated gradient border */
+.gradient-border {
+  position: relative;
+}
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(91,84,184,0.5), rgba(157,151,232,0.2), rgba(91,84,184,0.5));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Glow effects */
+.glow-sm { box-shadow: 0 0 20px -5px rgba(91,84,184,0.2); }
+.glow-md { box-shadow: 0 0 40px -8px rgba(91,84,184,0.25); }
+.glow-lg { box-shadow: 0 0 60px -12px rgba(91,84,184,0.3); }
+
+/* Focus styles */
 a:focus-visible,
 button:focus-visible,
 input:focus-visible {
@@ -53,7 +103,7 @@ input:focus-visible {
   border-radius: 4px;
 }
 
-/* Trust marquee — continuous scroll */
+/* Trust marquee */
 .trust-marquee {
   position: relative;
   overflow: hidden;
@@ -81,25 +131,35 @@ input:focus-visible {
   .trust-marquee__track { animation: none; }
 }
 
-/* Help TOC link hover */
+/* Help TOC */
 .help-toc-link { transition: color 0.2s ease, background 0.2s ease; }
 .help-toc-link:hover { color: var(--text) !important; background: rgba(91,84,184,0.08); }
 
-/* Footer link hover */
+/* Footer links */
 footer a { transition: color 0.2s ease; }
 footer a:hover { color: var(--text) !important; }
 
-/* CTA button hover glow */
-.cta-primary { transition: background 0.2s ease, box-shadow 0.2s ease; }
-.cta-primary:hover { box-shadow: 0 0 20px -4px rgba(91,84,184,0.4); }
-.cta-outline { transition: border-color 0.2s ease, color 0.2s ease; }
-.cta-outline:hover { border-color: rgba(91,84,184,0.5) !important; color: var(--text) !important; }
+/* CTA buttons */
+.cta-primary {
+  transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+  background: linear-gradient(135deg, var(--brand), var(--brand-hover)) !important;
+}
+.cta-primary:hover {
+  box-shadow: 0 0 30px -4px rgba(91,84,184,0.5);
+  transform: translateY(-1px);
+}
+.cta-outline { transition: border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease; }
+.cta-outline:hover {
+  border-color: rgba(91,84,184,0.5) !important;
+  color: var(--text) !important;
+  box-shadow: 0 0 20px -8px rgba(91,84,184,0.2);
+}
 
-/* Card hover — softer transition for marketing cards */
-.card-hover { border: 1px solid var(--card-border); transition: border-color 0.3s ease, box-shadow 0.3s ease; }
-.card-hover:hover { border-color: rgba(91,84,184,0.4); box-shadow: 0 0 24px -8px rgba(91,84,184,0.15); }
+/* Card hover */
+.card-hover { border: 1px solid var(--card-border); transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease; }
+.card-hover:hover { border-color: rgba(91,84,184,0.4); box-shadow: 0 0 30px -8px rgba(91,84,184,0.15); transform: translateY(-2px); }
 
-/* Blog post prose */
+/* Prose */
 .prose-conply { color: #a9a5c4; line-height: 1.8; font-size: 0.9375rem; letter-spacing: 0.01em; }
 .prose-conply h2 { color: var(--text); font-size: 1.25rem; font-weight: 700; margin: 2.5rem 0 0.75rem; letter-spacing: -0.01em; }
 .prose-conply h3 { color: var(--text); font-size: 1rem; font-weight: 600; margin: 2rem 0 0.5rem; letter-spacing: -0.01em; }

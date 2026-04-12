@@ -61,44 +61,49 @@ export default function HomePage() {
 
       <main>
         {/* Hero */}
-        <section className="relative overflow-hidden" style={{ minHeight: '480px' }}>
-          {/* Subtle glow behind hero content */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] pointer-events-none"
-            style={{ zIndex: 0, background: 'radial-gradient(ellipse, rgba(91,84,184,0.12) 0%, transparent 70%)' }} />
+        <section className="relative overflow-hidden">
+          {/* Multi-layered glow background */}
+          <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[600px] pointer-events-none"
+            style={{ zIndex: 0, background: 'radial-gradient(ellipse, rgba(91,84,184,0.18) 0%, transparent 60%)' }} />
+          <div className="absolute top-1/4 left-1/4 w-[400px] h-[400px] pointer-events-none"
+            style={{ zIndex: 0, background: 'radial-gradient(circle, rgba(122,116,204,0.08) 0%, transparent 50%)' }} />
+          <div className="absolute top-1/3 right-1/4 w-[300px] h-[300px] pointer-events-none"
+            style={{ zIndex: 0, background: 'radial-gradient(circle, rgba(157,151,232,0.06) 0%, transparent 50%)' }} />
+          {/* Dot grid pattern */}
+          <div className="absolute inset-0 dot-grid pointer-events-none" style={{ zIndex: 0, opacity: 0.4 }} />
           <RockSilhouette className="absolute bottom-0 left-0 w-full pointer-events-none" style={{ zIndex: 1 }} />
           <div className="absolute inset-0 pointer-events-none" style={{
             zIndex: 2,
-            background: 'linear-gradient(to right, var(--bg) 30%, rgba(14,12,30,0.5) 60%, transparent 100%)',
+            background: 'linear-gradient(to right, var(--bg) 25%, rgba(14,12,30,0.4) 55%, transparent 100%)',
           }} />
-          <div className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none" style={{
+          <div className="absolute bottom-0 left-0 right-0 h-40 pointer-events-none" style={{
             zIndex: 2,
             background: 'linear-gradient(to top, var(--bg), transparent)',
           }} />
-          <div className="relative max-w-4xl mx-auto px-6 pt-24 pb-32 text-center" style={{ zIndex: 3 }}>
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold leading-[1.1] mb-6" style={{ color: 'var(--text)', letterSpacing: '-0.02em' }}>
+          <div className="relative max-w-4xl mx-auto px-6 pt-28 pb-36 text-center" style={{ zIndex: 3 }}>
+            <h1 className="text-3xl sm:text-5xl lg:text-[64px] font-extrabold leading-[1.05] mb-6 text-gradient" style={{ letterSpacing: '-0.03em' }}>
               Your team learns real scenarios.{' '}
               <br className="hidden sm:block" />
               Your regulator gets the audit trail.
             </h1>
-            <p className="text-base sm:text-lg max-w-2xl mx-auto mb-10" style={{ color: '#a9a5c4' }}>
+            <p className="text-base sm:text-lg max-w-2xl mx-auto mb-12" style={{ color: '#a9a5c4' }}>
               Regulated AI agents generate training scenarios grounded in real Gibraltar statute.
               Delivered in Slack, done in 10 minutes, with PDF records for every session.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
               <a href={CONTACT_EMAIL}
-                className="cta-primary w-full sm:w-auto text-center px-8 py-4 rounded-xl font-semibold text-white"
-                style={{ background: 'var(--brand)' }}>
+                className="cta-primary w-full sm:w-auto text-center px-8 py-4 rounded-2xl font-semibold text-white">
                 Get in touch
               </a>
               <Link href="#how-it-works"
-                className="cta-outline w-full sm:w-auto text-center px-8 py-4 rounded-xl font-semibold"
-                style={{ color: 'var(--accent)', border: '1px solid var(--border)' }}>
+                className="cta-outline w-full sm:w-auto text-center px-8 py-4 rounded-2xl font-semibold"
+                style={{ color: 'var(--accent)', border: '1px solid rgba(91,84,184,0.3)' }}>
                 How it works →
               </Link>
             </div>
 
-            {/* Video — embedded in hero, no separate heading */}
-            <div className="mt-12 max-w-3xl mx-auto">
+            {/* Video — glassmorphism wrapper */}
+            <div className="mt-14 max-w-3xl mx-auto glass-card rounded-2xl p-1.5 glow-md">
               <LoomEmbed videoId="cfe3ae0c9a66438c8db3514a07a625e6" title="ConPly product walkthrough" />
             </div>
           </div>

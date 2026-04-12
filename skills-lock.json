@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "skills": {
+    "api-and-interface-design": {
+      "source": "addyosmani/agent-skills",
+      "sourceType": "github",
+      "computedHash": "3cf54553433e55875c664baf78f9c769820bdfac155f09bf2989d70e20e6e147"
+    },
+    "code-review-and-quality": {
+      "source": "addyosmani/agent-skills",
+      "sourceType": "github",
+      "computedHash": "83931d7416bcff73c24d976c1e45f09f80259541d33e9fdfe3ee521d39b27428"
+    },
+    "frontend-ui-engineering": {
+      "source": "addyosmani/agent-skills",
+      "sourceType": "github",
+      "computedHash": "a3bcfbb377d02f455c3f75d912ed3e015ef913f2cd55e62a041719e53aabfe65"
+    },
+    "performance-optimization": {
+      "source": "addyosmani/agent-skills",
+      "sourceType": "github",
+      "computedHash": "087baf94f788bd6a70ba8ec0aa0246f93808251fe2d24e1fd7a3df81896d2367"
+    },
+    "security-and-hardening": {
+      "source": "addyosmani/agent-skills",
+      "sourceType": "github",
+      "computedHash": "5ab0ca195c66406f3bddefb0c97468f2eb717232e4ffced8628f5d921707e281"
+    },
+    "shipping-and-launch": {
+      "source": "addyosmani/agent-skills",
+      "sourceType": "github",
+      "computedHash": "3cd9f8154c7aa578cf7db15c43b54e358bbe7da03c633d289b0302acf4a83028"
+    }
+  }
+}
