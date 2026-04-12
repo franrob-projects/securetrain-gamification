@@ -134,80 +134,80 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* How it works */}
-        <section id="how-it-works" className="max-w-6xl mx-auto px-6 py-28">
+        {/* How it works — vertical timeline */}
+        <section id="how-it-works" className="max-w-3xl mx-auto px-6 py-28">
           <div className="text-center mb-16">
             <p className="text-[11px] font-medium uppercase tracking-[0.15em] mb-3" style={{ color: 'var(--accent)' }}>
               How it works
             </p>
             <h2 className="text-2xl sm:text-3xl font-bold tracking-tight" style={{ color: 'var(--text)' }}>
-              Three steps. No setup overhead.
+              The <span className="text-gradient">Training Lifecycle</span>
             </h2>
+            <p className="text-sm mt-3" style={{ color: '#a9a5c4' }}>
+              From team onboarding to audit-ready records. A fully managed loop.
+            </p>
           </div>
 
-          {/* Step 1 — full width, left-aligned with icon */}
-          <div className="relative rounded-2xl p-8 mb-5"
-            style={{ background: 'var(--card)', border: '1px solid var(--card-border)' }}>
-            <div className="flex flex-col sm:flex-row gap-6 items-start">
-              <div className="flex-shrink-0 w-14 h-14 rounded-xl flex items-center justify-center"
-                style={{ background: 'rgba(91,84,184,0.12)', border: '1px solid rgba(91,84,184,0.3)' }}>
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--accent)' }}>
-                  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-                  <circle cx="9" cy="7" r="4" />
-                  <line x1="19" y1="8" x2="19" y2="14" />
-                  <line x1="22" y1="11" x2="16" y2="11" />
-                </svg>
-              </div>
-              <div className="flex-1">
-                <div className="flex items-center gap-3 mb-2">
-                  <span className="text-xs font-bold uppercase tracking-widest" style={{ color: 'rgba(157,151,232,0.6)' }}>Step 01</span>
+          <div className="relative">
+            {/* Vertical connecting line */}
+            <div className="absolute left-6 sm:left-7 top-0 bottom-0 w-px pointer-events-none"
+              style={{ background: 'linear-gradient(to bottom, rgba(91,84,184,0.4), rgba(91,84,184,0.1))' }} />
+
+            <div className="space-y-2">
+              {[
+                {
+                  step: '01',
+                  title: 'Admin Invites Team',
+                  body: 'Add staff from the dashboard. They receive an email with a sign-in link. Assign each person a sector — Crypto, iGaming, or Both — and ConPly maps the right modules.',
+                  icon: 'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 7a4 4 0 1 0 0-8 4 4 0 0 0 0 8M19 8v6M22 11h-6',
+                },
+                {
+                  step: '02',
+                  title: 'Slack Delivers Training',
+                  body: 'Each working day, one Slack message with a direct link. Staff click, complete three AI-generated scenarios grounded in Gibraltar law, and return to work.',
+                  icon: 'M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z',
+                },
+                {
+                  step: '03',
+                  title: 'AI Generates Scenarios',
+                  body: 'Purpose-built agents retrieve real regulation text — POCA 2015, GFSC Principles, Gambling Act — then generate unique scenarios. Every explanation cites the specific section.',
+                  icon: 'M12 2a7 7 0 0 0-7 7c0 5 7 11 7 11s7-6 7-11a7 7 0 0 0-7-7zM12 12a3 3 0 1 1 0-6 3 3 0 0 1 0 6z',
+                },
+                {
+                  step: '04',
+                  title: 'Scores Are Recorded',
+                  body: 'Every completion writes a timestamped record: user, module, score. The compliance matrix updates in real time. No manual data entry.',
+                  icon: 'M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2zM14 2v6h6M8 13h2M8 17h2M14 13h2M14 17h2',
+                },
+                {
+                  step: '05',
+                  title: 'Audit Trail Ready',
+                  body: 'Admins see who is compliant, who is overdue, and can download a PDF completion record for any user — the evidence a regulator asks for during a supervisory visit.',
+                  icon: 'M9 11l3 3L22 4M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11',
+                },
+              ].map((s, i) => (
+                <div key={s.step} className="relative flex items-start gap-5 sm:gap-6 rounded-xl px-4 py-5 sm:py-6 timeline-step"
+                >
+                  {/* Icon node */}
+                  <div className="relative z-10 flex-shrink-0 w-12 h-12 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center"
+                    style={{ background: 'var(--bg)', border: '1px solid rgba(91,84,184,0.3)' }}>
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"
+                      style={{ color: 'var(--accent)' }}>
+                      <path d={s.icon} />
+                    </svg>
+                  </div>
+
+                  {/* Content */}
+                  <div className="flex-1 pt-1">
+                    <span className="inline-block text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full mb-3"
+                      style={{ color: 'var(--accent)', background: 'rgba(91,84,184,0.12)', border: '1px solid rgba(91,84,184,0.2)' }}>
+                      Step {s.step}
+                    </span>
+                    <h3 className="text-base font-semibold mb-1.5" style={{ color: 'var(--text)' }}>{s.title}</h3>
+                    <p className="text-sm leading-relaxed" style={{ color: '#a9a5c4' }}>{s.body}</p>
+                  </div>
                 </div>
-                <h3 className="text-lg font-semibold mb-2" style={{ color: 'var(--text)' }}>Set up your team</h3>
-                <p className="text-sm leading-relaxed max-w-xl" style={{ color: '#a9a5c4' }}>
-                  Invite staff from the admin dashboard. They receive an email with a sign-in link. Assign each person a sector and ConPly maps the right modules to them.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Step 2 & 3 — side by side */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            {/* Step 2 */}
-            <div className="rounded-2xl p-7 relative overflow-hidden"
-              style={{ background: 'rgba(91,84,184,0.08)', border: '1px solid rgba(91,84,184,0.25)' }}>
-              <div className="absolute top-0 right-0 w-32 h-32 pointer-events-none"
-                style={{ background: 'radial-gradient(circle at top right, rgba(91,84,184,0.12), transparent 70%)' }} />
-              <span className="text-xs font-bold uppercase tracking-widest" style={{ color: 'rgba(157,151,232,0.6)' }}>Step 02</span>
-              <div className="mt-4 mb-4">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--accent)' }}>
-                  <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
-                  <polyline points="14 2 14 8 20 8" />
-                  <path d="M8 13h2" /><path d="M8 17h2" />
-                  <path d="M14 13h2" /><path d="M14 17h2" />
-                </svg>
-              </div>
-              <h3 className="text-lg font-semibold mb-2" style={{ color: 'var(--text)' }}>Slack delivers training daily</h3>
-              <p className="text-sm leading-relaxed" style={{ color: '#a9a5c4' }}>
-                Each working day, staff get one Slack message with a direct link to a module. Three AI scenarios, scored, done in 10 minutes.
-              </p>
-            </div>
-
-            {/* Step 3 */}
-            <div className="rounded-2xl p-7 relative overflow-hidden"
-              style={{ background: 'var(--card)', border: '1px solid var(--card-border)' }}>
-              <div className="absolute bottom-0 left-0 w-40 h-40 pointer-events-none"
-                style={{ background: 'radial-gradient(circle at bottom left, rgba(22,163,74,0.06), transparent 70%)' }} />
-              <span className="text-xs font-bold uppercase tracking-widest" style={{ color: 'rgba(157,151,232,0.6)' }}>Step 03</span>
-              <div className="mt-4 mb-4">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: '#4ade80' }}>
-                  <path d="M9 11l3 3L22 4" />
-                  <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
-                </svg>
-              </div>
-              <h3 className="text-lg font-semibold mb-2" style={{ color: 'var(--text)' }}>Compliance records build automatically</h3>
-              <p className="text-sm leading-relaxed" style={{ color: '#a9a5c4' }}>
-                Every completion is recorded with a timestamp and score. Admins see a live compliance matrix. Any module can be exported as a PDF record for regulators.
-              </p>
+              ))}
             </div>
           </div>
         </section>
