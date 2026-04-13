@@ -2,7 +2,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import { motion } from 'framer-motion'
 import { TrainingModule } from '@/data/modules'
-import { CheckCircle2, XCircle, ExternalLink } from 'lucide-react'
+import { CheckCircle2, XCircle, ExternalLink, FileText, HelpCircle } from 'lucide-react'
 
 interface Scenario {
   scenario: string
@@ -14,7 +14,13 @@ interface Scenario {
 
 const TOTAL = 3
 
-// Split the explanation body from the trailing "Regulation reference: …" line
+const OPTION_COLORS = [
+  { idle: 'rgba(96,165,250,0.06)',  border: 'rgba(96,165,250,0.15)',  letter: '#60a5fa' },
+  { idle: 'rgba(167,139,250,0.06)', border: 'rgba(167,139,250,0.15)', letter: '#a78bfa' },
+  { idle: 'rgba(244,114,182,0.06)', border: 'rgba(244,114,182,0.15)', letter: '#f472b6' },
+  { idle: 'rgba(251,191,36,0.06)',  border: 'rgba(251,191,36,0.15)',  letter: '#fbbf24' },
+]
+
 function splitCitation(explanation: string): { body: string; citation: string | null } {
   const match = explanation.match(/Regulation reference:\s*(.+)$/im)
   if (!match) return { body: explanation.trim(), citation: null }
@@ -49,7 +55,6 @@ export function ScenarioPlayer({ module: m, onComplete }: { module: TrainingModu
     }
   }, [m.title, m.topics])
 
-  // Prefetch all 3 scenarios in parallel on mount to eliminate inter-question wait
   useEffect(() => {
     fetchScenario()
     fetchScenario()
@@ -64,9 +69,9 @@ export function ScenarioPlayer({ module: m, onComplete }: { module: TrainingModu
   }
 
   function handleNext() {
-    const finalCorrect = correct + (selected === scenarios[current].correctIndex ? 0 : 0) // already counted in handleAnswer
     const nextIdx = current + 1
     if (nextIdx >= TOTAL) {
+      const finalCorrect = correct
       onComplete(Math.round((finalCorrect / TOTAL) * 100), finalCorrect)
       return
     }
@@ -112,12 +117,9 @@ export function ScenarioPlayer({ module: m, onComplete }: { module: TrainingModu
   const wasCorrect = selected === s.correctIndex
   const { body: explanationBody, citation } = splitCitation(s.explanation)
 
-  // Progress as percentage for animated bar
-  const progressPct = ((current + (answered ? 1 : 0)) / TOTAL) * 100
-
   return (
-    <div className="space-y-6">
-      {/* Progress bar with step indicators */}
+    <div className="space-y-8">
+      {/* Progress bar */}
       <div className="flex items-center gap-3">
         <div className="flex-1 flex items-center gap-1.5">
           {Array.from({ length: TOTAL }).map((_, i) => (
@@ -126,7 +128,7 @@ export function ScenarioPlayer({ module: m, onComplete }: { module: TrainingModu
                 style={{
                   width: i < current ? '100%' : i === current && answered ? '100%' : i === current ? '50%' : '0%',
                   height: '100%',
-                  background: i < current || (i === current && answered) ? 'var(--brand)' : 'rgba(91,84,184,0.4)',
+                  background: i < current || (i === current && answered) ? '#4ade80' : 'rgba(91,84,184,0.4)',
                   transition: 'width 500ms ease-in-out',
                   borderRadius: 'inherit',
                 }}
@@ -134,39 +136,52 @@ export function ScenarioPlayer({ module: m, onComplete }: { module: TrainingModu
             </div>
           ))}
         </div>
-        <span className="text-xs font-medium whitespace-nowrap px-2 py-1 rounded-md" style={{ color: 'var(--accent)', background: 'rgba(91,84,184,0.1)' }}>
-          {current + 1} / {TOTAL}
+        <span className="text-xs font-medium whitespace-nowrap px-2.5 py-1 rounded-lg" style={{ color: 'var(--accent)', background: 'rgba(91,84,184,0.1)', border: '1px solid rgba(91,84,184,0.2)' }}>
+          {current + 1} of {TOTAL}
         </span>
       </div>
 
-      {/* Scenario */}
-      <div className="rounded-xl p-6" style={{ border: '1px solid var(--border)', background: 'var(--surface)' }}>
-        <div className="flex items-center gap-2 mb-3">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--accent)' }}>
-            <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
-            <polyline points="14 2 14 8 20 8" />
-          </svg>
-          <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--accent)' }}>Scenario</p>
+      {/* Scenario card */}
+      <div className="rounded-xl overflow-hidden" style={{ border: '1px solid var(--card-border)' }}>
+        {/* Header strip */}
+        <div className="px-6 py-3 flex items-center gap-2"
+          style={{ background: 'rgba(91,84,184,0.08)', borderBottom: '1px solid var(--card-border)' }}>
+          <FileText className="w-4 h-4" style={{ color: 'var(--accent)' }} />
+          <span className="text-[11px] font-semibold uppercase tracking-widest" style={{ color: 'var(--accent)' }}>
+            Scenario
+          </span>
         </div>
-        <p className="text-sm leading-relaxed" style={{ color: 'var(--text)' }}>{s.scenario}</p>
+        {/* Body */}
+        <div className="px-6 py-5" style={{ background: 'var(--surface)' }}>
+          <p className="text-sm leading-[1.85]" style={{ color: 'var(--text)' }}>{s.scenario}</p>
+        </div>
       </div>
 
       {/* Question */}
       <div>
-        <p className="text-sm font-medium mb-3" style={{ color: 'var(--text)' }}>{s.question}</p>
-        <div className="space-y-2">
+        <div className="flex items-start gap-3 mb-5">
+          <HelpCircle className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: '#60a5fa' }} />
+          <p className="text-sm font-semibold leading-relaxed" style={{ color: 'var(--text)' }}>{s.question}</p>
+        </div>
+
+        <div className="space-y-3">
           {s.options.map((opt, i) => {
-            let bg = 'var(--surface)', border = 'var(--border)', color = 'var(--text)'
+            const c = OPTION_COLORS[i]
+            let bg = c.idle, border = c.border, textColor = 'var(--text)', letterColor = c.letter
             if (answered) {
-              if (i === s.correctIndex)  { bg = 'rgba(22,163,74,0.1)';  border = 'rgba(22,163,74,0.5)';  color = '#4ade80' }
-              else if (i === selected)   { bg = 'rgba(185,28,28,0.1)';  border = 'rgba(185,28,28,0.5)';  color = '#f87171' }
-              else                       { color = 'var(--muted)' }
+              if (i === s.correctIndex)  { bg = 'rgba(22,163,74,0.1)';  border = 'rgba(22,163,74,0.5)';  textColor = '#4ade80'; letterColor = '#4ade80' }
+              else if (i === selected)   { bg = 'rgba(185,28,28,0.1)';  border = 'rgba(185,28,28,0.5)';  textColor = '#f87171'; letterColor = '#f87171' }
+              else                       { textColor = 'var(--muted)'; letterColor = 'var(--muted)'; bg = 'transparent'; border = 'var(--card-border)' }
             }
             return (
               <button key={i} onClick={() => handleAnswer(i)} disabled={answered}
-                className="w-full text-left px-4 py-3 rounded-xl text-sm transition-all"
-                style={{ border: `1px solid ${border}`, background: bg, color }}>
-                <span className="font-medium mr-2">{String.fromCharCode(65 + i)}.</span>{opt}
+                className="w-full text-left px-5 py-4 rounded-xl text-sm transition-all flex items-start gap-4 group"
+                style={{ border: `1px solid ${border}`, background: bg, color: textColor }}>
+                <span className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 text-xs font-bold transition-all"
+                  style={{ background: answered ? 'transparent' : `${c.letter}15`, color: letterColor, border: `1px solid ${border}` }}>
+                  {String.fromCharCode(65 + i)}
+                </span>
+                <span className="leading-relaxed pt-0.5">{opt}</span>
               </button>
             )
           })}
@@ -179,24 +194,32 @@ export function ScenarioPlayer({ module: m, onComplete }: { module: TrainingModu
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.2, ease: 'easeOut' }}
-          className="rounded-xl p-4 flex gap-3"
-          style={{
-            border: `1px solid ${wasCorrect ? 'rgba(22,163,74,0.4)' : 'rgba(185,28,28,0.4)'}`,
-            background: wasCorrect ? 'rgba(22,163,74,0.08)' : 'rgba(185,28,28,0.08)',
-          }}
+          className="rounded-xl overflow-hidden"
+          style={{ border: `1px solid ${wasCorrect ? 'rgba(22,163,74,0.3)' : 'rgba(185,28,28,0.3)'}` }}
         >
-          {wasCorrect
-            ? <CheckCircle2 className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
-            : <XCircle      className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" />}
-          <div className="flex-1">
-            <p className="text-sm leading-relaxed" style={{ color: 'var(--text)' }}>{explanationBody}</p>
+          {/* Feedback header */}
+          <div className="px-5 py-3 flex items-center gap-2"
+            style={{
+              background: wasCorrect ? 'rgba(22,163,74,0.08)' : 'rgba(185,28,28,0.08)',
+              borderBottom: `1px solid ${wasCorrect ? 'rgba(22,163,74,0.15)' : 'rgba(185,28,28,0.15)'}`,
+            }}>
+            {wasCorrect
+              ? <CheckCircle2 className="w-4 h-4 text-green-400" />
+              : <XCircle className="w-4 h-4 text-red-400" />}
+            <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: wasCorrect ? '#4ade80' : '#f87171' }}>
+              {wasCorrect ? 'Correct' : 'Incorrect'}
+            </span>
+          </div>
+          {/* Explanation body */}
+          <div className="px-5 py-4" style={{ background: 'var(--surface)' }}>
+            <p className="text-sm leading-[1.85]" style={{ color: 'var(--muted)' }}>{explanationBody}</p>
             {citation && (
-              <div className="mt-3 pt-3 flex items-start gap-2" style={{ borderTop: `1px solid ${wasCorrect ? 'rgba(22,163,74,0.15)' : 'rgba(185,28,28,0.15)'}` }}>
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-                  className="flex-shrink-0 mt-0.5" style={{ color: '#8b87a8' }}>
+              <div className="mt-4 pt-4 flex items-start gap-2.5" style={{ borderTop: '1px solid var(--card-border)' }}>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                  className="flex-shrink-0 mt-0.5" style={{ color: 'var(--accent)' }}>
                   <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" /><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
                 </svg>
-                <p style={{ fontSize: '12px', color: '#8b87a8' }}>
+                <p className="text-xs leading-relaxed" style={{ color: 'var(--accent)' }}>
                   {citation}
                 </p>
               </div>
@@ -205,22 +228,23 @@ export function ScenarioPlayer({ module: m, onComplete }: { module: TrainingModu
         </motion.div>
       )}
 
+      {/* Actions */}
       {answered && (
-        <a href="https://www.gibraltarcompliancetraining.com" target="_blank" rel="noopener noreferrer"
-          className="flex items-center gap-1.5 text-xs transition-colors" style={{ color: 'var(--muted)' }}>
-          <ExternalLink className="w-3 h-3" />
-          Deep-dive this topic on Conply | Gibraltar Compliance Training
-        </a>
-      )}
-
-      {answered && (
-        <button onClick={handleNext}
-          className="w-full py-3 px-6 rounded-xl font-semibold text-sm transition-colors text-white"
-          style={{ background: 'var(--brand)' }}
-          onMouseOver={e => (e.currentTarget.style.background = 'var(--brand-hover)')}
-          onMouseOut={e => (e.currentTarget.style.background = 'var(--brand)')}>
-          {current + 1 < TOTAL ? 'Next scenario' : 'See results'}
-        </button>
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+          <button onClick={handleNext}
+            className="flex-1 py-3.5 px-6 rounded-xl font-semibold text-sm transition-colors text-white text-center"
+            style={{ background: 'var(--brand)' }}
+            onMouseOver={e => (e.currentTarget.style.background = 'var(--brand-hover)')}
+            onMouseOut={e => (e.currentTarget.style.background = 'var(--brand)')}>
+            {current + 1 < TOTAL ? 'Next scenario' : 'See results'}
+          </button>
+          <a href="https://www.gibraltarcompliancetraining.com" target="_blank" rel="noopener noreferrer"
+            className="flex items-center justify-center gap-1.5 text-xs py-3 px-4 rounded-xl transition-colors"
+            style={{ color: 'var(--muted)', border: '1px solid var(--card-border)' }}>
+            <ExternalLink className="w-3 h-3" />
+            Deep-dive this topic
+          </a>
+        </div>
       )}
     </div>
   )
