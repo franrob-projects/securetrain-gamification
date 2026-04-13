@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="POCA 2015 MLRO training obligations">
+  <defs>
+    <style>
+      .bg { fill: #FAFAFB; }
+      .brand { fill: #534AB7; }
+      .brand-tint { fill: #EEEDF9; }
+      .ink { fill: #14142B; }
+      .muted { fill: #6B7280; }
+      .stroke { stroke: #534AB7; fill: none; stroke-width: 1.25; }
+      .stroke-muted { stroke: #D1D5DB; fill: none; stroke-width: 1; }
+      text { font-family: 'DM Sans', system-ui, -apple-system, sans-serif; }
+      .eyebrow { font-size: 13px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; fill: #534AB7; }
+      .title { font-size: 44px; font-weight: 500; fill: #14142B; letter-spacing: -0.02em; }
+      .obligation-label { font-size: 14px; font-weight: 500; fill: #14142B; }
+      .obligation-meta { font-size: 11px; font-weight: 400; fill: #6B7280; }
+      .hub-label { font-size: 22px; font-weight: 500; fill: #FFFFFF; letter-spacing: 0.02em; }
+      .hub-sub { font-size: 11px; font-weight: 500; fill: #C9C4F0; letter-spacing: 0.12em; }
+      .statute { font-size: 12px; font-weight: 500; fill: #534AB7; letter-spacing: 0.08em; }
+    </style>
+  </defs>
+
+  <rect class="bg" width="1200" height="630"/>
+
+  <!-- Left copy block -->
+  <text class="eyebrow" x="80" y="110">Proceeds of Crime Act 2015</text>
+  <text class="title" x="80" y="160">The MLRO's</text>
+  <text class="title" x="80" y="210">statutory training duty</text>
+
+  <rect x="80" y="240" width="220" height="28" rx="14" fill="#EEEDF9"/>
+  <text class="statute" x="98" y="258">POCA 2015 · s.8 &amp; sch.9</text>
+
+  <text class="eyebrow" x="80" y="570" opacity="0.5">03 · ROLE-SPECIFIC OBLIGATIONS</text>
+
+  <!-- Hub-and-spoke, centred around x=820 -->
+  <g transform="translate(820, 315)">
+
+    <!-- Spokes (drawn under nodes) -->
+    <line x1="0" y1="0" x2="0" y2="-210" class="stroke-muted"/>
+    <line x1="0" y1="0" x2="200" y2="-105" class="stroke-muted"/>
+    <line x1="0" y1="0" x2="200" y2="105" class="stroke-muted"/>
+    <line x1="0" y1="0" x2="0" y2="210" class="stroke-muted"/>
+    <line x1="0" y1="0" x2="-200" y2="105" class="stroke-muted"/>
+    <line x1="0" y1="0" x2="-200" y2="-105" class="stroke-muted"/>
+
+    <!-- Hub -->
+    <circle cx="0" cy="0" r="78" class="brand"/>
+    <text class="hub-sub" x="0" y="-14" text-anchor="middle">THE</text>
+    <text class="hub-label" x="0" y="12" text-anchor="middle">MLRO</text>
+    <text class="hub-sub" x="0" y="32" text-anchor="middle">&amp; DEPUTY</text>
+
+    <!-- Obligation 1: Top -->
+    <g transform="translate(0, -230)">
+      <rect x="-110" y="-26" width="220" height="52" rx="6" fill="#FFFFFF" stroke="#E5E7EB"/>
+      <circle cx="-92" cy="0" r="4" class="brand"/>
+      <text class="obligation-label" x="-80" y="-4">Own competency</text>
+      <text class="obligation-meta" x="-80" y="14">Maintain current AML knowledge</text>
+    </g>
+
+    <!-- Obligation 2: Top-right -->
+    <g transform="translate(215, -125)">
+      <rect x="-110" y="-26" width="220" height="52" rx="6" fill="#FFFFFF" stroke="#E5E7EB"/>
+      <circle cx="-92" cy="0" r="4" class="brand"/>
+      <text class="obligation-label" x="-80" y="-4">Firm-wide programme</text>
+      <text class="obligation-meta" x="-80" y="14">Design &amp; deliver AML training</text>
+    </g>
+
+    <!-- Obligation 3: Bottom-right -->
+    <g transform="translate(215, 125)">
+      <rect x="-110" y="-26" width="220" height="52" rx="6" fill="#FFFFFF" stroke="#E5E7EB"/>
+      <circle cx="-92" cy="0" r="4" class="brand"/>
+      <text class="obligation-label" x="-80" y="-4">Tipping-off awareness</text>
+      <text class="obligation-meta" x="-80" y="14">Section 25 POCA obligations</text>
+    </g>
+
+    <!-- Obligation 4: Bottom -->
+    <g transform="translate(0, 230)">
+      <rect x="-110" y="-26" width="220" height="52" rx="6" fill="#FFFFFF" stroke="#E5E7EB"/>
+      <circle cx="-92" cy="0" r="4" class="brand"/>
+      <text class="obligation-label" x="-80" y="-4">Record-keeping</text>
+      <text class="obligation-meta" x="-80" y="14">Evidence of training completed</text>
+    </g>
+
+    <!-- Obligation 5: Bottom-left -->
+    <g transform="translate(-215, 125)">
+      <rect x="-110" y="-26" width="220" height="52" rx="6" fill="#FFFFFF" stroke="#E5E7EB"/>
+      <circle cx="-92" cy="0" r="4" class="brand"/>
+      <text class="obligation-label" x="-80" y="-4">Refresher cadence</text>
+      <text class="obligation-meta" x="-80" y="14">Annual at minimum</text>
+    </g>
+
+    <!-- Obligation 6: Top-left -->
+    <g transform="translate(-215, -125)">
+      <rect x="-110" y="-26" width="220" height="52" rx="6" fill="#FFFFFF" stroke="#E5E7EB"/>
+      <circle cx="-92" cy="0" r="4" class="brand"/>
+      <text class="obligation-label" x="-80" y="-4">New-joiner induction</text>
+      <text class="obligation-meta" x="-80" y="14">Before customer contact</text>
+    </g>
+
+  </g>
+</svg>

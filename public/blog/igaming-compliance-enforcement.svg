@@ -1,0 +1,128 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="Gibraltar Gambling Commissioner enforcement actions and training failures">
+  <defs>
+    <style>
+      .bg { fill: #FAFAFB; }
+      .brand { fill: #534AB7; }
+      .brand-tint { fill: #EEEDF9; }
+      .ink { fill: #14142B; }
+      .muted { fill: #6B7280; }
+      .stroke-muted { stroke: #E5E7EB; fill: none; stroke-width: 1; }
+      text { font-family: 'DM Sans', system-ui, -apple-system, sans-serif; }
+      .eyebrow { font-size: 13px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; fill: #534AB7; }
+      .title { font-size: 44px; font-weight: 500; fill: #14142B; letter-spacing: -0.02em; }
+      .case-id { font-size: 11px; font-weight: 600; fill: #6B7280; letter-spacing: 0.12em; }
+      .case-label { font-size: 13px; font-weight: 500; fill: #14142B; }
+      .tag-text { font-size: 10px; font-weight: 500; fill: #6B7280; letter-spacing: 0.06em; }
+      .tag-text-active { font-size: 10px; font-weight: 500; fill: #FFFFFF; letter-spacing: 0.06em; }
+      .section-num { font-size: 11px; font-weight: 600; fill: #534AB7; letter-spacing: 0.12em; }
+      .legend-text { font-size: 11px; font-weight: 400; fill: #6B7280; }
+      .column-head { font-size: 10px; font-weight: 600; fill: #6B7280; letter-spacing: 0.12em; }
+    </style>
+  </defs>
+
+  <rect class="bg" width="1200" height="630"/>
+
+  <!-- Left copy block -->
+  <text class="eyebrow" x="80" y="110">Gambling Commissioner · Public Decisions</text>
+  <text class="title" x="80" y="160">The factor that</text>
+  <text class="title" x="80" y="210">keeps appearing</text>
+
+  <!-- Legend -->
+  <g transform="translate(80, 260)">
+    <rect x="0" y="0" width="14" height="14" rx="3" class="brand"/>
+    <text class="legend-text" x="22" y="11">Inadequate staff training cited</text>
+    <rect x="0" y="24" width="14" height="14" rx="3" fill="#FFFFFF" stroke="#E5E7EB"/>
+    <text class="legend-text" x="22" y="35">Other contributing factor</text>
+  </g>
+
+  <text class="eyebrow" x="80" y="570" opacity="0.5">05 · ENFORCEMENT PATTERN</text>
+
+  <!-- Right-side case file list -->
+  <g transform="translate(580, 110)">
+
+    <!-- Column headers -->
+    <text class="column-head" x="0" y="0">CASE</text>
+    <text class="column-head" x="140" y="0">PRIMARY FAILING</text>
+    <text class="column-head" x="400" y="0">CONTRIBUTING FACTORS</text>
+
+    <!-- Horizontal rule -->
+    <line x1="0" y1="14" x2="540" y2="14" stroke="#E5E7EB" stroke-width="1"/>
+
+    <!-- Case row 1 -->
+    <g transform="translate(0, 50)">
+      <text class="case-id" x="0" y="4">DEC 01</text>
+      <text class="case-label" x="140" y="4">AML controls</text>
+      <!-- Tag: CDD -->
+      <rect x="400" y="-10" width="54" height="20" rx="4" fill="#FFFFFF" stroke="#E5E7EB"/>
+      <text class="tag-text" x="427" y="4" text-anchor="middle">CDD</text>
+      <!-- Tag: Training (highlighted) -->
+      <rect x="460" y="-10" width="72" height="20" rx="4" class="brand"/>
+      <text class="tag-text-active" x="496" y="4" text-anchor="middle">TRAINING</text>
+      <line x1="0" y1="26" x2="540" y2="26" stroke="#F3F4F6" stroke-width="1"/>
+    </g>
+
+    <!-- Case row 2 -->
+    <g transform="translate(0, 100)">
+      <text class="case-id" x="0" y="4">DEC 02</text>
+      <text class="case-label" x="140" y="4">Social responsibility</text>
+      <rect x="400" y="-10" width="54" height="20" rx="4" fill="#FFFFFF" stroke="#E5E7EB"/>
+      <text class="tag-text" x="427" y="4" text-anchor="middle">MI</text>
+      <rect x="460" y="-10" width="72" height="20" rx="4" class="brand"/>
+      <text class="tag-text-active" x="496" y="4" text-anchor="middle">TRAINING</text>
+      <line x1="0" y1="26" x2="540" y2="26" stroke="#F3F4F6" stroke-width="1"/>
+    </g>
+
+    <!-- Case row 3 -->
+    <g transform="translate(0, 150)">
+      <text class="case-id" x="0" y="4">DEC 03</text>
+      <text class="case-label" x="140" y="4">Suspicious activity</text>
+      <rect x="400" y="-10" width="54" height="20" rx="4" fill="#FFFFFF" stroke="#E5E7EB"/>
+      <text class="tag-text" x="427" y="4" text-anchor="middle">SAR</text>
+      <rect x="460" y="-10" width="72" height="20" rx="4" class="brand"/>
+      <text class="tag-text-active" x="496" y="4" text-anchor="middle">TRAINING</text>
+      <line x1="0" y1="26" x2="540" y2="26" stroke="#F3F4F6" stroke-width="1"/>
+    </g>
+
+    <!-- Case row 4 -->
+    <g transform="translate(0, 200)">
+      <text class="case-id" x="0" y="4">DEC 04</text>
+      <text class="case-label" x="140" y="4">Source of funds</text>
+      <rect x="400" y="-10" width="54" height="20" rx="4" fill="#FFFFFF" stroke="#E5E7EB"/>
+      <text class="tag-text" x="427" y="4" text-anchor="middle">EDD</text>
+      <rect x="460" y="-10" width="72" height="20" rx="4" class="brand"/>
+      <text class="tag-text-active" x="496" y="4" text-anchor="middle">TRAINING</text>
+      <line x1="0" y1="26" x2="540" y2="26" stroke="#F3F4F6" stroke-width="1"/>
+    </g>
+
+    <!-- Case row 5 -->
+    <g transform="translate(0, 250)">
+      <text class="case-id" x="0" y="4">DEC 05</text>
+      <text class="case-label" x="140" y="4">Self-exclusion</text>
+      <rect x="400" y="-10" width="54" height="20" rx="4" fill="#FFFFFF" stroke="#E5E7EB"/>
+      <text class="tag-text" x="427" y="4" text-anchor="middle">SYS</text>
+      <rect x="460" y="-10" width="72" height="20" rx="4" class="brand"/>
+      <text class="tag-text-active" x="496" y="4" text-anchor="middle">TRAINING</text>
+      <line x1="0" y1="26" x2="540" y2="26" stroke="#F3F4F6" stroke-width="1"/>
+    </g>
+
+    <!-- Case row 6 -->
+    <g transform="translate(0, 300)">
+      <text class="case-id" x="0" y="4">DEC 06</text>
+      <text class="case-label" x="140" y="4">PEP screening</text>
+      <rect x="400" y="-10" width="54" height="20" rx="4" fill="#FFFFFF" stroke="#E5E7EB"/>
+      <text class="tag-text" x="427" y="4" text-anchor="middle">GOV</text>
+      <rect x="460" y="-10" width="72" height="20" rx="4" class="brand"/>
+      <text class="tag-text-active" x="496" y="4" text-anchor="middle">TRAINING</text>
+      <line x1="0" y1="26" x2="540" y2="26" stroke="#F3F4F6" stroke-width="1"/>
+    </g>
+
+    <!-- Pattern callout -->
+    <g transform="translate(0, 360)">
+      <rect x="0" y="0" width="540" height="56" rx="6" fill="#EEEDF9"/>
+      <circle cx="28" cy="28" r="4" class="brand"/>
+      <text x="48" y="24" font-family="DM Sans, system-ui" font-size="13" font-weight="500" fill="#14142B">Training appears in every published decision.</text>
+      <text x="48" y="42" font-family="DM Sans, system-ui" font-size="11" fill="#6B7280">The baseline is no longer "we have a programme" — it's "we can prove it works."</text>
+    </g>
+
+  </g>
+</svg>

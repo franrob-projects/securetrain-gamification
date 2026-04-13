@@ -11,7 +11,7 @@
   --brand:       #5B54B8;
   --brand-hover: #7A74CC;
   --brand-dark:  #3F3A8A;
-  --muted:       #8b87a8;
+  --muted:       #a9a5c4;
   --accent:      #9d97e8;
   --text:        #ffffff;
   --card:        rgba(30,27,56,0.6);
@@ -20,6 +20,8 @@
 }
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { font-size: 110%; }
 
 body {
   font-family: 'Inter', system-ui, sans-serif;
@@ -119,7 +121,7 @@ input:focus-visible {
   display: flex;
   align-items: center;
   flex-shrink: 0;
-  padding: 0 0.5rem;
+  padding: 0 2rem;
   white-space: nowrap;
 }
 .trust-marquee:hover .trust-marquee__track { animation-play-state: paused; }
@@ -130,6 +132,15 @@ input:focus-visible {
 @media (prefers-reduced-motion: reduce) {
   .trust-marquee__track { animation: none; }
 }
+
+/* Step rows */
+.step-row { transition: background 0.3s ease, transform 0.3s ease; }
+.step-row:hover { background: rgba(91,84,184,0.04); transform: translateX(4px); }
+.step-row:hover .step-icon { box-shadow: 0 0 20px -4px currentColor; transform: scale(1.08); }
+.step-row:hover .step-label { color: var(--text) !important; }
+
+/* Nav links */
+nav a.rounded-lg:hover, nav button.rounded-lg:hover { color: var(--text) !important; background: rgba(91,84,184,0.08); }
 
 /* Help TOC */
 .help-toc-link { transition: color 0.2s ease, background 0.2s ease; }
@@ -154,10 +165,6 @@ footer a:hover { color: var(--text) !important; }
   color: var(--text) !important;
   box-shadow: 0 0 20px -8px rgba(91,84,184,0.2);
 }
-
-/* Timeline step hover */
-.timeline-step { transition: background 0.2s ease; }
-.timeline-step:hover { background: rgba(91,84,184,0.04); }
 
 /* Card hover */
 .card-hover { border: 1px solid var(--card-border); transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease; }

@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="Gambling Act 2025 training obligations by role">
+  <defs>
+    <style>
+      .bg { fill: #FAFAFB; }
+      .brand { fill: #534AB7; }
+      .brand-tint { fill: #EEEDF9; }
+      .ink { fill: #14142B; }
+      .muted { fill: #6B7280; }
+      .stroke { stroke: #534AB7; fill: none; stroke-width: 1.25; }
+      .stroke-muted { stroke: #D1D5DB; fill: none; stroke-width: 1; }
+      text { font-family: 'DM Sans', system-ui, -apple-system, sans-serif; }
+      .eyebrow { font-size: 13px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; fill: #534AB7; }
+      .title { font-size: 44px; font-weight: 500; fill: #14142B; letter-spacing: -0.02em; }
+      .role-label { font-size: 15px; font-weight: 500; fill: #14142B; }
+      .role-meta { font-size: 12px; font-weight: 400; fill: #6B7280; letter-spacing: 0.02em; }
+      .node-label { font-size: 14px; font-weight: 500; fill: #FFFFFF; letter-spacing: 0.02em; }
+      .date { font-size: 12px; font-weight: 500; fill: #534AB7; letter-spacing: 0.06em; }
+    </style>
+  </defs>
+
+  <rect class="bg" width="1200" height="630"/>
+
+  <!-- Eyebrow + title block -->
+  <text class="eyebrow" x="80" y="110">Gambling Act 2025 · Gibraltar</text>
+  <text class="title" x="80" y="160">Who the statute</text>
+  <text class="title" x="80" y="210">targets for training</text>
+
+  <!-- Date pill -->
+  <rect x="80" y="240" width="170" height="28" rx="14" fill="#EEEDF9"/>
+  <text class="date" x="98" y="258">IN FORCE · OCT 2025</text>
+
+  <!-- Central Act node -->
+  <g transform="translate(340, 420)">
+    <rect x="-100" y="-32" width="200" height="64" rx="8" class="brand"/>
+    <text class="node-label" x="0" y="-4" text-anchor="middle">Gambling Act 2025</text>
+    <text x="0" y="16" text-anchor="middle" fill="#C9C4F0" font-family="DM Sans, system-ui" font-size="11" letter-spacing="0.06em">SECTIONS 84–91</text>
+  </g>
+
+  <!-- Connecting lines from central node to roles -->
+  <path class="stroke" d="M 440 420 Q 560 420 680 170"/>
+  <path class="stroke" d="M 440 420 Q 580 420 720 295"/>
+  <path class="stroke" d="M 440 420 Q 600 420 760 420"/>
+  <path class="stroke" d="M 440 420 Q 580 420 720 545"/>
+
+  <!-- Role: Directors & Senior Managers -->
+  <g transform="translate(680, 140)">
+    <circle cx="0" cy="0" r="5" class="brand"/>
+    <text class="role-label" x="20" y="4">Directors &amp; Senior Managers</text>
+    <text class="role-meta" x="20" y="26">Governance · oversight accountability</text>
+  </g>
+
+  <!-- Role: MLRO & Deputy -->
+  <g transform="translate(720, 265)">
+    <circle cx="0" cy="0" r="5" class="brand"/>
+    <text class="role-label" x="20" y="4">MLRO &amp; Deputy MLRO</text>
+    <text class="role-meta" x="20" y="26">Suspicious activity · reporting workflow</text>
+  </g>
+
+  <!-- Role: Customer-facing staff -->
+  <g transform="translate(760, 390)">
+    <circle cx="0" cy="0" r="5" class="brand"/>
+    <text class="role-label" x="20" y="4">Customer-facing staff</text>
+    <text class="role-meta" x="20" y="26">CDD · social responsibility · red flags</text>
+  </g>
+
+  <!-- Role: New joiners -->
+  <g transform="translate(720, 515)">
+    <circle cx="0" cy="0" r="5" class="brand"/>
+    <text class="role-label" x="20" y="4">All new joiners</text>
+    <text class="role-meta" x="20" y="26">Induction · before customer contact</text>
+  </g>
+
+  <!-- Decorative dotted perimeter on right -->
+  <g opacity="0.4">
+    <circle cx="1100" cy="90" r="3" class="brand"/>
+    <circle cx="1130" cy="90" r="3" fill="#D1D5DB"/>
+    <circle cx="1100" cy="120" r="3" fill="#D1D5DB"/>
+    <circle cx="1130" cy="120" r="3" class="brand"/>
+  </g>
+
+  <!-- Section number marker -->
+  <text x="80" y="570" class="eyebrow" opacity="0.5">01 · REGULATORY SCOPE</text>
+</svg>

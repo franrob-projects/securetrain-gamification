@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   title: 'Compliance Blog',
   description: 'Practical guidance on Gibraltar compliance obligations for crypto and iGaming firms. POCA 2015, GFSC principles, Gambling Act 2025, and more.',
   openGraph: {
-    title: 'Compliance Blog — ConPly',
+    title: 'Compliance Blog | Conply',
     description: 'Practical guidance on Gibraltar compliance obligations for crypto and iGaming firms.',
     type: 'website',
   },
@@ -81,7 +81,7 @@ export default async function BlogPage({
             {posts.length > 0 && (
               <div className="rounded-xl overflow-hidden mb-8 flex flex-col sm:flex-row"
                 style={{ background: 'var(--card)', border: '1px solid var(--card-border)' }}>
-                <BlogCover tags={posts[0].tags} className="h-48 sm:h-auto sm:w-72 flex-shrink-0" />
+                <BlogCover tags={posts[0].tags} coverImage={posts[0].coverImage} className="h-48 sm:h-auto sm:w-72 flex-shrink-0" />
                 <div className="p-6 sm:p-8 flex flex-col gap-3 flex-1">
                   <div className="flex gap-2 flex-wrap">
                     {posts[0].tags.slice(0, 2).map(t => (
@@ -118,7 +118,7 @@ export default async function BlogPage({
                 {posts.slice(1).map(post => (
                   <div key={post.slug} className="rounded-xl flex flex-col overflow-hidden card-hover"
                     style={{ background: 'var(--card)' }}>
-                    <BlogCover tags={post.tags} className="h-36" />
+                    <BlogCover tags={post.tags} coverImage={post.coverImage} className="h-36" />
 
                     <div className="p-5 flex flex-col gap-3 flex-1">
                       <div className="flex gap-2 flex-wrap">

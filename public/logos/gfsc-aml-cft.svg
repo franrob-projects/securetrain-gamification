@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <circle cx="100" cy="100" r="90" fill="#003087"/>
+  <!-- Document shape -->
+  <rect x="58" y="40" width="84" height="104" rx="4" fill="#ffffff" opacity="0.95"/>
+  <path d="M118,40 L142,64 L118,64 Z" fill="#C9A84C"/>
+  <rect x="118" y="40" width="24" height="24" fill="none"/>
+  <path d="M118,40 L142,40 L142,64 L118,64 Z" fill="#e8d5a3"/>
+  <path d="M118,40 L142,64 L118,64 Z" fill="#C9A84C"/>
+  <!-- Lines on document -->
+  <rect x="68" y="72" width="40" height="3" rx="1" fill="#003087"/>
+  <rect x="68" y="80" width="60" height="3" rx="1" fill="#003087" opacity="0.5"/>
+  <rect x="68" y="88" width="55" height="3" rx="1" fill="#003087" opacity="0.5"/>
+  <!-- Shield on doc -->
+  <path d="M78,98 L100,108 L122,98 L122,120 Q100,132 78,120 Z" fill="#003087" opacity="0.15" stroke="#003087" stroke-width="1.5"/>
+  <text x="100" y="118" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#003087" text-anchor="middle">AML</text>
+  <rect x="68" y="128" width="50" height="3" rx="1" fill="#003087" opacity="0.4"/>
+  <!-- Label -->
+  <text x="100" y="162" font-family="Arial, sans-serif" font-size="9" font-weight="bold" fill="#C9A84C" text-anchor="middle" letter-spacing="0.5">GFSC AML/CFT</text>
+  <text x="100" y="175" font-family="Arial, sans-serif" font-size="8" fill="#ffffff" text-anchor="middle">Guidance Notes</text>
+</svg>

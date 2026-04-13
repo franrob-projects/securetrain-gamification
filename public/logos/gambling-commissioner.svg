@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 80" width="320" height="80">
+  <rect width="320" height="80" fill="#ffffff" rx="4"/>
+  <rect width="320" height="80" fill="none" stroke="#CC0000" stroke-width="2" rx="4"/>
+  <!-- Castle icon simplified -->
+  <rect x="14" y="28" width="40" height="36" fill="none" stroke="#CC0000" stroke-width="2"/>
+  <rect x="14" y="20" width="8" height="14" fill="#CC0000"/>
+  <rect x="25" y="20" width="8" height="14" fill="#CC0000"/>
+  <rect x="37" y="20" width="8" height="14" fill="#CC0000"/>
+  <rect x="48" y="20" width="6" height="14" fill="#CC0000"/>
+  <rect x="24" y="42" width="10" height="22" fill="#CC0000"/>
+  <!-- Text -->
+  <text x="64" y="30" font-family="Arial, sans-serif" font-size="9" fill="#333333" letter-spacing="1">GIBRALTAR</text>
+  <text x="64" y="48" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#CC0000">Gambling</text>
+  <text x="64" y="64" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#CC0000">Commissioner</text>
+</svg>

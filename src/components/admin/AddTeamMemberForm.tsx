@@ -96,7 +96,7 @@ export function AddTeamMemberForm({
                 Added to your team list, but the invitation email could not be sent.
               </p>
               <p className="text-xs" style={{ color: 'rgba(139,135,168,0.7)' }}>
-                Reason: {result.inviteReason ?? 'unknown'}. They can still sign in manually at /auth using this email — their team_member row will link automatically.
+                Reason: {result.inviteReason ?? 'unknown'}. They can still sign in manually at /auth using this email. Their team_member row will link automatically.
               </p>
             </div>
           )}

@@ -54,7 +54,7 @@ export default async function PostPage({
     description: post.meta.excerpt,
     datePublished: post.meta.date,
     author: { '@type': 'Organization', name: post.meta.author },
-    publisher: { '@type': 'Organization', name: 'ConPly', url: base },
+    publisher: { '@type': 'Organization', name: 'Conply', url: base },
     url: `${base}/blog/${slug}`,
     keywords: post.meta.tags.join(', '),
   }
@@ -68,7 +68,7 @@ export default async function PostPage({
       <main>
         {/* Cover band */}
         <div className="relative">
-          <BlogCover tags={post.meta.tags} className="h-48 sm:h-56" />
+          <BlogCover tags={post.meta.tags} coverImage={post.meta.coverImage} className="h-48 sm:h-56" />
           <div className="absolute inset-0 pointer-events-none"
             style={{ background: 'linear-gradient(to top, var(--bg) 0%, transparent 60%)' }} />
         </div>

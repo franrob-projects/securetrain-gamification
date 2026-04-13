@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="GFSC Principle 7 compliance cycle">
+  <defs>
+    <style>
+      .bg { fill: #FAFAFB; }
+      .brand { fill: #534AB7; }
+      .brand-tint { fill: #EEEDF9; }
+      .ink { fill: #14142B; }
+      .muted { fill: #6B7280; }
+      .stroke { stroke: #534AB7; fill: none; stroke-width: 1.25; }
+      .stroke-dash { stroke: #534AB7; fill: none; stroke-width: 1.25; stroke-dasharray: 3 4; }
+      text { font-family: 'DM Sans', system-ui, -apple-system, sans-serif; }
+      .eyebrow { font-size: 13px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; fill: #534AB7; }
+      .title { font-size: 44px; font-weight: 500; fill: #14142B; letter-spacing: -0.02em; }
+      .stage-num { font-size: 11px; font-weight: 600; fill: #534AB7; letter-spacing: 0.12em; }
+      .stage-label { font-size: 16px; font-weight: 500; fill: #14142B; }
+      .stage-meta { font-size: 12px; font-weight: 400; fill: #6B7280; }
+      .centre-title { font-size: 15px; font-weight: 500; fill: #FFFFFF; letter-spacing: 0.02em; }
+      .centre-sub { font-size: 11px; font-weight: 500; fill: #C9C4F0; letter-spacing: 0.08em; }
+    </style>
+  </defs>
+
+  <rect class="bg" width="1200" height="630"/>
+
+  <!-- Left copy block -->
+  <text class="eyebrow" x="80" y="110">Regulatory Principle 7</text>
+  <text class="title" x="80" y="160">Systems &amp; controls,</text>
+  <text class="title" x="80" y="210">proportionate to risk</text>
+  <text class="stage-meta" x="80" y="250" font-size="14">A continuous loop — not a one-off tick-box.</text>
+
+  <rect x="80" y="290" width="290" height="1" fill="#E5E7EB"/>
+  <text class="eyebrow" x="80" y="320" opacity="0.6">02 · THE PRINCIPLE 7 LOOP</text>
+
+  <!-- Cycle diagram, centred right -->
+  <g transform="translate(880, 315)">
+    <!-- Outer cycle track -->
+    <circle cx="0" cy="0" r="180" class="stroke-dash" opacity="0.4"/>
+
+    <!-- Centre node -->
+    <circle cx="0" cy="0" r="62" class="brand"/>
+    <text class="centre-sub" x="0" y="-8" text-anchor="middle">PRINCIPLE</text>
+    <text x="0" y="18" text-anchor="middle" fill="#FFFFFF" font-family="DM Sans, system-ui" font-size="34" font-weight="500">07</text>
+
+    <!-- Stage 1: Risk Assessment (top) -->
+    <g transform="translate(0, -180)">
+      <circle cx="0" cy="0" r="8" class="brand"/>
+      <circle cx="0" cy="0" r="4" fill="#FFFFFF"/>
+      <text class="stage-num" x="0" y="-32" text-anchor="middle">01</text>
+      <text class="stage-label" x="0" y="-14" text-anchor="middle">Risk Assessment</text>
+    </g>
+
+    <!-- Stage 2: Systems & Controls (right) -->
+    <g transform="translate(180, 0)">
+      <circle cx="0" cy="0" r="8" class="brand"/>
+      <circle cx="0" cy="0" r="4" fill="#FFFFFF"/>
+      <text class="stage-num" x="20" y="-6" text-anchor="start">02</text>
+      <text class="stage-label" x="20" y="14" text-anchor="start">Systems &amp; Controls</text>
+    </g>
+
+    <!-- Stage 3: Training (bottom) -->
+    <g transform="translate(0, 180)">
+      <circle cx="0" cy="0" r="8" class="brand"/>
+      <circle cx="0" cy="0" r="4" fill="#FFFFFF"/>
+      <text class="stage-label" x="0" y="28" text-anchor="middle">Training</text>
+      <text class="stage-num" x="0" y="46" text-anchor="middle">03</text>
+    </g>
+
+    <!-- Stage 4: Monitoring (left) -->
+    <g transform="translate(-180, 0)">
+      <circle cx="0" cy="0" r="8" class="brand"/>
+      <circle cx="0" cy="0" r="4" fill="#FFFFFF"/>
+      <text class="stage-num" x="-20" y="-6" text-anchor="end">04</text>
+      <text class="stage-label" x="-20" y="14" text-anchor="end">Monitoring</text>
+    </g>
+
+    <!-- Directional arrows on cycle -->
+    <path class="stroke" d="M 127 -127 A 180 180 0 0 1 127 127" marker-end="url(#arrowhead)"/>
+    <path class="stroke" d="M 127 127 A 180 180 0 0 1 -127 127" marker-end="url(#arrowhead)"/>
+    <path class="stroke" d="M -127 127 A 180 180 0 0 1 -127 -127" marker-end="url(#arrowhead)"/>
+    <path class="stroke" d="M -127 -127 A 180 180 0 0 1 127 -127" marker-end="url(#arrowhead)"/>
+  </g>
+
+  <defs>
+    <marker id="arrowhead" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+      <path d="M 0 0 L 6 4 L 0 8 z" fill="#534AB7"/>
+    </marker>
+  </defs>
+</svg>

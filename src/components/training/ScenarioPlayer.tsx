@@ -209,7 +209,7 @@ export function ScenarioPlayer({ module: m, onComplete }: { module: TrainingModu
         <a href="https://www.gibraltarcompliancetraining.com" target="_blank" rel="noopener noreferrer"
           className="flex items-center gap-1.5 text-xs transition-colors" style={{ color: 'var(--muted)' }}>
           <ExternalLink className="w-3 h-3" />
-          Deep-dive this topic on Conply — Gibraltar Compliance Training
+          Deep-dive this topic on Conply | Gibraltar Compliance Training
         </a>
       )}
 

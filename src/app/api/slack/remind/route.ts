@@ -57,7 +57,7 @@ async function sendReminder(opts: { userName?: string; moduleId?: string }): Pro
       elements: [
         {
           type: 'mrkdwn',
-          text: '_ConPly · Gibraltar Compliance Training_',
+          text: '_Conply · Gibraltar Compliance Training_',
         },
       ],
     },

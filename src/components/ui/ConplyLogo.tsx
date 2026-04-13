@@ -7,7 +7,7 @@ export function ConplyLogo({ size = 'md' }: { size?: 'sm' | 'md' | 'lg' }) {
   return (
     <img
       src="/conply-logo.svg"
-      alt="ConPly"
+      alt="Conply"
       width={width}
       height={height}
       style={{ display: 'block' }}

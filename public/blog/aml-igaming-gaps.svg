@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="Five recurring AML training gaps in Gibraltar iGaming">
+  <defs>
+    <style>
+      .bg { fill: #FAFAFB; }
+      .brand { fill: #534AB7; }
+      .brand-tint { fill: #EEEDF9; }
+      .ink { fill: #14142B; }
+      .muted { fill: #6B7280; }
+      .stroke-muted { stroke: #E5E7EB; fill: none; stroke-width: 1; }
+      text { font-family: 'DM Sans', system-ui, -apple-system, sans-serif; }
+      .eyebrow { font-size: 13px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; fill: #534AB7; }
+      .title { font-size: 40px; font-weight: 500; fill: #14142B; letter-spacing: -0.02em; }
+      .subtitle { font-size: 16px; font-weight: 400; fill: #6B7280; }
+      .card-num { font-size: 38px; font-weight: 500; fill: #534AB7; letter-spacing: -0.02em; }
+      .card-label { font-size: 14px; font-weight: 500; fill: #14142B; }
+      .card-meta { font-size: 11px; font-weight: 400; fill: #6B7280; letter-spacing: 0.04em; text-transform: uppercase; }
+      .section-num { font-size: 11px; font-weight: 600; fill: #534AB7; letter-spacing: 0.12em; }
+    </style>
+  </defs>
+
+  <rect class="bg" width="1200" height="630"/>
+
+  <!-- Top banner -->
+  <text class="eyebrow" x="80" y="90">Gibraltar iGaming · AML Training Audit</text>
+  <text class="title" x="80" y="140">Five gaps we see,</text>
+  <text class="title" x="80" y="190">over and over again</text>
+
+  <!-- Decorative right-side marker -->
+  <line x1="1120" y1="80" x2="1120" y2="200" stroke="#534AB7" stroke-width="1"/>
+  <text class="section-num" x="1100" y="95" text-anchor="end">04 · FIELD NOTES</text>
+
+  <!-- Divider -->
+  <line x1="80" y1="260" x2="1120" y2="260" stroke="#E5E7EB" stroke-width="1"/>
+
+  <!-- Five cards in a row -->
+  <!-- Card 1 -->
+  <g transform="translate(80, 300)">
+    <rect x="0" y="0" width="195" height="250" rx="8" fill="#FFFFFF" class="stroke-muted"/>
+    <text class="card-num" x="20" y="58">01</text>
+    <line x1="20" y1="78" x2="50" y2="78" stroke="#534AB7" stroke-width="1.5"/>
+    <text class="card-label" x="20" y="120">Risk-based</text>
+    <text class="card-label" x="20" y="140">approach, in</text>
+    <text class="card-label" x="20" y="160">name only</text>
+    <text class="card-meta" x="20" y="222">GAP 01</text>
+  </g>
+
+  <!-- Card 2 -->
+  <g transform="translate(295, 300)">
+    <rect x="0" y="0" width="195" height="250" rx="8" fill="#FFFFFF" class="stroke-muted"/>
+    <text class="card-num" x="20" y="58">02</text>
+    <line x1="20" y1="78" x2="50" y2="78" stroke="#534AB7" stroke-width="1.5"/>
+    <text class="card-label" x="20" y="120">No refresh</text>
+    <text class="card-label" x="20" y="140">after rule</text>
+    <text class="card-label" x="20" y="160">changes</text>
+    <text class="card-meta" x="20" y="222">GAP 02</text>
+  </g>
+
+  <!-- Card 3 (highlighted) -->
+  <g transform="translate(510, 300)">
+    <rect x="0" y="0" width="195" height="250" rx="8" class="brand"/>
+    <text class="card-num" x="20" y="58" fill="#FFFFFF">03</text>
+    <line x1="20" y1="78" x2="50" y2="78" stroke="#FFFFFF" stroke-width="1.5"/>
+    <text class="card-label" x="20" y="120" fill="#FFFFFF">One deck for</text>
+    <text class="card-label" x="20" y="140" fill="#FFFFFF">every role,</text>
+    <text class="card-label" x="20" y="160" fill="#FFFFFF">every year</text>
+    <text class="card-meta" x="20" y="222" fill="#C9C4F0">MOST COMMON</text>
+  </g>
+
+  <!-- Card 4 -->
+  <g transform="translate(725, 300)">
+    <rect x="0" y="0" width="195" height="250" rx="8" fill="#FFFFFF" class="stroke-muted"/>
+    <text class="card-num" x="20" y="58">04</text>
+    <line x1="20" y1="78" x2="50" y2="78" stroke="#534AB7" stroke-width="1.5"/>
+    <text class="card-label" x="20" y="120">Records that</text>
+    <text class="card-label" x="20" y="140">prove attendance,</text>
+    <text class="card-label" x="20" y="160">not learning</text>
+    <text class="card-meta" x="20" y="222">GAP 04</text>
+  </g>
+
+  <!-- Card 5 -->
+  <g transform="translate(940, 300)">
+    <rect x="0" y="0" width="180" height="250" rx="8" fill="#FFFFFF" class="stroke-muted"/>
+    <text class="card-num" x="20" y="58">05</text>
+    <line x1="20" y1="78" x2="50" y2="78" stroke="#534AB7" stroke-width="1.5"/>
+    <text class="card-label" x="20" y="120">Typologies</text>
+    <text class="card-label" x="20" y="140">detached from</text>
+    <text class="card-label" x="20" y="160">the product</text>
+    <text class="card-meta" x="20" y="222">GAP 05</text>
+  </g>
+</svg>

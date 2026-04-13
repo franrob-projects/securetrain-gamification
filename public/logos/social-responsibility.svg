@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <circle cx="100" cy="100" r="90" fill="#1a6b3c"/>
+  <!-- Heart shape -->
+  <path d="M100,140 Q60,115 55,85 Q50,60 75,58 Q88,57 100,72 Q112,57 125,58 Q150,60 145,85 Q140,115 100,140 Z" fill="#ffffff" opacity="0.9"/>
+  <!-- Person inside heart -->
+  <circle cx="100" cy="85" r="10" fill="#1a6b3c"/>
+  <path d="M82,115 Q82,100 100,98 Q118,100 118,115" fill="#1a6b3c"/>
+  <!-- Hands reaching up either side -->
+  <path d="M68,95 Q58,85 62,75 Q66,68 72,72 Q74,80 72,88" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M132,95 Q142,85 138,75 Q134,68 128,72 Q126,80 128,88" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Checkmark -->
+  <polyline points="88,84 96,93 113,76" fill="none" stroke="#1a6b3c" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Label -->
+  <text x="100" y="158" font-family="Arial, sans-serif" font-size="8.5" font-weight="bold" fill="#C9A84C" text-anchor="middle" letter-spacing="0.5">SOCIAL RESPONSIBILITY</text>
+  <text x="100" y="171" font-family="Arial, sans-serif" font-size="8" fill="#ffffff" text-anchor="middle">Codes of Practice</text>
+</svg>

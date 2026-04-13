@@ -43,8 +43,25 @@ const DEFAULT_STYLE = {
   accent:   'rgba(91,84,184,0.3)',
 }
 
-export function BlogCover({ tags, className }: { tags: string[]; className?: string }) {
-  // Pick the first matching topic style
+export function BlogCover({ tags, coverImage, className }: { tags: string[]; coverImage?: string; className?: string }) {
+  // If a real cover image exists, use it
+  if (coverImage) {
+    return (
+      <div
+        className={`relative overflow-hidden ${className ?? ''}`}
+        style={{ borderBottom: '1px solid var(--card-border)' }}
+      >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={coverImage}
+          alt=""
+          className="w-full h-full object-cover"
+        />
+      </div>
+    )
+  }
+
+  // Fallback: icon-based cover
   const style = tags.reduce<typeof DEFAULT_STYLE | null>(
     (found, tag) => found ?? TOPIC_STYLES[tag] ?? null,
     null,
@@ -60,7 +77,6 @@ export function BlogCover({ tags, className }: { tags: string[]; className?: str
         borderBottom: '1px solid var(--card-border)',
       }}
     >
-      {/* Large faded icon */}
       <Icon
         style={{
           width: '64px',
@@ -69,7 +85,6 @@ export function BlogCover({ tags, className }: { tags: string[]; className?: str
         }}
         strokeWidth={1.2}
       />
-      {/* Subtle grid pattern */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
