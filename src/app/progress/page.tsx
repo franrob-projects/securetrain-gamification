@@ -235,7 +235,7 @@ export default function ProgressPage() {
           </div>
         )}
 
-        <p className="mt-10 text-xs" style={{ color: 'rgba(139,135,168,0.5)' }}>
+        <p className="mt-10 text-xs" style={{ color: 'rgba(169,165,196,0.5)' }}>
           All completions are recorded in your compliance audit trail. Download the PDF record for any completed module above.
         </p>
       </main>

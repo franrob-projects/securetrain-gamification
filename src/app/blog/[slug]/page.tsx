@@ -68,7 +68,7 @@ export default async function PostPage({
       <main>
         {/* Cover band */}
         <div className="relative">
-          <BlogCover tags={post.meta.tags} coverImage={post.meta.coverImage} className="h-48 sm:h-56" />
+          <BlogCover tags={post.meta.tags} coverImage={post.meta.coverImage} alt={post.meta.title} className="h-48 sm:h-56" />
           <div className="absolute inset-0 pointer-events-none"
             style={{ background: 'linear-gradient(to top, var(--bg) 0%, transparent 60%)' }} />
         </div>
@@ -77,9 +77,9 @@ export default async function PostPage({
           {/* Breadcrumb */}
           <nav className="flex items-center gap-2 text-xs mb-8" style={{ color: 'var(--muted)' }}>
             <Link href="/" style={{ color: 'var(--muted)' }}>Home</Link>
-            <span style={{ color: 'rgba(139,135,168,0.4)' }}>/</span>
+            <span style={{ color: 'rgba(169,165,196,0.4)' }}>/</span>
             <Link href="/blog" style={{ color: 'var(--muted)' }}>Blog</Link>
-            <span style={{ color: 'rgba(139,135,168,0.4)' }}>/</span>
+            <span style={{ color: 'rgba(169,165,196,0.4)' }}>/</span>
             <span className="line-clamp-1" style={{ color: 'var(--text)' }}>{post.meta.title}</span>
           </nav>
 
@@ -98,9 +98,9 @@ export default async function PostPage({
             </h1>
             <div className="flex items-center gap-4 text-xs pb-6" style={{ color: 'var(--muted)', borderBottom: '1px solid var(--card-border)' }}>
               <span className="font-medium" style={{ color: 'var(--accent)' }}>{post.meta.author}</span>
-              <span style={{ color: 'rgba(139,135,168,0.4)' }}>|</span>
+              <span style={{ color: 'rgba(169,165,196,0.4)' }}>|</span>
               <span>{formatDate(post.meta.date)}</span>
-              <span style={{ color: 'rgba(139,135,168,0.4)' }}>|</span>
+              <span style={{ color: 'rgba(169,165,196,0.4)' }}>|</span>
               <span>{post.meta.readingTime}</span>
             </div>
           </div>

@@ -15,7 +15,7 @@ export function TrustMarquee() {
   return (
     <section className="border-y" style={{ borderColor: 'var(--border)', background: 'rgba(91,84,184,0.04)' }}>
       <div className="py-6">
-        <p className="text-center text-[10px] font-semibold uppercase tracking-[0.2em] mb-4" style={{ color: 'rgba(139,135,168,0.5)' }}>
+        <p className="text-center text-[10px] font-semibold uppercase tracking-[0.2em] mb-4" style={{ color: 'rgba(169,165,196,0.5)' }}>
           Mapped to Gibraltar regulation
         </p>
         <div className="trust-marquee" aria-hidden="false">

@@ -42,7 +42,7 @@ export default function GeniusPage() {
               Personalised learning journeys that map regulation topics directly to each user. The AI knows what they&apos;ve covered, where they&apos;re weak, and what to test them on next.
             </p>
             <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer"
-              className="inline-block px-8 py-3.5 rounded-xl font-semibold text-sm text-black"
+              className="cta-genius inline-block px-8 py-3.5 rounded-xl font-semibold text-sm text-black"
               style={{ background: 'linear-gradient(135deg, #fbbf24, #f59e0b)' }}>
               Book a demo
             </a>
@@ -280,8 +280,8 @@ export default function GeniusPage() {
           <div className="text-center mb-12">
             <h2 className="text-3xl sm:text-4xl font-bold" style={{ color: 'var(--text)' }}>Genius vs Pro</h2>
           </div>
-          <div className="rounded-xl overflow-hidden" style={{ border: '1px solid var(--card-border)' }}>
-            <div className="grid grid-cols-3 text-center text-xs font-semibold uppercase tracking-wider"
+          <div className="rounded-xl overflow-x-auto" style={{ border: '1px solid var(--card-border)' }}>
+            <div className="grid grid-cols-3 text-center text-xs font-semibold uppercase tracking-wider min-w-[480px]"
               style={{ background: 'rgba(91,84,184,0.06)', borderBottom: '1px solid var(--card-border)' }}>
               <div className="px-4 py-3" style={{ color: 'var(--muted)' }}>Feature</div>
               <div className="px-4 py-3" style={{ color: '#a78bfa' }}>Pro</div>
@@ -326,7 +326,7 @@ export default function GeniusPage() {
               We&apos;ll walk you through a personalised demo using your firm&apos;s sector and team structure. 30 minutes, no commitment.
             </p>
             <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer"
-              className="inline-block px-8 py-3.5 rounded-xl font-semibold text-sm text-black"
+              className="cta-genius inline-block px-8 py-3.5 rounded-xl font-semibold text-sm text-black"
               style={{ background: 'linear-gradient(135deg, #fbbf24, #f59e0b)' }}>
               Book a demo
             </a>

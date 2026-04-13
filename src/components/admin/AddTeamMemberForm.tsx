@@ -86,7 +86,7 @@ export function AddTeamMemberForm({
               <p className="text-sm flex items-center justify-center gap-2" style={{ color: 'var(--muted)' }}>
                 <Mail className="w-4 h-4" /> Invitation sent to {result.email}
               </p>
-              <p className="text-xs" style={{ color: 'rgba(139,135,168,0.7)' }}>
+              <p className="text-xs" style={{ color: 'rgba(169,165,196,0.7)' }}>
                 They&apos;ll receive an email with a sign-in link. Their compliance tracking starts the moment they sign in.
               </p>
             </div>
@@ -95,7 +95,7 @@ export function AddTeamMemberForm({
               <p className="text-sm" style={{ color: 'var(--muted)' }}>
                 Added to your team list, but the invitation email could not be sent.
               </p>
-              <p className="text-xs" style={{ color: 'rgba(139,135,168,0.7)' }}>
+              <p className="text-xs" style={{ color: 'rgba(169,165,196,0.7)' }}>
                 Reason: {result.inviteReason ?? 'unknown'}. They can still sign in manually at /auth using this email. Their team_member row will link automatically.
               </p>
             </div>
@@ -166,7 +166,7 @@ export function AddTeamMemberForm({
 
           <div>
             <label className="block text-xs font-medium mb-1.5" style={{ color: 'var(--muted)' }}>
-              Job title <span style={{ color: 'rgba(139,135,168,0.5)' }}>(optional)</span>
+              Job title <span style={{ color: 'rgba(169,165,196,0.5)' }}>(optional)</span>
             </label>
             <input
               type="text"
@@ -220,7 +220,7 @@ export function AddTeamMemberForm({
             </button>
           </div>
 
-          <p className="text-xs pt-2" style={{ color: 'rgba(139,135,168,0.6)' }}>
+          <p className="text-xs pt-2" style={{ color: 'rgba(169,165,196,0.6)' }}>
             They&apos;ll receive an invitation email with a sign-in link. Their training history starts tracking from their first sign-in.
           </p>
         </form>

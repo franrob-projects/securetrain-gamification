@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { ConplyLogo } from '@/components/ui/ConplyLogo'
+import { CONTACT_EMAIL_BARE } from '@/lib/constants'
 
 const PRODUCT = [
   { label: 'Pro',             href: '/products/pro'    },
@@ -48,7 +49,7 @@ export function Footer() {
                 style={{ background: 'rgba(167,139,250,0.1)', border: '1px solid rgba(167,139,250,0.2)', color: '#a78bfa' }}>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
               </a>
-              <a href="mailto:francisroberts@live.com" aria-label="Email"
+              <a href={CONTACT_EMAIL_BARE} aria-label="Email"
                 className="w-8 h-8 rounded-lg flex items-center justify-center transition-colors"
                 style={{ background: 'rgba(74,222,128,0.1)', border: '1px solid rgba(74,222,128,0.2)', color: '#4ade80' }}>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>

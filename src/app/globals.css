@@ -131,6 +131,8 @@ input:focus-visible {
 }
 @media (prefers-reduced-motion: reduce) {
   .trust-marquee__track { animation: none; }
+  .step-row:hover, .card-hover:hover, .cta-primary:hover { transform: none !important; }
+  .step-row:hover .step-icon { transform: none !important; }
 }
 
 /* Step rows */
@@ -138,6 +140,16 @@ input:focus-visible {
 .step-row:hover { background: rgba(91,84,184,0.04); transform: translateX(4px); }
 .step-row:hover .step-icon { box-shadow: 0 0 20px -4px currentColor; transform: scale(1.08); }
 .step-row:hover .step-label { color: var(--text) !important; }
+
+/* Genius CTA */
+.cta-genius {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 0 20px -4px rgba(251,191,36,0.3);
+}
+.cta-genius:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 0 30px -4px rgba(251,191,36,0.5);
+}
 
 /* Nav links */
 nav a.rounded-lg:hover, nav button.rounded-lg:hover { color: var(--text) !important; background: rgba(91,84,184,0.08); }

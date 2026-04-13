@@ -202,10 +202,10 @@ export default function PricingPage() {
                     </ul>
 
                     <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer"
-                      className="block text-center py-3.5 rounded-xl text-sm font-semibold transition-colors"
+                      className={`block text-center py-3.5 rounded-xl text-sm font-semibold ${tier.featured ? 'cta-primary text-white' : 'cta-outline'}`}
                       style={tier.featured
-                        ? { background: 'var(--brand)', color: '#fff' }
-                        : { background: 'transparent', color: 'var(--accent)', border: '1px solid var(--border)' }
+                        ? {}
+                        : { color: 'var(--accent)', border: '1px solid var(--border)' }
                       }>
                       {tier.cta}
                     </a>

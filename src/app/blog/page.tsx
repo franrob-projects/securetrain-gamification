@@ -45,7 +45,7 @@ export default async function BlogPage({
           <p className="text-[11px] font-medium uppercase tracking-[0.15em] mb-3" style={{ color: 'var(--accent)' }}>
             From the blog
           </p>
-          <h1 className="text-3xl font-bold mb-3" style={{ color: 'var(--text)' }}>
+          <h1 className="text-3xl sm:text-4xl font-bold mb-3" style={{ color: 'var(--text)' }}>
             Stay ahead of Gibraltar regulation
           </h1>
           <p className="text-sm mb-8 max-w-lg" style={{ color: 'var(--muted)' }}>
@@ -79,9 +79,9 @@ export default async function BlogPage({
           <div>
             {/* Featured first post */}
             {posts.length > 0 && (
-              <div className="rounded-xl overflow-hidden mb-8 flex flex-col sm:flex-row"
-                style={{ background: 'var(--card)', border: '1px solid var(--card-border)' }}>
-                <BlogCover tags={posts[0].tags} coverImage={posts[0].coverImage} className="h-48 sm:h-auto sm:w-72 flex-shrink-0" />
+              <div className="rounded-xl overflow-hidden mb-8 flex flex-col sm:flex-row card-hover"
+                style={{ background: 'var(--card)' }}>
+                <BlogCover tags={posts[0].tags} coverImage={posts[0].coverImage} alt={posts[0].title} className="h-48 sm:h-auto sm:w-72 flex-shrink-0" />
                 <div className="p-6 sm:p-8 flex flex-col gap-3 flex-1">
                   <div className="flex gap-2 flex-wrap">
                     {posts[0].tags.slice(0, 2).map(t => (
@@ -100,7 +100,7 @@ export default async function BlogPage({
                   <div className="flex items-center justify-between pt-3" style={{ borderTop: '1px solid var(--card-border)' }}>
                     <div className="flex items-center gap-3">
                       <span className="text-xs" style={{ color: 'var(--muted)' }}>{formatDate(posts[0].date)}</span>
-                      <span className="text-xs" style={{ color: 'rgba(139,135,168,0.6)' }}>{posts[0].readingTime}</span>
+                      <span className="text-xs" style={{ color: 'rgba(169,165,196,0.6)' }}>{posts[0].readingTime}</span>
                     </div>
                     <Link href={`/blog/${posts[0].slug}`}
                       className="text-xs font-semibold"
@@ -118,7 +118,7 @@ export default async function BlogPage({
                 {posts.slice(1).map(post => (
                   <div key={post.slug} className="rounded-xl flex flex-col overflow-hidden card-hover"
                     style={{ background: 'var(--card)' }}>
-                    <BlogCover tags={post.tags} coverImage={post.coverImage} className="h-36" />
+                    <BlogCover tags={post.tags} coverImage={post.coverImage} alt={post.title} className="h-36" />
 
                     <div className="p-5 flex flex-col gap-3 flex-1">
                       <div className="flex gap-2 flex-wrap">
@@ -141,7 +141,7 @@ export default async function BlogPage({
                       <div className="flex items-center justify-between mt-auto pt-2" style={{ borderTop: '1px solid var(--card-border)' }}>
                         <div className="flex items-center gap-3">
                           <span className="text-xs" style={{ color: 'var(--muted)' }}>{formatDate(post.date)}</span>
-                          <span className="text-xs" style={{ color: 'rgba(139,135,168,0.6)' }}>{post.readingTime}</span>
+                          <span className="text-xs" style={{ color: 'rgba(169,165,196,0.6)' }}>{post.readingTime}</span>
                         </div>
                         <Link href={`/blog/${post.slug}`}
                           className="text-xs font-semibold"

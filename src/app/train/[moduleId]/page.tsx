@@ -256,7 +256,7 @@ export default function TrainPage() {
                   </div>
                 </div>
 
-                <p className="text-xs text-center mb-6" style={{ color: 'rgba(139,135,168,0.6)' }}>
+                <p className="text-xs text-center mb-6" style={{ color: 'rgba(169,165,196,0.6)' }}>
                   This completion has been recorded in your compliance audit trail.
                 </p>
 

@@ -13,7 +13,7 @@ const config: Config = {
           hover:   '#7A74CC',
           dark:    '#3F3A8A',
         },
-        muted:  '#8b87a8',
+        muted:  '#a9a5c4',
         accent: '#9d97e8',
       },
       animation: {

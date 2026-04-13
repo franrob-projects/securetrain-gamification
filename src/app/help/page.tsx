@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { Nav } from '@/components/marketing/Nav'
 import { Footer } from '@/components/marketing/Footer'
 import { Shield, Clock, Users, FileText, Layers, Lock, Settings, HelpCircle, AlertTriangle, CheckCircle, Info, Zap } from 'lucide-react'
+import { CONTACT_EMAIL_BARE } from '@/lib/constants'
 
 export const metadata: Metadata = {
   title: 'Help & Setup Guide',
@@ -271,7 +272,7 @@ export default function HelpPage() {
               </div>
 
               <p>
-                If you require a data processing agreement (DPA) or have specific security questions, <a href="mailto:francisrobeets@gmail.com">contact us</a>.
+                If you require a data processing agreement (DPA) or have specific security questions, <a href={CONTACT_EMAIL_BARE}>contact us</a>.
               </p>
             </section>
 
@@ -363,7 +364,7 @@ export default function HelpPage() {
               <p className="text-sm mb-4" style={{ color: 'var(--muted)' }}>
                 We&apos;re happy to help you get up and running.
               </p>
-              <a href="mailto:francisrobeets@gmail.com"
+              <a href={CONTACT_EMAIL_BARE}
                 className="inline-block px-6 py-2.5 rounded-lg text-sm font-semibold text-white"
                 style={{ background: 'var(--brand)' }}>
                 Email us

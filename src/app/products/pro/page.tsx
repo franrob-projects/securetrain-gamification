@@ -261,6 +261,20 @@ export default function ProPage() {
           </div>
         </section>
 
+        {/* CTA */}
+        <section className="max-w-3xl mx-auto px-6 py-16 sm:py-24 text-center">
+          <h2 className="text-2xl sm:text-3xl font-bold mb-4" style={{ color: 'var(--text)' }}>
+            Ready to get started?
+          </h2>
+          <p className="text-sm mb-8 max-w-lg mx-auto" style={{ color: 'var(--muted)' }}>
+            We&apos;ll walk you through the platform and set up a trial with your team. 30 minutes, no commitment.
+          </p>
+          <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer"
+            className="cta-primary inline-block px-10 py-4 rounded-xl font-semibold text-white text-sm">
+            Book a demo
+          </a>
+        </section>
+
         {/* Upgrade nudge */}
         <section className="border-t" style={{ borderColor: 'var(--border)', background: 'rgba(91,84,184,0.04)' }}>
           <div className="max-w-3xl mx-auto px-6 py-16 sm:py-24 text-center">

@@ -96,9 +96,14 @@ export default function HomePage() {
                   </li>
                 ))}
               </ul>
-              <div>
-                <Link href="#how-it-works"
+              <div className="flex flex-col sm:flex-row gap-3">
+                <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer"
                   className="cta-primary block sm:inline-block text-center px-8 py-3.5 rounded-xl font-semibold text-white text-sm">
+                  Book a demo
+                </a>
+                <Link href="#how-it-works"
+                  className="cta-outline block sm:inline-block text-center px-8 py-3.5 rounded-xl font-semibold text-sm"
+                  style={{ color: 'var(--accent)', border: '1px solid rgba(91,84,184,0.3)' }}>
                   How it works
                 </Link>
               </div>
@@ -187,7 +192,7 @@ export default function HomePage() {
         <section id="how-it-works" className="border-y" style={{ borderColor: 'var(--border)', background: 'rgba(91,84,184,0.04)' }}>
           <div className="max-w-3xl mx-auto px-6 py-16 sm:py-24">
           <div className="text-center mb-14">
-            <h2 className="text-4xl sm:text-5xl font-bold tracking-tight" style={{ color: 'var(--text)' }}>
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight" style={{ color: 'var(--text)' }}>
               The <span className="text-gradient">training lifecycle</span>
             </h2>
             <p className="text-sm mt-3" style={{ color: 'var(--muted)' }}>
@@ -314,7 +319,7 @@ export default function HomePage() {
                 <div key={post.slug} className="rounded-xl flex flex-col overflow-hidden card-hover"
                   style={{ background: 'var(--card)' }}
                 >
-                  <BlogCover tags={post.tags} coverImage={post.coverImage} className="h-28" />
+                  <BlogCover tags={post.tags} coverImage={post.coverImage} alt={post.title} className="h-28" />
                   <div className="p-5 flex flex-col gap-3 flex-1">
                   <span className="text-xs font-medium px-2 py-0.5 rounded-full w-fit"
                     style={{ background: 'rgba(91,84,184,0.2)', color: 'var(--accent)' }}>

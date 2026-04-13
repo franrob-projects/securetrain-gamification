@@ -53,7 +53,7 @@ export function ComplianceChart() {
       {/* Legend */}
       <div className="flex gap-5 justify-end mb-5 text-xs">
         <span className="flex items-center gap-2" style={{ color: 'var(--muted)' }}>
-          <span className="w-2.5 h-2.5 rounded-full inline-block" style={{ background: 'rgba(139,135,168,0.5)' }} />
+          <span className="w-2.5 h-2.5 rounded-full inline-block" style={{ background: 'rgba(169,165,196,0.5)' }} />
           Traditional e-learning
         </span>
         <span className="flex items-center gap-2" style={{ color: '#4ade80' }}>
@@ -78,12 +78,12 @@ export function ComplianceChart() {
           />
           <XAxis
             dataKey="stage"
-            tick={{ fill: '#8b87a8', fontSize: 11 }}
+            tick={{ fill: '#a9a5c4', fontSize: 11 }}
             axisLine={{ stroke: 'rgba(46,42,82,0.4)' }}
             tickLine={false}
           />
           <YAxis
-            tick={{ fill: '#8b87a8', fontSize: 10 }}
+            tick={{ fill: '#a9a5c4', fontSize: 10 }}
             axisLine={false}
             tickLine={false}
             tickFormatter={(v: number) => `${v}%`}
@@ -93,7 +93,7 @@ export function ComplianceChart() {
           <Area
             type="monotone"
             dataKey="traditional"
-            stroke="rgba(139,135,168,0.4)"
+            stroke="rgba(169,165,196,0.4)"
             strokeWidth={2}
             strokeDasharray="4 4"
             fill="none"
@@ -138,7 +138,7 @@ export function ComplianceChart() {
           </div>
         </div>
         <div className="flex items-center gap-3">
-          <div className="w-2 h-8 rounded-full" style={{ background: 'rgba(139,135,168,0.3)' }} />
+          <div className="w-2 h-8 rounded-full" style={{ background: 'rgba(169,165,196,0.3)' }} />
           <div>
             <div className="text-lg font-bold" style={{ color: 'var(--muted)' }}>45%</div>
             <div className="text-[10px] uppercase tracking-wider" style={{ color: 'var(--muted)', opacity: 0.6 }}>Traditional at audit</div>

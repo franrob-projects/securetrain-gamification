@@ -154,7 +154,7 @@ function SectorLabel({ sector }: { sector: UserSector }) {
   const map: Record<UserSector, { label: string; color: string }> = {
     crypto:  { label: 'Crypto',  color: '#7A74CC' },
     gambling: { label: 'iGaming', color: '#9d97e8' },
-    both:    { label: 'Both',    color: '#8b87a8'  },
+    both:    { label: 'Both',    color: '#a9a5c4'  },
   }
   const s = map[sector]
   return <span className="text-xs" style={{ color: s.color }}>{s.label}</span>
@@ -340,11 +340,11 @@ export function ComplianceMatrix() {
                     return (
                       <td key={m.id} className="px-2 py-2 text-center">
                         {!req ? (
-                          <Minus className="w-3 h-3 mx-auto" style={{ color: 'rgba(139,135,168,0.25)' }} />
+                          <Minus className="w-3 h-3 mx-auto" style={{ color: 'rgba(169,165,196,0.25)' }} />
                         ) : date ? (
                           <div className="flex flex-col items-center gap-0.5">
                             <CheckCircle2 className="w-3.5 h-3.5" style={{ color: '#16a34a' }} />
-                            <span style={{ fontSize: '9px', color: 'rgba(139,135,168,0.7)' }}>{formatDate(date)}</span>
+                            <span style={{ fontSize: '9px', color: 'rgba(169,165,196,0.7)' }}>{formatDate(date)}</span>
                           </div>
                         ) : (
                           <XCircle className="w-3.5 h-3.5 mx-auto" style={{ color: '#dc2626', opacity: 0.65 }} />
@@ -395,7 +395,7 @@ export function ComplianceMatrix() {
         </div>
       )}
 
-      <p className="mt-3 text-xs" style={{ color: 'rgba(139,135,168,0.5)' }}>
+      <p className="mt-3 text-xs" style={{ color: 'rgba(169,165,196,0.5)' }}>
         RG = Responsible Gambling · SM = Senior Manager · Click the bell icon next to overdue users to send a Slack reminder
       </p>
 

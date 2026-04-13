@@ -43,7 +43,7 @@ const DEFAULT_STYLE = {
   accent:   'rgba(91,84,184,0.3)',
 }
 
-export function BlogCover({ tags, coverImage, className }: { tags: string[]; coverImage?: string; className?: string }) {
+export function BlogCover({ tags, coverImage, className, alt }: { tags: string[]; coverImage?: string; className?: string; alt?: string }) {
   // If a real cover image exists, use it
   if (coverImage) {
     return (
@@ -54,7 +54,7 @@ export function BlogCover({ tags, coverImage, className }: { tags: string[]; cov
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={coverImage}
-          alt=""
+          alt={alt || ''}
           className="w-full h-full object-cover"
         />
       </div>
