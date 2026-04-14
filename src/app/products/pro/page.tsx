@@ -65,6 +65,16 @@ export default function ProPage() {
 
             <div className="space-y-5">
 
+              {/* Stage intro */}
+              <div className="max-w-2xl mx-auto text-center pb-2">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.15em] mb-2" style={{ color: '#a78bfa' }}>
+                  Stage 1 &middot; Ingest
+                </p>
+                <p className="text-sm leading-relaxed" style={{ color: 'var(--muted)' }}>
+                  We take the primary sources of Gibraltar compliance law and break them into citable chunks. Each chunk keeps its source, section, and surrounding context. This is the single source of truth every scenario will be grounded in.
+                </p>
+              </div>
+
               {/* Row 1: Regulation sources + shared database */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-start">
                 <div className="rounded-xl p-5" style={{ background: 'var(--card)', border: '1px solid var(--card-border)' }}>
@@ -119,6 +129,16 @@ export default function ProPage() {
               {/* Arrow */}
               <div className="flex justify-center">
                 <svg width="2" height="24" viewBox="0 0 2 24"><line x1="1" y1="0" x2="1" y2="20" stroke="rgba(167,139,250,0.3)" strokeWidth="2" strokeDasharray="4 4" /><polygon points="0,20 2,20 1,24" fill="rgba(167,139,250,0.4)" /></svg>
+              </div>
+
+              {/* Stage intro */}
+              <div className="max-w-2xl mx-auto text-center pb-2">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.15em] mb-2" style={{ color: '#a78bfa' }}>
+                  Stage 2 &middot; Generate
+                </p>
+                <p className="text-sm leading-relaxed" style={{ color: 'var(--muted)' }}>
+                  When a staff member starts a module, the AI pulls the relevant regulation chunks and builds three unique multiple-choice scenarios. Every answer is scored and every explanation cites the exact statute. Retry the module and you get three fresh scenarios.
+                </p>
               </div>
 
               {/* Row 2: AI generation + scenario output */}
@@ -188,6 +208,16 @@ export default function ProPage() {
               {/* Arrow */}
               <div className="flex justify-center">
                 <svg width="2" height="24" viewBox="0 0 2 24"><line x1="1" y1="0" x2="1" y2="20" stroke="rgba(167,139,250,0.3)" strokeWidth="2" strokeDasharray="4 4" /><polygon points="0,20 2,20 1,24" fill="rgba(167,139,250,0.4)" /></svg>
+              </div>
+
+              {/* Stage intro */}
+              <div className="max-w-2xl mx-auto text-center pb-2">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.15em] mb-2" style={{ color: '#a78bfa' }}>
+                  Stage 3 &middot; Evidence
+                </p>
+                <p className="text-sm leading-relaxed" style={{ color: 'var(--muted)' }}>
+                  Every completion is recorded against the user with date, time, score, and module. Admins see a live team compliance matrix, staff can download PDF certificates, and Slack delivers the next training to the whole team the following working day.
+                </p>
               </div>
 
               {/* Row 3: Outputs - compliance matrix + PDF */}

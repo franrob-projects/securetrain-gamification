@@ -67,6 +67,16 @@ export default function GeniusPage() {
             {/* Full diagram */}
             <div className="space-y-5">
 
+              {/* Stage intro */}
+              <div className="max-w-2xl mx-auto text-center pb-2">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.15em] mb-2" style={{ color: '#fbbf24' }}>
+                  Stage 1 &middot; Ingest
+                </p>
+                <p className="text-sm leading-relaxed" style={{ color: 'var(--muted)' }}>
+                  Primary Gibraltar statute is broken into citable chunks and indexed with vector embeddings. Every chunk retains its source, section, and context so scenarios can cite the exact law later.
+                </p>
+              </div>
+
               {/* Row 1: Regulation sources feed into chunks */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-start">
                 <div className="rounded-xl p-5" style={{ background: 'var(--card)', border: '1px solid var(--card-border)' }}>
@@ -121,6 +131,16 @@ export default function GeniusPage() {
               {/* Arrow */}
               <div className="flex justify-center">
                 <svg width="2" height="24" viewBox="0 0 2 24"><line x1="1" y1="0" x2="1" y2="20" stroke="rgba(251,191,36,0.3)" strokeWidth="2" strokeDasharray="4 4" /><polygon points="0,20 2,20 1,24" fill="rgba(251,191,36,0.4)" /></svg>
+              </div>
+
+              {/* Stage intro */}
+              <div className="max-w-2xl mx-auto text-center pb-2">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.15em] mb-2" style={{ color: '#fbbf24' }}>
+                  Stage 2 &middot; Personalise
+                </p>
+                <p className="text-sm leading-relaxed" style={{ color: 'var(--muted)' }}>
+                  This is the difference from Pro. The AI reads each user&apos;s profile, sector, past scores, and regulation coverage map before generating scenarios. Mastered topics are skipped, weak areas get drilled, new territory starts with foundations.
+                </p>
               </div>
 
               {/* Row 2: User profile + AI */}
@@ -223,6 +243,16 @@ export default function GeniusPage() {
               {/* Arrow */}
               <div className="flex justify-center">
                 <svg width="2" height="24" viewBox="0 0 2 24"><line x1="1" y1="0" x2="1" y2="20" stroke="rgba(251,191,36,0.3)" strokeWidth="2" strokeDasharray="4 4" /><polygon points="0,20 2,20 1,24" fill="rgba(251,191,36,0.4)" /></svg>
+              </div>
+
+              {/* Stage intro */}
+              <div className="max-w-2xl mx-auto text-center pb-2">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.15em] mb-2" style={{ color: '#fbbf24' }}>
+                  Stage 3 &middot; Adapt
+                </p>
+                <p className="text-sm leading-relaxed" style={{ color: 'var(--muted)' }}>
+                  Every answer updates the user&apos;s compliance profile. Admins see regulation-level coverage per person, not just module ticks. The roadmap tells each user what to learn next. The system gets smarter the longer your team uses it.
+                </p>
               </div>
 
               {/* Row 3: Outputs */}
