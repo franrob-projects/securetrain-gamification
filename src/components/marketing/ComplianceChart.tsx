@@ -119,7 +119,7 @@ export function ComplianceChart() {
               color: '#fff',
               fontSize: 12,
             }}
-            formatter={(value: number, name: string) => [
+            formatter={(value, name) => [
               `${value}%`,
               name === 'conply' ? 'Conply' : 'Traditional',
             ]}
