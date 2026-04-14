@@ -1,6 +1,8 @@
 'use client'
 import { Suspense, useEffect, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
+import Link from 'next/link'
+import { ArrowLeft } from 'lucide-react'
 import { createClient } from '@/lib/supabase'
 import { ConplyLogo } from '@/components/ui/ConplyLogo'
 
@@ -63,10 +65,18 @@ function AuthInner() {
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[400px] pointer-events-none"
         style={{ background: 'radial-gradient(ellipse, rgba(91,84,184,0.08) 0%, transparent 70%)' }} />
 
+      {/* Back to home link, top-left */}
+      <Link href="/"
+        className="absolute top-6 left-6 flex items-center gap-1.5 text-xs transition-colors px-3 py-2 rounded-lg"
+        style={{ color: 'var(--muted)', background: 'rgba(91,84,184,0.05)', border: '1px solid var(--card-border)' }}>
+        <ArrowLeft className="w-3.5 h-3.5" />
+        Back to home
+      </Link>
+
       <div className="w-full max-w-sm relative">
-        <div className="flex justify-center mb-8">
+        <Link href="/" className="flex justify-center mb-8" aria-label="Conply home">
           <ConplyLogo size="md" />
-        </div>
+        </Link>
 
         {step === 'email' ? (
           <div className="rounded-2xl p-7 relative overflow-hidden" style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}>

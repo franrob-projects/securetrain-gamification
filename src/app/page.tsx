@@ -192,7 +192,7 @@ export default function HomePage() {
         <section id="how-it-works" className="border-y" style={{ borderColor: 'var(--border)', background: 'rgba(91,84,184,0.04)' }}>
           <div className="max-w-3xl mx-auto px-6 py-16 sm:py-24">
           <div className="text-center mb-14">
-            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight" style={{ color: 'var(--text)' }}>
+            <h2 className="text-3xl sm:text-4xl font-bold" style={{ color: 'var(--text)' }}>
               The <span className="text-gradient">training lifecycle</span>
             </h2>
             <p className="text-sm mt-3" style={{ color: 'var(--muted)' }}>
