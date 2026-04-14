@@ -61,11 +61,12 @@ body::after {
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(91,84,184,0.15);
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
 }
 .glass-card:hover {
   border-color: rgba(91,84,184,0.35);
-  box-shadow: 0 0 30px -8px rgba(91,84,184,0.15);
+  box-shadow: 0 0 30px -8px rgba(91,84,184,0.25);
+  transform: translateY(-3px);
 }
 
 /* Dot grid background pattern */
@@ -131,7 +132,7 @@ input:focus-visible {
 }
 @media (prefers-reduced-motion: reduce) {
   .trust-marquee__track { animation: none; }
-  .step-row:hover, .card-hover:hover, .cta-primary:hover { transform: none !important; }
+  .step-row:hover, .card-hover:hover, .cta-primary:hover, .glass-card:hover { transform: none !important; }
   .step-row:hover .step-icon { transform: none !important; }
 }
 
