@@ -157,7 +157,9 @@ nav a.rounded-lg:hover, nav button.rounded-lg:hover { color: var(--text) !import
 
 /* Help TOC */
 .help-toc-link { transition: color 0.2s ease, background 0.2s ease; }
-.help-toc-link:hover { color: var(--text) !important; background: rgba(91,84,184,0.08); }
+.help-toc-icon { color: var(--muted); opacity: 0.6; transition: color 0.2s ease, opacity 0.2s ease, transform 0.2s ease; }
+.help-toc-link:hover { color: var(--text) !important; background: color-mix(in srgb, var(--toc-accent, #5B54B8) 12%, transparent); }
+.help-toc-link:hover .help-toc-icon { color: var(--toc-accent, var(--accent)); opacity: 1; transform: scale(1.1); }
 
 /* Footer links */
 footer a { transition: color 0.2s ease; }

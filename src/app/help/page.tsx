@@ -11,14 +11,14 @@ export const metadata: Metadata = {
 }
 
 const SECTIONS = [
-  { id: 'getting-started',    label: 'Getting started',             icon: Zap },
-  { id: 'invite-team',        label: 'Inviting team members',       icon: Users },
-  { id: 'training-flow',      label: 'How training works',          icon: Clock },
-  { id: 'records',            label: 'Compliance records & audits', icon: FileText },
-  { id: 'sectors',            label: 'Sectors & module mapping',    icon: Layers },
-  { id: 'security',           label: 'Security & data',             icon: Lock },
-  { id: 'technical',          label: 'Technical setup',             icon: Settings },
-  { id: 'faq',                label: 'FAQ',                         icon: HelpCircle },
+  { id: 'getting-started',    label: 'Getting started',             icon: Zap,         color: '#fbbf24' },
+  { id: 'invite-team',        label: 'Inviting team members',       icon: Users,       color: '#60a5fa' },
+  { id: 'training-flow',      label: 'How training works',          icon: Clock,       color: '#a78bfa' },
+  { id: 'records',            label: 'Compliance records & audits', icon: FileText,    color: '#4ade80' },
+  { id: 'sectors',            label: 'Sectors & module mapping',    icon: Layers,      color: '#f472b6' },
+  { id: 'security',           label: 'Security & data',             icon: Lock,        color: '#38bdf8' },
+  { id: 'technical',          label: 'Technical setup',             icon: Settings,    color: '#9d97e8' },
+  { id: 'faq',                label: 'FAQ',                         icon: HelpCircle,  color: '#f87171' },
 ] as const
 
 function Callout({ type = 'info', children }: { type?: 'info' | 'tip' | 'warning'; children: React.ReactNode }) {
@@ -89,8 +89,8 @@ export default function HelpPage() {
                   return (
                     <li key={s.id}>
                       <a href={`#${s.id}`} className="help-toc-link text-sm flex items-center gap-2.5 px-2.5 py-2 rounded-lg"
-                        style={{ color: 'var(--muted)' }}>
-                        <Icon className="w-3.5 h-3.5 flex-shrink-0" style={{ opacity: 0.6 }} />
+                        style={{ color: 'var(--muted)', ['--toc-accent' as string]: s.color }}>
+                        <Icon className="help-toc-icon w-3.5 h-3.5 flex-shrink-0" />
                         {s.label}
                       </a>
                     </li>
