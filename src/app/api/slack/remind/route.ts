@@ -2,21 +2,41 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createServerClient } from '@/lib/supabaseServer'
 import { MODULES } from '@/data/modules'
 
+const THREAT_LABEL: Record<string, string> = {
+  critical: '🔴  Critical priority',
+  high:     '🟠  High priority',
+  medium:   '🟡  Medium priority',
+  low:      '🟢  Low priority',
+}
+
+const SECTOR_LABEL: Record<string, string> = {
+  crypto:   'Crypto licensees',
+  gambling: 'Gambling licensees',
+  both:     'All Gibraltar licensees',
+}
+
 async function sendReminder(opts: { userName?: string; moduleId?: string }): Promise<{ ok: boolean; error?: string }> {
   const base     = process.env.NEXT_PUBLIC_APP_URL ?? 'https://www.conply.org'
   const moduleId = opts.moduleId ?? process.env.SLACK_MODULE_ID ?? 'aml-financial-crime'
   const module   = MODULES.find(m => m.id === moduleId) ?? MODULES[0]
-  const url      = `${base}/train/${moduleId}?redirect=/train/${moduleId}`
+  const url      = `${base}/train/${moduleId}`
 
   const isPersonal = !!opts.userName
   const headerText = isPersonal
-    ? `${opts.userName}, your compliance training is overdue`
+    ? `${opts.userName}, your training is due`
     : `Today's compliance training`
 
-  // Trim the description so the card stays compact
-  const shortDescription = module.description.length > 160
-    ? module.description.slice(0, 160).trimEnd() + '…'
+  const shortDescription = module.description.length > 180
+    ? module.description.slice(0, 180).trimEnd() + '…'
     : module.description
+
+  const topicPreview = module.topics.slice(0, 3).map(t => `  •  ${t}`).join('\n')
+
+  const metaLine = [
+    THREAT_LABEL[module.threatLevel] ?? module.threatLevel,
+    `⏱  ${module.durationMins} min`,
+    SECTOR_LABEL[module.sector] ?? module.sector,
+  ].join('    ·    ')
 
   const fallbackText = `${headerText} — ${module.title}`
 
@@ -34,12 +54,15 @@ async function sendReminder(opts: { userName?: string; moduleId?: string }): Pro
     },
     {
       type: 'context',
-      elements: [
-        {
-          type: 'mrkdwn',
-          text: '⏱  Around 10 minutes  ·  3 AI-generated scenarios  ·  Mapped to Gibraltar regulation',
-        },
-      ],
+      elements: [{ type: 'mrkdwn', text: metaLine }],
+    },
+    { type: 'divider' },
+    {
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: `*What you'll cover*\n${topicPreview}`,
+      },
     },
     {
       type: 'actions',
@@ -50,6 +73,11 @@ async function sendReminder(opts: { userName?: string; moduleId?: string }): Pro
           url,
           style: 'primary',
         },
+        {
+          type: 'button',
+          text: { type: 'plain_text', text: 'View all modules', emoji: true },
+          url: `${base}/progress`,
+        },
       ],
     },
     {
@@ -57,7 +85,7 @@ async function sendReminder(opts: { userName?: string; moduleId?: string }): Pro
       elements: [
         {
           type: 'mrkdwn',
-          text: '_Conply · Gibraltar Compliance Training_',
+          text: `<${base}|Conply>  ·  Gibraltar compliance training, mapped to regulation`,
         },
       ],
     },
@@ -71,8 +99,13 @@ async function sendReminder(opts: { userName?: string; moduleId?: string }): Pro
     },
     body: JSON.stringify({
       channel: process.env.SLACK_CHANNEL_ID,
-      text:    fallbackText, // shown in notifications and screen readers
-      blocks,
+      text:    fallbackText,
+      attachments: [
+        {
+          color: '#5B54B8',
+          blocks,
+        },
+      ],
       unfurl_links: false,
       unfurl_media: false,
     }),
