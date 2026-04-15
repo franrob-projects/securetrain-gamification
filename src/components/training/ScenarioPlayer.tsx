@@ -2,7 +2,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import { motion } from 'framer-motion'
 import { TrainingModule } from '@/data/modules'
-import { CheckCircle2, XCircle, ExternalLink, FileText, HelpCircle } from 'lucide-react'
+import { CheckCircle2, XCircle, FileText, HelpCircle } from 'lucide-react'
 
 interface Scenario {
   scenario: string
@@ -230,21 +230,13 @@ export function ScenarioPlayer({ module: m, onComplete }: { module: TrainingModu
 
       {/* Actions */}
       {answered && (
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-          <button onClick={handleNext}
-            className="flex-1 py-3.5 px-6 rounded-xl font-semibold text-sm transition-colors text-white text-center"
-            style={{ background: 'var(--brand)' }}
-            onMouseOver={e => (e.currentTarget.style.background = 'var(--brand-hover)')}
-            onMouseOut={e => (e.currentTarget.style.background = 'var(--brand)')}>
-            {current + 1 < TOTAL ? 'Next scenario' : 'See results'}
-          </button>
-          <a href="https://www.gibraltarcompliancetraining.com" target="_blank" rel="noopener noreferrer"
-            className="flex items-center justify-center gap-1.5 text-xs py-3 px-4 rounded-xl transition-colors"
-            style={{ color: 'var(--muted)', border: '1px solid var(--card-border)' }}>
-            <ExternalLink className="w-3 h-3" />
-            Deep-dive this topic
-          </a>
-        </div>
+        <button onClick={handleNext}
+          className="w-full py-3.5 px-6 rounded-xl font-semibold text-sm transition-colors text-white text-center"
+          style={{ background: 'var(--brand)' }}
+          onMouseOver={e => (e.currentTarget.style.background = 'var(--brand-hover)')}
+          onMouseOut={e => (e.currentTarget.style.background = 'var(--brand)')}>
+          {current + 1 < TOTAL ? 'Next scenario' : 'See results'}
+        </button>
       )}
     </div>
   )

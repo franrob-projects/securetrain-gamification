@@ -107,9 +107,9 @@ export async function POST(req: NextRequest) {
 
   // Send Supabase invite email — creates auth.users entry, fires the
   // link_team_member_on_signup trigger, and emails them a sign-in link.
-  const base = process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000'
+  const base = process.env.NEXT_PUBLIC_APP_URL ?? 'https://www.conply.org'
   const { error: inviteError } = await ctx.supabase.auth.admin.inviteUserByEmail(cleanEmail, {
-    redirectTo: `${base}/`,
+    redirectTo: `${base}/auth`,
     data: {
       name:       body.name.trim(),
       invited_by: ctx.user.email,

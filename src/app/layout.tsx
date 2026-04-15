@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL ?? 'https://conply.gi'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL ?? 'https://www.conply.org'),
   title: {
     template: '%s | Conply',
     default: 'Conply | Gibraltar Compliance Training',
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_GB',
     siteName: 'Conply',
-    url: process.env.NEXT_PUBLIC_APP_URL ?? 'https://conply.gi',
+    url: process.env.NEXT_PUBLIC_APP_URL ?? 'https://www.conply.org',
   },
   twitter: {
     card: 'summary_large_image',

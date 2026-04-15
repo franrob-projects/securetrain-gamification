@@ -2,7 +2,7 @@ import type { MetadataRoute } from 'next'
 import { getAllPosts } from '@/lib/blog'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = process.env.NEXT_PUBLIC_APP_URL ?? 'https://conply.gi'
+  const base = process.env.NEXT_PUBLIC_APP_URL ?? 'https://www.conply.org'
   const posts = getAllPosts()
 
   const staticRoutes: MetadataRoute.Sitemap = [

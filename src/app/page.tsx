@@ -390,7 +390,7 @@ export default function HomePage() {
           '@type': 'Organization',
           name: 'Conply',
           description: 'Gibraltar compliance training for crypto and iGaming firms',
-          url: 'https://conply.gi',
+          url: 'https://www.conply.org',
         })}}
       />
     </div>

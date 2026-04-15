@@ -116,7 +116,7 @@ export default function HelpPage() {
 
               <div className="space-y-3 my-6">
                 <StepCard number="1" title="Create your admin account">
-                  Sign up at conply.gi. Your account becomes the firm admin automatically.
+                  Sign up at conply.org. Your account becomes the firm admin automatically.
                 </StepCard>
                 <StepCard number="2" title="Invite your team">
                   Add staff from the admin dashboard. They get a sign-in link by email.

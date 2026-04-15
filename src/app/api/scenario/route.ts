@@ -49,11 +49,22 @@ Examples of valid regulation references:
     messages: [{ role: 'user', content: prompt }],
   })
 
-  const text = (message.content[0] as { type: string; text: string }).text
-  const json = JSON.parse(text.slice(text.indexOf('{'), text.lastIndexOf('}') + 1))
+  const block = message.content[0]
+  if (!block || block.type !== 'text') {
+    return NextResponse.json({ error: 'Scenario generation failed' }, { status: 502 })
+  }
 
-  return NextResponse.json({
-    ...json,
-    _ragChunksUsed: chunks.length, // diagnostic — UI ignores this
-  })
+  const text = block.text
+  const start = text.indexOf('{')
+  const end   = text.lastIndexOf('}')
+  if (start === -1 || end === -1) {
+    return NextResponse.json({ error: 'Scenario generation failed' }, { status: 502 })
+  }
+
+  try {
+    const json = JSON.parse(text.slice(start, end + 1))
+    return NextResponse.json({ ...json, _ragChunksUsed: chunks.length })
+  } catch {
+    return NextResponse.json({ error: 'Scenario generation failed' }, { status: 502 })
+  }
 }

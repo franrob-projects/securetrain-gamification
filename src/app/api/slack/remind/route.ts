@@ -3,7 +3,7 @@ import { createServerClient } from '@/lib/supabaseServer'
 import { MODULES } from '@/data/modules'
 
 async function sendReminder(opts: { userName?: string; moduleId?: string }): Promise<{ ok: boolean; error?: string }> {
-  const base     = process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000'
+  const base     = process.env.NEXT_PUBLIC_APP_URL ?? 'https://www.conply.org'
   const moduleId = opts.moduleId ?? process.env.SLACK_MODULE_ID ?? 'aml-financial-crime'
   const module   = MODULES.find(m => m.id === moduleId) ?? MODULES[0]
   const url      = `${base}/train/${moduleId}?redirect=/train/${moduleId}`

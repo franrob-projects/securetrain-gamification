@@ -19,7 +19,7 @@ export async function generateMetadata({
   const { slug } = await params
   const post = await getPostHtml(slug)
   if (!post) return {}
-  const base = process.env.NEXT_PUBLIC_APP_URL ?? 'https://conply.gi'
+  const base = process.env.NEXT_PUBLIC_APP_URL ?? 'https://www.conply.org'
   return {
     title: post.meta.title,
     description: post.meta.excerpt,
@@ -45,7 +45,7 @@ export default async function PostPage({
   const post = await getPostHtml(slug)
   if (!post) notFound()
 
-  const base = process.env.NEXT_PUBLIC_APP_URL ?? 'https://conply.gi'
+  const base = process.env.NEXT_PUBLIC_APP_URL ?? 'https://www.conply.org'
 
   const jsonLd = {
     '@context': 'https://schema.org',
