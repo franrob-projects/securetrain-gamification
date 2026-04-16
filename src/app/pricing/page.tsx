@@ -17,21 +17,21 @@ const JURISDICTION_META: Record<Jurisdiction, { label: string; regulator: string
 const TIER_COPY: Record<Jurisdiction, { pro: { description: string; firstFeature: string }; genius: { description: string; firstFeature: string } }> = {
   gibraltar: {
     pro: {
-      description:  'Team-wide compliance training powered by a shared Gibraltar regulation database. Staff work through the same curriculum.',
+      description:  'Team-wide compliance training, shared curriculum, full audit trail.',
       firstFeature: 'All Gibraltar compliance modules (POCA 2015, GFSC, Gambling Act)',
     },
     genius: {
-      description:  'Personalised learning journeys for every user. Adaptive scenarios, per-user compliance profiles, topic-level coverage.',
+      description:  'Personalised learning journeys, adaptive scenarios, per-user compliance profiles.',
       firstFeature: 'Everything in Pro, personalised per user',
     },
   },
   luxembourg: {
     pro: {
-      description:  'Team-wide compliance training powered by a shared Luxembourg regulation database. Staff work through the same curriculum.',
+      description:  'Team-wide compliance training, shared curriculum, full audit trail.',
       firstFeature: 'All Luxembourg compliance modules (MiCA, AML Law 2004, DORA, CSSF)',
     },
     genius: {
-      description:  'Personalised learning journeys for every user. Adaptive scenarios, per-user compliance profiles, topic-level coverage.',
+      description:  'Personalised learning journeys, adaptive scenarios, per-user compliance profiles.',
       firstFeature: 'Everything in Pro, personalised per user',
     },
   },
@@ -42,7 +42,7 @@ function makeTiers(j: Jurisdiction) {
   return [
     {
       name: 'Pro',
-      annualPrice: 19,
+      annualPrice: 12,
       minUsers: 10,
       description: copy.pro.description,
       cta: 'Book a demo',
@@ -59,7 +59,7 @@ function makeTiers(j: Jurisdiction) {
     },
     {
       name: 'Genius',
-      annualPrice: 39,
+      annualPrice: 22,
       minUsers: 10,
       description: copy.genius.description,
       cta: 'Book a demo',
