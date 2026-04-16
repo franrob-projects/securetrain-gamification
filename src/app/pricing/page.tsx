@@ -15,20 +15,26 @@ const JURISDICTION_META: Record<Jurisdiction, { label: string; regulator: string
   luxembourg: { label: 'Luxembourg', regulator: 'CSSF', pitch: 'Training grounded in MiCA (EU 2023/1114), the AML Law of 12 November 2004, and DORA.' },
 }
 
-const TIER_COPY: Record<Jurisdiction, { starter: { description: string; firstFeature: string }; growth: string }> = {
+const TIER_COPY: Record<Jurisdiction, { pro: { description: string; firstFeature: string }; genius: { description: string; firstFeature: string } }> = {
   gibraltar: {
-    starter: {
-      description:  'For small Gibraltar firms: boutique DLT providers, B2B iGaming suppliers, and early-stage operators.',
-      firstFeature: 'All 8 Gibraltar compliance modules',
+    pro: {
+      description:  'Team-wide compliance training powered by a shared Gibraltar regulation database. Staff work through the same curriculum.',
+      firstFeature: 'All Gibraltar compliance modules (POCA 2015, GFSC, Gambling Act)',
     },
-    growth: 'For mid-sized crypto and iGaming operators who need a real audit trail and admin oversight.',
+    genius: {
+      description:  'Personalised learning journeys for every user. Adaptive scenarios, per-user compliance profiles, topic-level coverage.',
+      firstFeature: 'Everything in Pro, personalised per user',
+    },
   },
   luxembourg: {
-    starter: {
-      description:  'For small Luxembourg firms: CASP start-ups, payment institutions, and early-stage fintechs authorised by the CSSF.',
-      firstFeature: 'All 8 Luxembourg compliance modules',
+    pro: {
+      description:  'Team-wide compliance training powered by a shared Luxembourg regulation database. Staff work through the same curriculum.',
+      firstFeature: 'All Luxembourg compliance modules (MiCA, AML Law 2004, DORA, CSSF)',
     },
-    growth: 'For mid-sized CASPs, fintechs, and investment fund managers who need a real audit trail and admin oversight.',
+    genius: {
+      description:  'Personalised learning journeys for every user. Adaptive scenarios, per-user compliance profiles, topic-level coverage.',
+      firstFeature: 'Everything in Pro, personalised per user',
+    },
   },
 }
 
@@ -36,52 +42,37 @@ function makeTiers(j: Jurisdiction) {
   const copy = TIER_COPY[j]
   return [
     {
-      name: 'Starter',
-      annualPrice: 24,
+      name: 'Pro',
+      annualPrice: 19,
       minUsers: 10,
-      description: copy.starter.description,
+      description: copy.pro.description,
       cta: 'Book a demo',
       featured: false,
       features: [
-        copy.starter.firstFeature,
-        'AI-generated scenarios (RAG)',
+        copy.pro.firstFeature,
+        'AI-generated scenarios grounded in real statute',
         'Delivered in Slack or Microsoft Teams',
         'Mobile-friendly — train on the go',
+        'Team compliance matrix',
         'PDF completion records',
-        'Team compliance dashboard',
-        'Email support',
+        'Sector-based module assignment',
       ],
     },
     {
-      name: 'Growth',
-      annualPrice: 19,
-      minUsers: 25,
-      description: copy.growth,
+      name: 'Genius',
+      annualPrice: 39,
+      minUsers: 10,
+      description: copy.genius.description,
       cta: 'Book a demo',
       featured: true,
       features: [
-        'Everything in Starter, plus:',
-        'Per-user Slack / Teams reminders',
-        'Per-user training history',
-        'Sector-based module mapping',
-        'Priority support (4hr response)',
-        'Quarterly compliance reports',
-      ],
-    },
-    {
-      name: 'Scale',
-      annualPrice: 14,
-      minUsers: 75,
-      description: 'For larger licence holders, multi-entity groups, and firms needing dedicated onboarding and custom modules.',
-      cta: 'Book a demo',
-      featured: false,
-      features: [
-        'Everything in Growth, plus:',
-        'Custom regulation modules',
-        'SSO (Google / Microsoft 365)',
-        'Dedicated success manager',
-        'Service-level agreement',
-        'Multi-entity support',
+        copy.genius.firstFeature,
+        'Per-user learning paths',
+        'Adaptive scenario difficulty',
+        'Topic-level regulation mapping',
+        'Individual compliance profiles',
+        'Regulation-level coverage per user',
+        'Priority support',
       ],
     },
   ]
@@ -215,8 +206,8 @@ export default function PricingPage() {
         </section>
 
         {/* Tier cards */}
-        <section className="max-w-6xl mx-auto px-6 pb-16 sm:pb-24">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 items-start">
+        <section className="max-w-4xl mx-auto px-6 pb-16 sm:pb-24">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 items-start">
             {tiers.map(tier => {
               const price = annual ? tier.annualPrice : Math.round(tier.annualPrice * 1.2)
               const floor = price * tier.minUsers
