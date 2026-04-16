@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Check, Star } from 'lucide-react'
+import { Check } from 'lucide-react'
 import { Nav } from '@/components/marketing/Nav'
 import { Footer } from '@/components/marketing/Footer'
 import { JurisdictionFlag } from '@/components/ui/JurisdictionFlag'
@@ -213,24 +213,17 @@ export default function PricingPage() {
                   key={tier.name}
                   className="rounded-2xl flex flex-col relative overflow-hidden"
                   style={{
-                    background: tier.featured ? 'rgba(91,84,184,0.08)' : 'var(--card)',
-                    border: tier.featured ? '1px solid rgba(91,84,184,0.5)' : '1px solid var(--card-border)',
+                    background: tier.featured ? 'rgba(251,191,36,0.06)' : 'var(--card)',
+                    border: tier.featured ? '1px solid rgba(251,191,36,0.4)' : '1px solid var(--card-border)',
                   }}
                 >
                   {tier.featured && (
                     <div className="absolute top-0 left-1/2 -translate-x-1/2 w-60 h-40 pointer-events-none"
-                      style={{ background: 'radial-gradient(ellipse, rgba(91,84,184,0.12), transparent 70%)' }} />
+                      style={{ background: 'radial-gradient(ellipse, rgba(251,191,36,0.14), transparent 70%)' }} />
                   )}
 
                   <div className="p-7 flex flex-col flex-1 relative">
-                    {tier.featured && (
-                      <div className="text-[11px] font-medium uppercase tracking-[0.15em] mb-3 flex items-center gap-2"
-                        style={{ color: 'var(--accent)' }}>
-                        <Star className="w-3 h-3" fill="currentColor" />
-                        Most popular
-                      </div>
-                    )}
-                    <h2 className="text-lg font-bold mb-1" style={{ color: 'var(--text)' }}>{tier.name}</h2>
+                    <h2 className="text-lg font-bold mb-1" style={{ color: tier.featured ? '#fbbf24' : 'var(--text)' }}>{tier.name}</h2>
                     <p className="text-xs mb-5 leading-relaxed" style={{ color: 'var(--muted)' }}>{tier.description}</p>
 
                     <div className="mb-2">
@@ -252,16 +245,16 @@ export default function PricingPage() {
                     <ul className="space-y-3 mb-7 flex-1">
                       {tier.features.map(f => (
                         <li key={f} className="flex items-start gap-2.5 text-sm" style={{ color: 'var(--muted)' }}>
-                          <Check className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color: tier.featured ? '#4ade80' : 'var(--accent)' }} />
+                          <Check className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color: tier.featured ? '#fbbf24' : 'var(--accent)' }} />
                           <span>{f}</span>
                         </li>
                       ))}
                     </ul>
 
                     <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer"
-                      className={`block text-center py-3.5 rounded-xl text-sm font-semibold ${tier.featured ? 'cta-primary text-white' : 'cta-outline'}`}
+                      className="block text-center py-3.5 rounded-xl text-sm font-semibold"
                       style={tier.featured
-                        ? {}
+                        ? { background: 'linear-gradient(135deg, #fbbf24, #f59e0b)', color: '#000' }
                         : { color: 'var(--accent)', border: '1px solid var(--border)' }
                       }>
                       {tier.cta}
