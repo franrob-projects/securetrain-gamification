@@ -105,7 +105,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: error.message }, { status: 500 })
   }
 
-  // Send Supabase invite email — creates auth.users entry, fires the
+  // Send Supabase invite email, creates auth.users entry, fires the
   // link_team_member_on_signup trigger, and emails them a sign-in link.
   const base = process.env.NEXT_PUBLIC_APP_URL ?? 'https://www.conply.org'
   const { error: inviteError } = await ctx.supabase.auth.admin.inviteUserByEmail(cleanEmail, {
@@ -118,7 +118,7 @@ export async function POST(req: NextRequest) {
 
   if (inviteError) {
     // Most common reason: user already exists in auth.users from a prior signup.
-    // The team_member row is still created — they just won't get an invite email.
+    // The team_member row is still created, they just won't get an invite email.
     console.warn('[invite-email]', inviteError.message)
     return NextResponse.json({
       member: data,

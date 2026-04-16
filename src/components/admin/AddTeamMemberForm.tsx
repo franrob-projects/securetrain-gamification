@@ -59,7 +59,7 @@ export function AddTeamMemberForm({
     }
   }
 
-  // Success state — render after the team member is added
+  // Success state, render after the team member is added
   if (result) {
     return (
       <div

@@ -25,7 +25,7 @@
   <text class="eyebrow" x="80" y="110">Regulatory Principle 7</text>
   <text class="title" x="80" y="160">Systems &amp; controls,</text>
   <text class="title" x="80" y="210">proportionate to risk</text>
-  <text class="stage-meta" x="80" y="250" font-size="14">A continuous loop — not a one-off tick-box.</text>
+  <text class="stage-meta" x="80" y="250" font-size="14">A continuous loop, not a one-off tick-box.</text>
 
   <rect x="80" y="290" width="290" height="1" fill="#E5E7EB"/>
   <text class="eyebrow" x="80" y="320" opacity="0.6">02 · THE PRINCIPLE 7 LOOP</text>

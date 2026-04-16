@@ -185,7 +185,7 @@ function toTeamMember(api: ApiTeamMember): TeamMember {
   return {
     id:     api.id,
     name:   api.name,
-    role:   api.job_title ?? '—',
+    role:   api.job_title ?? '-',
     sector: api.sector,
     completions,
   }
@@ -213,7 +213,7 @@ export function ComplianceMatrix() {
       const json = await res.json() as { members: ApiTeamMember[] }
       setReal(json.members.map(toTeamMember))
     } catch {
-      // Silent fail — falls back to seed data
+      // Silent fail, falls back to seed data
     }
   }
 
@@ -260,7 +260,7 @@ export function ComplianceMatrix() {
 
   return (
     <div>
-      {/* Seed data banner — full width when present */}
+      {/* Seed data banner, full width when present */}
       {!isRealData && (
         <div className="mb-5 px-4 py-3 rounded-lg flex items-center gap-2 text-xs"
           style={{ background: 'rgba(217,119,6,0.10)', color: '#d97706', border: '1px solid rgba(217,119,6,0.25)' }}>

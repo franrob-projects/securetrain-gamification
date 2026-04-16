@@ -92,7 +92,7 @@ export default function TrainPage() {
       doc.text(value, 70, y)
       y += 10
     }
-    row('User:',          userEmail || '—')
+    row('User:',          userEmail || '-')
     row('Module:',        module.title)
     row('Completed:',     `${dateStr} at ${timeStr}`)
     row('Score:',         `${correctCount} of ${TOTAL} correct (${finalScore}%)`)

@@ -7,14 +7,14 @@ import { AuthRedirect } from '@/components/marketing/AuthRedirect'
 import { HeroToggle } from '@/components/marketing/HeroToggle'
 import { ComplianceChart } from '@/components/marketing/ComplianceChart'
 import { BlogCover } from '@/components/marketing/BlogCover'
-import { DeliveryChannels, SlackLogo, TeamsLogo } from '@/components/ui/DeliveryChannels'
+import { SlackLogo, TeamsLogo } from '@/components/ui/DeliveryChannels'
 import { getAllPosts } from '@/lib/blog'
 import { formatDate } from '@/lib/format'
 import { BOOKING_URL } from '@/lib/constants'
 
 export const metadata: Metadata = {
   title: 'Conply | AI-Powered Compliance Training for iGaming, Crypto & Fintech',
-  description: 'Conply delivers AI-generated compliance training scenarios grounded in real regulation. Supporting Gibraltar (GFSC) and Luxembourg (CSSF) regulated firms. Delivered in Slack or Microsoft Teams — mobile-friendly, on the go. Audit-ready.',
+  description: 'Conply delivers AI-generated compliance training scenarios grounded in real regulation. Supporting Gibraltar (GFSC) and Luxembourg (CSSF) regulated firms. Delivered in Slack or Microsoft Teams. Mobile-friendly, on the go. Audit-ready.',
 }
 
 const FEATURES = [
@@ -33,7 +33,7 @@ const FEATURES = [
   {
     icon: Smartphone,
     title: 'Delivered in Slack & Teams',
-    body: 'One message per day in Slack or Microsoft Teams, with a direct link. No login portals, no extra apps. Staff train on the apps they already have open — including on mobile, on the go.',
+    body: 'One message per day in Slack or Microsoft Teams, with a direct link. No login portals, no extra apps. Staff train on the apps they already have open, including on mobile, on the go.',
     color: '#f472b6', bg: 'rgba(244,114,182,0.1)', border: 'rgba(244,114,182,0.25)',
     delivery: true,
   },
@@ -47,7 +47,7 @@ const FEATURES = [
 
 const METRICS = [
   { value: '8',    label: 'Regulatory modules',           sub: 'AML, DLT, KYC, Sanctions, MiCA, DORA, and more',           color: '#4ade80' },
-  { value: '30+',  label: 'Regulation sources',           sub: 'Across Gibraltar and Luxembourg — POCA, GFSC, MiCA, CSSF', color: '#fbbf24' },
+  { value: '30+',  label: 'Regulation sources',           sub: 'Across Gibraltar and Luxembourg: POCA, GFSC, MiCA, CSSF', color: '#fbbf24' },
   { value: '<10',  label: 'Minutes per session',          sub: 'Three scenarios, scored, with a compliance record',        color: '#f472b6' },
   { value: '0',    label: 'Slide decks',                  sub: 'AI scenarios replace passive e-learning',                  color: '#a78bfa' },
 ]
@@ -82,24 +82,35 @@ export default function HomePage() {
                 <br className="hidden sm:block" />
                 <span className="text-gradient">Built for your jurisdiction.</span>
               </h1>
-              <p className="text-sm sm:text-base leading-relaxed mb-4 max-w-lg" style={{ color: 'var(--muted)' }}>
-                Conply generates compliance training scenarios grounded in the actual regulation that governs your firm. Delivered in Slack or Microsoft Teams — mobile-friendly, so staff can train on the go — and completed in under 10 minutes, with audit-ready PDF records for every session.
+              <p className="text-sm sm:text-base leading-relaxed mb-6 max-w-lg" style={{ color: 'var(--muted)' }}>
+                Compliance training grounded in the actual regulation that governs your firm. Completed in under 10 minutes, with audit-ready PDF records.
               </p>
               <p className="text-xs leading-relaxed mb-8 max-w-lg" style={{ color: 'var(--muted)', opacity: 0.75 }}>
-                Currently supporting <span style={{ color: 'var(--accent)', fontWeight: 500 }}>Gibraltar</span> (GFSC / POCA 2015 / Gambling Act 2025) and <span style={{ color: 'var(--accent)', fontWeight: 500 }}>Luxembourg</span> (CSSF / MiCA / AML Law 2004).
+                Supporting <span style={{ color: 'var(--accent)', fontWeight: 500 }}>Gibraltar</span> (GFSC) and <span style={{ color: 'var(--accent)', fontWeight: 500 }}>Luxembourg</span> (CSSF).
               </p>
-              <ul className="space-y-3 mb-10">
-                {[
-                  'Scenarios built from POCA 2015, GFSC Principles, MiCA, the AML Law of 2004, DORA, and CSSF circulars.',
-                  'Delivered daily in Slack or Microsoft Teams — works on the mobile apps, train on the go.',
-                  'Audit-ready PDF completion records for every user and every module.',
-                ].map(item => (
-                  <li key={item} className="flex items-start gap-2.5 text-sm" style={{ color: 'var(--muted)' }}>
-                    <span className="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: 'var(--accent)' }} />
-                    {item}
-                  </li>
-                ))}
-              </ul>
+
+              <div className="mb-10 rounded-2xl p-5 relative overflow-hidden"
+                style={{ background: 'linear-gradient(135deg, rgba(98,100,167,0.14), rgba(167,139,250,0.08))', border: '1px solid rgba(98,100,167,0.35)' }}>
+                <div className="text-[10px] font-bold uppercase tracking-[0.18em] mb-3" style={{ color: '#a5a7de' }}>
+                  Delivered where your team already works
+                </div>
+                <div className="flex items-center gap-4 flex-wrap">
+                  <div className="flex items-center gap-2.5">
+                    <SlackLogo className="w-9 h-9" />
+                    <span className="text-base font-bold" style={{ color: 'var(--text)' }}>Slack</span>
+                  </div>
+                  <div className="w-px h-7" style={{ background: 'rgba(255,255,255,0.12)' }} />
+                  <div className="flex items-center gap-2.5">
+                    <TeamsLogo className="w-9 h-9" />
+                    <span className="text-base font-bold" style={{ color: 'var(--text)' }}>Microsoft Teams</span>
+                  </div>
+                </div>
+                <div className="flex items-center gap-1.5 mt-4 text-xs" style={{ color: 'var(--muted)' }}>
+                  <Smartphone className="w-4 h-4" />
+                  Works on the mobile apps. Train on the commute, between meetings, anywhere.
+                </div>
+              </div>
+
               <div className="flex flex-col sm:flex-row gap-3">
                 <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer"
                   className="cta-primary block sm:inline-block text-center px-8 py-3.5 rounded-xl font-semibold text-white text-sm">
@@ -110,9 +121,6 @@ export default function HomePage() {
                   style={{ color: 'var(--accent)', border: '1px solid rgba(91,84,184,0.3)' }}>
                   How it works
                 </Link>
-              </div>
-              <div className="mt-6">
-                <DeliveryChannels variant="pill" />
               </div>
             </div>
 
@@ -157,7 +165,7 @@ export default function HomePage() {
                   AI agents that only speak from the law
                 </h2>
                 <p className="text-sm leading-relaxed mb-8" style={{ color: 'var(--muted)' }}>
-                  Conply doesn&apos;t use generic AI prompts. Purpose-built agents retrieve the actual text of the regulation that governs your firm — whether that is Gibraltar statute or Luxembourg/EU law — and generate training scenarios constrained to what the law says, not what a language model guesses it says.
+                  Conply doesn&apos;t use generic AI prompts. Purpose-built agents retrieve the actual text of the regulation that governs your firm, whether that is Gibraltar statute or Luxembourg/EU law, and generate training scenarios constrained to what the law says, not what a language model guesses it says.
                 </p>
                 <div className="space-y-5">
                   {[
@@ -218,14 +226,14 @@ export default function HomePage() {
               {
                 step: '02',
                 title: 'Slack or Teams delivers training',
-                body: 'Each working day, one message lands in Slack or Microsoft Teams with a direct link. Staff click, complete three AI-generated scenarios grounded in their firm\'s regulation, and return to work. Works on the mobile apps they already have — train on the commute, between meetings, wherever.',
+                body: 'Each working day, one message lands in Slack or Microsoft Teams with a direct link. Staff click, complete three AI-generated scenarios grounded in their firm\'s regulation, and return to work. Works on the mobile apps they already have, train on the commute, between meetings, wherever.',
                 icon: 'M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z',
                 color: '#a78bfa', bg: 'rgba(167,139,250,0.1)', border: 'rgba(167,139,250,0.25)',
               },
               {
                 step: '03',
                 title: 'AI generates scenarios',
-                body: 'Purpose-built agents retrieve real regulation text — POCA 2015 and GFSC Principles for Gibraltar firms, or the AML Law of 2004, MiCA, and CSSF guidance for Luxembourg firms — then generate unique scenarios. Every explanation cites the specific section.',
+                body: 'Purpose-built agents retrieve real regulation text (POCA 2015 and GFSC Principles for Gibraltar firms, or the AML Law of 2004, MiCA, and CSSF guidance for Luxembourg firms) then generate unique scenarios. Every explanation cites the specific section.',
                 icon: 'M12 2a7 7 0 0 0-7 7c0 2.8 1.6 4.5 3 5.5V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.5c1.4-1 3-2.7 3-5.5a7 7 0 0 0-7-7zM9 21h6M10 21v1M14 21v1',
                 color: '#f472b6', bg: 'rgba(244,114,182,0.1)', border: 'rgba(244,114,182,0.25)',
               },
@@ -325,7 +333,7 @@ export default function HomePage() {
                 Stay ahead of regulation
               </h2>
               <p className="text-sm max-w-lg mx-auto" style={{ color: 'var(--muted)' }}>
-                Practical guidance on Gibraltar and Luxembourg compliance obligations — covering POCA 2015, MiCA, CSSF supervisory requirements, AML/CFT, and more.
+                Practical guidance on Gibraltar and Luxembourg compliance obligations, covering POCA 2015, MiCA, CSSF supervisory requirements, AML/CFT, and more.
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5 mb-8">

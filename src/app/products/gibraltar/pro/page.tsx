@@ -217,7 +217,7 @@ export default function ProPage() {
                   Stage 3 &middot; Evidence
                 </p>
                 <p className="text-sm leading-relaxed" style={{ color: 'var(--muted)' }}>
-                  Every completion is recorded against the user with date, time, score, and module. Admins see a live team compliance matrix, staff can download PDF certificates, and the next training lands in Slack or Microsoft Teams the following working day — on the mobile apps they already have.
+                  Every completion is recorded against the user with date, time, score, and module. Admins see a live team compliance matrix, staff can download PDF certificates, and the next training lands in Slack or Microsoft Teams the following working day, on the mobile apps they already have.
                 </p>
               </div>
 

@@ -65,7 +65,7 @@ async function main() {
     }
 
     inserted++
-    process.stdout.write(`  ✓ ${chunk.source}${chunk.section ? ' — ' + chunk.section : ''}\n`)
+    process.stdout.write(`  ✓ ${chunk.source}${chunk.section ? ': ' + chunk.section : ''}\n`)
   }
 
   console.log(`\n✅ Inserted ${inserted}/${REGULATION_SEED.length} regulation chunks.`)

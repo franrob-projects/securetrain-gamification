@@ -49,7 +49,7 @@ export function Nav() {
 
         {/* Desktop */}
         <div className="hidden md:flex items-center gap-1">
-          {/* Products dropdown — cascading */}
+          {/* Products dropdown, cascading */}
           <div
             className="relative"
             onMouseEnter={() => setProductsOpen(true)}

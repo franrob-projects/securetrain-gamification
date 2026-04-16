@@ -50,7 +50,7 @@ export function DeliveryChannels({
         {showMobile && (
           <div className="flex items-center gap-1.5 mt-3 text-[11px]" style={{ color: 'var(--muted)' }}>
             <Smartphone className="w-3.5 h-3.5" />
-            Works on mobile — train on the go
+            Works on mobile, train on the go
           </div>
         )}
       </div>

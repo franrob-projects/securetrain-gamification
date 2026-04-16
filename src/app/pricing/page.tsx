@@ -52,7 +52,7 @@ function makeTiers(j: Jurisdiction) {
         copy.pro.firstFeature,
         'AI-generated scenarios grounded in real statute',
         'Delivered in Slack or Microsoft Teams',
-        'Mobile-friendly — train on the go',
+        'Mobile-friendly, train on the go',
         'Team compliance matrix',
         'PDF completion records',
         'Sector-based module assignment',
@@ -89,7 +89,7 @@ const FAQ = [
   },
   {
     q: 'Which jurisdictions do you support?',
-    a: 'Conply currently supports Gibraltar (POCA 2015, GFSC Principles, the Gambling Act 2025, Commissioner\'s Codes) and Luxembourg (MiCA, the AML Law of 12 November 2004, DORA, CSSF circulars). If you\'re regulated elsewhere, the content will not map to your obligations — get in touch if you\'d like to see your jurisdiction added.',
+    a: 'Conply currently supports Gibraltar (POCA 2015, GFSC Principles, the Gambling Act 2025, Commissioner\'s Codes) and Luxembourg (MiCA, the AML Law of 12 November 2004, DORA, CSSF circulars). If you\'re regulated elsewhere, the content will not map to your obligations, get in touch if you\'d like to see your jurisdiction added.',
   },
   {
     q: 'Are completion records suitable for regulator audits?',

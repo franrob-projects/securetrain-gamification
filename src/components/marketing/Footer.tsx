@@ -3,10 +3,10 @@ import { ConplyLogo } from '@/components/ui/ConplyLogo'
 import { CONTACT_EMAIL_BARE } from '@/lib/constants'
 
 const PRODUCT = [
-  { label: 'Pro — Gibraltar',     href: '/products/gibraltar/pro'      },
-  { label: 'Genius — Gibraltar',  href: '/products/gibraltar/genius'   },
-  { label: 'Pro — Luxembourg',    href: '/products/luxembourg/pro'     },
-  { label: 'Genius — Luxembourg', href: '/products/luxembourg/genius'  },
+  { label: 'Pro (Gibraltar)',     href: '/products/gibraltar/pro'      },
+  { label: 'Genius (Gibraltar)',  href: '/products/gibraltar/genius'   },
+  { label: 'Pro (Luxembourg)',    href: '/products/luxembourg/pro'     },
+  { label: 'Genius (Luxembourg)', href: '/products/luxembourg/genius'  },
   { label: 'Pricing',             href: '/pricing'                     },
   { label: 'How it works',        href: '/#how-it-works'               },
 ]

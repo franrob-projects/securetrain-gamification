@@ -45,7 +45,7 @@ export default function ProgressPage() {
     init()
   }, [router])
 
-  // Latest completion per module — for the "current state" view
+  // Latest completion per module, for the "current state" view
   const latestByModule = new Map<string, Completion>()
   for (const c of completions) {
     if (!latestByModule.has(c.module_id)) latestByModule.set(c.module_id, c)
@@ -85,7 +85,7 @@ export default function ProgressPage() {
       doc.setFont('helvetica', 'normal'); doc.text(value, 70, y)
       y += 10
     }
-    row('User:',      userEmail || '—')
+    row('User:',      userEmail || '-')
     row('Module:',    m.title)
     row('Completed:', `${dateStr} at ${timeStr}`)
     row('Score:',     `${correct} of ${TOTAL_SCENARIOS} correct (${completion.score}%)`)

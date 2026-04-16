@@ -121,7 +121,7 @@
       <rect x="0" y="0" width="540" height="56" rx="6" fill="#EEEDF9"/>
       <circle cx="28" cy="28" r="4" class="brand"/>
       <text x="48" y="24" font-family="DM Sans, system-ui" font-size="13" font-weight="500" fill="#14142B">Training appears in every published decision.</text>
-      <text x="48" y="42" font-family="DM Sans, system-ui" font-size="11" fill="#6B7280">The baseline is no longer "we have a programme" — it's "we can prove it works."</text>
+      <text x="48" y="42" font-family="DM Sans, system-ui" font-size="11" fill="#6B7280">The baseline is no longer "we have a programme", it's "we can prove it works."</text>
     </g>
 
   </g>

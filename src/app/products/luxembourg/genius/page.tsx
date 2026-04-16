@@ -74,7 +74,7 @@ export default function GeniusPage() {
                   Stage 1 &middot; Ingest
                 </p>
                 <p className="text-sm leading-relaxed" style={{ color: 'var(--muted)' }}>
-                  Luxembourg and EU statute — MiCA, the AML Law of 2004, DORA, CSSF circulars — is broken into citable chunks and indexed with vector embeddings. Every chunk retains its source, article, and context so scenarios can cite the exact law later.
+                  Luxembourg and EU statute (MiCA, the AML Law of 2004, DORA, CSSF circulars) is broken into citable chunks and indexed with vector embeddings. Every chunk retains its source, article, and context so scenarios can cite the exact law later.
                 </p>
               </div>
 

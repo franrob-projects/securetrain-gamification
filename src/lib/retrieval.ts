@@ -12,9 +12,9 @@ export interface RetrievedChunk {
 
 // Retrieve the top N regulation chunks most relevant to a query.
 // Gracefully degrades to [] if OPENAI_API_KEY is missing, pgvector isn't
-// enabled, or the embeddings call fails — the scenario API will then
+// enabled, or the embeddings call fails, the scenario API will then
 // fall back to non-RAG generation.
-// Singleton — avoids re-parsing env and allocating a new HTTP client per request
+// Singleton, avoids re-parsing env and allocating a new HTTP client per request
 const openai = process.env.OPENAI_API_KEY ? new OpenAI() : null
 
 export async function retrieveRelevantChunks(query: string, count = 5): Promise<RetrievedChunk[]> {

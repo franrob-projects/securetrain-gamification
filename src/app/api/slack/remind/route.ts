@@ -38,7 +38,7 @@ async function sendReminder(opts: { userName?: string; moduleId?: string }): Pro
     SECTOR_LABEL[module.sector] ?? module.sector,
   ].join('    ·    ')
 
-  const fallbackText = `${headerText} — ${module.title}`
+  const fallbackText = `${headerText}: ${module.title}`
 
   const blocks = [
     {
@@ -115,7 +115,7 @@ async function sendReminder(opts: { userName?: string; moduleId?: string }): Pro
   return data.ok ? { ok: true } : { ok: false, error: data.error }
 }
 
-// Vercel cron — Authorization: Bearer {CRON_SECRET}
+// Vercel cron: Authorization: Bearer {CRON_SECRET}
 export async function GET(req: NextRequest) {
   const auth = req.headers.get('Authorization')
   if (auth !== `Bearer ${process.env.CRON_SECRET}`) {

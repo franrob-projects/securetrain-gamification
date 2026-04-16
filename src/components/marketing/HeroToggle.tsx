@@ -26,7 +26,7 @@ const STAFF_SCENARIOS: Record<JurisdictionKey, {
       'D. Wait for the next scheduled review',
     ],
     correctIndex: 1,
-    ref: 'Regulation reference: POCA 2015, Section 28 — Nominated officer reporting obligations.',
+    ref: 'Regulation reference: POCA 2015, Section 28: Nominated officer reporting obligations.',
   },
   luxembourg: {
     label:     'CASP / MiCA scenario',
@@ -41,7 +41,7 @@ const STAFF_SCENARIOS: Record<JurisdictionKey, {
       'D. Request retroactive originator info within 30 days',
     ],
     correctIndex: 1,
-    ref: 'Regulation reference: MiCA (EU 2023/1114), Article 72 — Transfer of funds obligations for CASPs.',
+    ref: 'Regulation reference: MiCA (EU 2023/1114), Article 72: Transfer of funds obligations for CASPs.',
   },
 }
 

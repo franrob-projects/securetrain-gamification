@@ -24,7 +24,7 @@ export interface Post {
   content: string
 }
 
-// Module-level cache — blog content is static, so one read per cold start is enough
+// Module-level cache, blog content is static, so one read per cold start is enough
 let _postsCache: PostMeta[] | null = null
 
 export function getAllPosts(): PostMeta[] {
@@ -51,7 +51,7 @@ export function getAllPosts(): PostMeta[] {
   return _postsCache
 }
 
-// Per-slug HTML cache — avoids re-parsing the same post in generateMetadata + page render
+// Per-slug HTML cache, avoids re-parsing the same post in generateMetadata + page render
 const _htmlCache = new Map<string, { meta: PostMeta; html: string }>()
 
 export function getPostBySlug(slug: string): Post | null {

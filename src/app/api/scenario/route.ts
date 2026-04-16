@@ -13,9 +13,9 @@ export async function POST(req: NextRequest) {
 
   const regulationContext = chunks.length > 0
     ? `
-You MUST ground the scenario in the following official Gibraltar regulation excerpts. Quote and reference only what is provided here — do NOT invent additional regulation. Use the section/principle references shown below verbatim in the regulation reference line.
+You MUST ground the scenario in the following official Gibraltar regulation excerpts. Quote and reference only what is provided here: do NOT invent additional regulation. Use the section/principle references shown below verbatim in the regulation reference line.
 
-${chunks.map((c, i) => `[REGULATION ${i + 1}] ${c.source} — ${c.document_title}${c.section ? ` (${c.section})` : ''}
+${chunks.map((c, i) => `[REGULATION ${i + 1}] ${c.source}: ${c.document_title}${c.section ? ` (${c.section})` : ''}
 ${c.content}`).join('\n\n')}
 `
     : ''
@@ -39,9 +39,9 @@ The explanation field MUST end with a new line containing the regulation referen
 Regulation reference: [Act name and section or principle number].
 
 Examples of valid regulation references:
-- Regulation reference: POCA 2015, Section 28 — MLRO appointment and reporting obligations.
-- Regulation reference: GFSC DLT Regulatory Principles, Principle 7 — Systems and security protocols.
-- Regulation reference: Gibraltar Gambling Act 2025, Section 42 — Staff training requirements.`
+- Regulation reference: POCA 2015, Section 28: MLRO appointment and reporting obligations.
+- Regulation reference: GFSC DLT Regulatory Principles, Principle 7: Systems and security protocols.
+- Regulation reference: Gibraltar Gambling Act 2025, Section 42: Staff training requirements.`
 
   const message = await client.messages.create({
     model: 'claude-haiku-4-5-20251001',

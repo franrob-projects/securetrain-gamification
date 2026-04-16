@@ -19,7 +19,7 @@ export const MODULES: TrainingModule[] = [
     sector: 'both',
     threatLevel: 'critical',
     topics: [
-      'POCA 2015 — the three principal money laundering offences',
+      'POCA 2015: the three principal money laundering offences',
       'SAR reporting process to the GFIU',
       'Tipping-off restrictions and when they apply',
       'Risk-based approach to AML controls',
@@ -37,7 +37,7 @@ export const MODULES: TrainingModule[] = [
     topics: [
       'All nine DLT Regulatory Principles',
       'DLT Provider Regulations 2020',
-      'Token classification — security vs utility vs e-money',
+      'Token classification: security vs utility vs e-money',
       'VASP Travel Rule obligations',
       'GFSC supervisory expectations and reporting',
     ],
@@ -53,7 +53,7 @@ export const MODULES: TrainingModule[] = [
     topics: [
       'Social Responsibility Codes of Practice',
       'Player protection and harm minimisation',
-      'Self-exclusion — implementation and record-keeping',
+      'Self-exclusion: implementation and record-keeping',
       'Affordability checks and source of funds',
       'Responsible advertising standards',
     ],
@@ -99,7 +99,7 @@ export const MODULES: TrainingModule[] = [
     sector: 'crypto',
     threatLevel: 'high',
     topics: [
-      'Insider dealing — definition and prohibitions',
+      'Insider dealing: definition and prohibitions',
       'Market manipulation in token markets',
       'GFSC market conduct guidance',
       'EU MAR equivalents in Gibraltar',
