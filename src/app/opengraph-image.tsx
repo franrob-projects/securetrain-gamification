@@ -3,7 +3,7 @@ import { readFile } from 'fs/promises'
 import { join } from 'path'
 
 export const runtime = 'nodejs'
-export const alt = 'Conply | Gibraltar Compliance Training'
+export const alt = 'Conply | AI-powered compliance training for Gibraltar and Luxembourg'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
@@ -34,14 +34,14 @@ export default async function Image() {
         <div
           style={{
             marginTop: 48,
-            fontSize:  52,
+            fontSize:  54,
             fontWeight: 600,
             lineHeight: 1.15,
-            maxWidth:  960,
+            maxWidth:  1000,
             letterSpacing: '-0.02em',
           }}
         >
-          Gibraltar compliance training, mapped to regulation.
+          Compliance training, grounded in statute.
         </div>
 
         <div
@@ -49,11 +49,11 @@ export default async function Image() {
             marginTop: 28,
             fontSize:  28,
             color:     '#a9a5c4',
-            maxWidth:  960,
+            maxWidth:  1000,
             lineHeight: 1.4,
           }}
         >
-          AI-powered, role-specific training for crypto and iGaming firms. POCA 2015, GFSC principles, Gambling Act 2025.
+          AI scenarios from POCA, GFSC, MiCA, CSSF. Gibraltar and Luxembourg. Delivered in Slack &amp; Microsoft Teams. Audit-ready PDF records.
         </div>
 
         <div
