@@ -4,7 +4,7 @@ import { Nav } from '@/components/marketing/Nav'
 import { Footer } from '@/components/marketing/Footer'
 import { JurisdictionBadge } from '@/components/marketing/JurisdictionBadge'
 import { BOOKING_URL } from '@/lib/constants'
-import { Crown, Database, Brain, Users, FileText, BarChart3, Shield, Layers, Target, GitBranch, User, CheckCircle, ArrowRight } from 'lucide-react'
+import { Database, Brain, Users, FileText, BarChart3, Shield, Layers, Target, GitBranch, User, CheckCircle, ArrowRight } from 'lucide-react'
 
 export const metadata: Metadata = {
   title: 'Conply Genius Luxembourg | Personalised CSSF Compliance Training',
@@ -32,11 +32,6 @@ export default function GeniusPage() {
         <section className="max-w-6xl mx-auto px-6 pt-16 sm:pt-24 pb-16 sm:pb-20">
           <div className="max-w-3xl">
             <JurisdictionBadge jurisdiction="luxembourg" product="genius" />
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-6 text-[11px] font-medium uppercase tracking-widest"
-              style={{ color: '#fbbf24', background: 'rgba(251,191,36,0.1)', border: '1px solid rgba(251,191,36,0.2)' }}>
-              <Crown className="w-3.5 h-3.5" />
-              Platinum
-            </div>
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-[1.1] mb-6" style={{ letterSpacing: '-0.03em', color: 'var(--text)' }}>
               Conply <span style={{ color: '#fbbf24' }}>Genius</span>
             </h1>

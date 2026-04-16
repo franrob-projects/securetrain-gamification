@@ -4,7 +4,7 @@ import { Nav } from '@/components/marketing/Nav'
 import { Footer } from '@/components/marketing/Footer'
 import { JurisdictionBadge } from '@/components/marketing/JurisdictionBadge'
 import { BOOKING_URL } from '@/lib/constants'
-import { Sparkles, Database, BookOpen, FileText, CheckCircle, Users, BarChart3, Shield } from 'lucide-react'
+import { Database, BookOpen, FileText, CheckCircle, Users, BarChart3, Shield } from 'lucide-react'
 
 export const metadata: Metadata = {
   title: 'Conply Pro Luxembourg | MiCA & CSSF Compliance Training',
@@ -32,11 +32,6 @@ export default function ProPage() {
         <section className="max-w-6xl mx-auto px-6 pt-16 sm:pt-24 pb-16 sm:pb-20">
           <div className="max-w-3xl">
             <JurisdictionBadge jurisdiction="luxembourg" product="pro" />
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-6 text-[11px] font-medium uppercase tracking-widest"
-              style={{ color: '#a78bfa', background: 'rgba(167,139,250,0.1)', border: '1px solid rgba(167,139,250,0.2)' }}>
-              <Sparkles className="w-3.5 h-3.5" />
-              Premium
-            </div>
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-[1.1] mb-6" style={{ letterSpacing: '-0.03em', color: 'var(--text)' }}>
               Conply <span style={{ color: '#a78bfa' }}>Pro</span>
             </h1>
