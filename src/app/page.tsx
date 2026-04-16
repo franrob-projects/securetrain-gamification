@@ -46,10 +46,10 @@ const FEATURES = [
 ]
 
 const METRICS = [
-  { value: '8',    label: 'Regulatory modules',           sub: 'AML, DLT, KYC, Sanctions, MiCA, DORA, and more',           color: '#4ade80' },
-  { value: '30+',  label: 'Regulation sources',           sub: 'Across Gibraltar and Luxembourg: POCA, GFSC, MiCA, CSSF', color: '#fbbf24' },
-  { value: '<10',  label: 'Minutes per session',          sub: 'Three scenarios, scored, with a compliance record',        color: '#f472b6' },
-  { value: '0',    label: 'Slide decks',                  sub: 'AI scenarios replace passive e-learning',                  color: '#a78bfa' },
+  { value: '30+',  label: 'Regulation sources',      sub: 'Primary statute across Gibraltar and Luxembourg: POCA, GFSC, MiCA, CSSF, DORA',  color: '#fbbf24' },
+  { value: '100%', label: 'Cited to statute',        sub: 'Every answer ends with the exact Act, section, or principle. No vague best-practice.', color: '#4ade80' },
+  { value: '<10',  label: 'Minutes per session',     sub: 'Three scored scenarios, PDF-stamped to the user for the audit trail',              color: '#f472b6' },
+  { value: 'New',  label: 'Scenarios every session', sub: 'AI-generated live from regulation text. No slide decks, no repeats, no passive e-learning.', color: '#a78bfa' },
 ]
 
 export default function HomePage() {
