@@ -5,7 +5,6 @@ import { Check, Star } from 'lucide-react'
 import { Nav } from '@/components/marketing/Nav'
 import { Footer } from '@/components/marketing/Footer'
 import { JurisdictionFlag } from '@/components/ui/JurisdictionFlag'
-import { DeliveryChannels } from '@/components/ui/DeliveryChannels'
 import { BOOKING_URL } from '@/lib/constants'
 
 type Jurisdiction = 'gibraltar' | 'luxembourg'
@@ -198,10 +197,6 @@ export default function PricingPage() {
               }}>
               Monthly
             </button>
-          </div>
-
-          <div className="mt-8 flex justify-center">
-            <DeliveryChannels variant="pill" />
           </div>
         </section>
 
