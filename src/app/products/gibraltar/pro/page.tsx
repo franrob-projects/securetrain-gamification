@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { Nav } from '@/components/marketing/Nav'
 import { Footer } from '@/components/marketing/Footer'
 import { JurisdictionBadge } from '@/components/marketing/JurisdictionBadge'
-import { DeliveryChannels, SlackLogo, TeamsLogo } from '@/components/ui/DeliveryChannels'
+import { DeliveryChannels } from '@/components/ui/DeliveryChannels'
 import { BOOKING_URL } from '@/lib/constants'
 import { Sparkles, Database, BookOpen, FileText, CheckCircle, Users, BarChart3, Shield } from 'lucide-react'
 
@@ -217,12 +217,12 @@ export default function ProPage() {
                   Stage 3 &middot; Evidence
                 </p>
                 <p className="text-sm leading-relaxed" style={{ color: 'var(--muted)' }}>
-                  Every completion is recorded against the user with date, time, score, and module. Admins see a live team compliance matrix, staff can download PDF certificates, and the next training lands in Slack or Microsoft Teams the following working day, on the mobile apps they already have.
+                  Every completion is recorded against the user with date, time, score, and module. Admins see a live team compliance matrix, and staff can download PDF certificates for any module they&apos;ve completed.
                 </p>
               </div>
 
               {/* Row 3: Outputs - compliance matrix + PDF */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="rounded-xl p-5" style={{ background: 'var(--card)', border: '1px solid var(--card-border)' }}>
                   <div className="flex items-center justify-between mb-3">
                     <p className="text-[10px] font-semibold uppercase tracking-widest" style={{ color: '#4ade80' }}>
@@ -250,16 +250,6 @@ export default function ProPage() {
                   <FileText className="w-5 h-5 mb-2" style={{ color: '#fbbf24' }} />
                   <p className="text-xs font-semibold" style={{ color: 'var(--text)' }}>PDF records</p>
                   <p className="text-[10px] mt-1" style={{ color: 'var(--muted)' }}>Per-user completion certificates</p>
-                </div>
-
-                <div className="rounded-xl px-5 py-4 text-center flex flex-col items-center justify-center"
-                  style={{ background: 'rgba(98,100,167,0.08)', border: '1px solid rgba(98,100,167,0.3)' }}>
-                  <div className="flex items-center gap-2 mb-2">
-                    <SlackLogo className="w-6 h-6" />
-                    <TeamsLogo className="w-6 h-6" />
-                  </div>
-                  <p className="text-xs font-semibold" style={{ color: 'var(--text)' }}>Slack &amp; Teams</p>
-                  <p className="text-[10px] mt-1" style={{ color: 'var(--muted)' }}>Delivered in-app &middot; works on mobile</p>
                 </div>
               </div>
 
