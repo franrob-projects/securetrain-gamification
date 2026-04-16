@@ -2,21 +2,22 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Nav } from '@/components/marketing/Nav'
 import { Footer } from '@/components/marketing/Footer'
+import { JurisdictionBadge } from '@/components/marketing/JurisdictionBadge'
 import { BOOKING_URL } from '@/lib/constants'
 import { Sparkles, Database, BookOpen, FileText, CheckCircle, Users, BarChart3, Shield } from 'lucide-react'
 
 export const metadata: Metadata = {
-  title: 'Pro | Premium',
-  description: 'Team-wide Gibraltar compliance training with a shared regulation database, scored scenarios, and audit-ready PDF records for every module.',
+  title: 'Conply Pro Luxembourg | MiCA & CSSF Compliance Training',
+  description: 'Team-wide compliance training mapped to MiCA, the AML Law of 12 November 2004, DORA, and CSSF circulars. Delivered via Slack. Audit-ready PDF records.',
 }
 
 const FEATURES = [
-  { icon: Database,    title: 'Shared regulation database',     desc: 'One central database of Gibraltar regulation sources covers your entire team. POCA 2015, GFSC Principles, the Gambling Act, and more.', color: '#60a5fa', bg: 'rgba(96,165,250,0.1)', border: 'rgba(96,165,250,0.25)' },
+  { icon: Database,    title: 'Shared regulation database',     desc: 'One central database covering CSSF supervisory expectations, MiCA CASP obligations, the AML Law of 2004, DORA, and more.', color: '#60a5fa', bg: 'rgba(96,165,250,0.1)', border: 'rgba(96,165,250,0.25)' },
   { icon: BookOpen,    title: 'Curriculum-based progression',    desc: 'Staff work through modules in order. Each module covers a regulation area. Complete it, tick it off, move to the next.', color: '#a78bfa', bg: 'rgba(167,139,250,0.1)', border: 'rgba(167,139,250,0.25)' },
-  { icon: FileText,    title: 'PDF completion records',          desc: 'Every module completion generates a downloadable PDF with user, date, score, and regulation reference. Audit-ready from day one.', color: '#4ade80', bg: 'rgba(74,222,128,0.1)', border: 'rgba(74,222,128,0.25)' },
-  { icon: BarChart3,   title: 'Team compliance dashboard',       desc: 'See who has completed what, who is overdue, and download records for any user. The matrix regulators expect.', color: '#f472b6', bg: 'rgba(244,114,182,0.1)', border: 'rgba(244,114,182,0.25)' },
-  { icon: Users,       title: 'Sector-based module assignment',  desc: 'Assign staff to Crypto, iGaming, or Both. Conply maps the right modules automatically. No manual configuration.', color: '#fbbf24', bg: 'rgba(251,191,36,0.1)', border: 'rgba(251,191,36,0.25)' },
-  { icon: Shield,      title: 'AI-generated scenarios',          desc: 'Three unique scenarios per session, grounded in Gibraltar regulation text. Scored answers with statute citations.', color: '#38bdf8', bg: 'rgba(56,189,248,0.1)', border: 'rgba(56,189,248,0.25)' },
+  { icon: FileText,    title: 'PDF completion records',          desc: 'Every module completion generates a downloadable PDF with user, date, score, and regulation reference. Audit-ready for CSSF supervisory visits.', color: '#4ade80', bg: 'rgba(74,222,128,0.1)', border: 'rgba(74,222,128,0.25)' },
+  { icon: BarChart3,   title: 'Team compliance dashboard',       desc: 'See who has completed what, who is overdue, and download records for any user. The matrix the CSSF expects in onsite inspections.', color: '#f472b6', bg: 'rgba(244,114,182,0.1)', border: 'rgba(244,114,182,0.25)' },
+  { icon: Users,       title: 'Sector-based module assignment',  desc: 'Assign staff to Crypto / DLT, Payments / Fintech, or Investment Funds. Conply maps the right modules automatically.', color: '#fbbf24', bg: 'rgba(251,191,36,0.1)', border: 'rgba(251,191,36,0.25)' },
+  { icon: Shield,      title: 'AI-generated scenarios',          desc: 'Three unique scenarios per session, grounded in MiCA, AML Law, DORA and CSSF circular text. Scored answers with statute citations.', color: '#38bdf8', bg: 'rgba(56,189,248,0.1)', border: 'rgba(56,189,248,0.25)' },
 ]
 
 export default function ProPage() {
@@ -30,6 +31,7 @@ export default function ProPage() {
         {/* Hero */}
         <section className="max-w-6xl mx-auto px-6 pt-16 sm:pt-24 pb-16 sm:pb-20">
           <div className="max-w-3xl">
+            <JurisdictionBadge jurisdiction="luxembourg" product="pro" />
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-6 text-[11px] font-medium uppercase tracking-widest"
               style={{ color: '#a78bfa', background: 'rgba(167,139,250,0.1)', border: '1px solid rgba(167,139,250,0.2)' }}>
               <Sparkles className="w-3.5 h-3.5" />
@@ -39,7 +41,7 @@ export default function ProPage() {
               Conply <span style={{ color: '#a78bfa' }}>Pro</span>
             </h1>
             <p className="text-base sm:text-lg leading-relaxed mb-8 max-w-2xl" style={{ color: 'var(--muted)' }}>
-              Team-wide compliance training powered by a shared Gibraltar regulation database. Staff work through modules, tick off regulations as they go, and generate audit-ready records.
+              Team-wide compliance training powered by a shared Luxembourg regulation database. Staff work through modules, tick off regulations as they go, and generate audit-ready records for CSSF supervisory visits.
             </p>
             <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer"
               className="cta-primary inline-block px-8 py-3.5 rounded-xl font-semibold text-white text-sm">
@@ -71,7 +73,7 @@ export default function ProPage() {
                   Stage 1 &middot; Ingest
                 </p>
                 <p className="text-sm leading-relaxed" style={{ color: 'var(--muted)' }}>
-                  We take the primary sources of Gibraltar compliance law and break them into citable chunks. Each chunk keeps its source, section, and surrounding context. This is the single source of truth every scenario will be grounded in.
+                  We take the primary sources of Luxembourg and EU compliance law and break them into citable chunks. Each chunk keeps its source, section, and surrounding context. This is the single source of truth every scenario will be grounded in.
                 </p>
               </div>
 
@@ -83,12 +85,12 @@ export default function ProPage() {
                   </p>
                   <div className="flex flex-wrap gap-2">
                     {[
-                      { name: 'POCA 2015', sections: '42 sections' },
-                      { name: 'GFSC DLT Principles', sections: '9 principles' },
-                      { name: 'Gambling Act 2025', sections: '38 sections' },
-                      { name: 'AML/CFT Guidance', sections: '6 chapters' },
-                      { name: 'Social Responsibility Codes', sections: '12 codes' },
-                      { name: 'Data Protection Act', sections: '8 parts' },
+                      { name: 'AML Law 12 Nov 2004', sections: '14 key articles' },
+                      { name: 'CSSF Regulation 12-02', sections: '8 chapters' },
+                      { name: 'MiCA (EU 2023/1114)', sections: '12 CASP obligations' },
+                      { name: 'DORA (EU 2022/2554)', sections: '6 ICT chapters' },
+                      { name: 'CSSF Circular 25/878', sections: 'EBA AML Guidelines' },
+                      { name: 'GDPR + Law of 1 Aug 2018', sections: '7 key provisions' },
                     ].map(r => (
                       <div key={r.name} className="rounded-lg px-3 py-2"
                         style={{ background: 'var(--bg)', border: '1px solid var(--card-border)' }}>
@@ -106,9 +108,9 @@ export default function ProPage() {
                   <div className="rounded-lg p-4" style={{ background: 'var(--bg)', border: '1px solid var(--card-border)' }}>
                     <div className="space-y-2">
                       {[
-                        { source: 'POCA 2015', section: 'Section 28', content: 'Nominated officer reporting obligations...' },
-                        { source: 'Gambling Act', section: 'Section 42', content: 'Staff competence standard requirements...' },
-                        { source: 'GFSC DLT', section: 'Principle 7', content: 'Systems, controls, and human resources...' },
+                        { source: 'MiCA (EU 2023/1114)', section: 'Article 72', content: 'Transfer of funds originator and beneficiary verification...' },
+                        { source: 'AML Law 2004',        section: 'Article 3-1', content: 'Customer due diligence and ongoing monitoring obligations...' },
+                        { source: 'DORA',                section: 'Chapter II', content: 'ICT risk management framework and governance...' },
                       ].map((chunk, i) => (
                         <div key={i} className="flex items-start gap-3 text-xs">
                           <Database className="w-3.5 h-3.5 flex-shrink-0 mt-0.5" style={{ color: '#a78bfa', opacity: 0.6 }} />
@@ -184,10 +186,10 @@ export default function ProPage() {
                   </div>
                   <div className="rounded-lg p-3" style={{ background: 'var(--bg)', border: '1px solid var(--card-border)' }}>
                     <p className="text-xs leading-relaxed mb-2" style={{ color: 'var(--text)' }}>
-                      A customer at your Gibraltar-licensed exchange deposits funds from three different bank accounts within 48 hours. What should you do first?
+                      A CASP authorised by the CSSF receives a €18,000 stablecoin transfer from a self-hosted wallet. The originator cannot be verified. What is the correct next step under the MiCA Travel Rule?
                     </p>
                     <div className="space-y-1">
-                      {['A. Contact the customer directly', 'B. File an internal SAR and assess', 'C. Freeze the account', 'D. Wait for the next review'].map((o, i) => (
+                      {['A. Process and flag for monthly review', 'B. Pause the transfer and request originator info', 'C. Return the funds without documentation', 'D. Apply EDD and proceed'].map((o, i) => (
                         <div key={o} className="px-2 py-1 rounded text-[10px]"
                           style={{
                             background: i === 1 ? 'rgba(74,222,128,0.08)' : 'transparent',
@@ -199,7 +201,7 @@ export default function ProPage() {
                       ))}
                     </div>
                     <p className="text-[10px] mt-2" style={{ color: 'var(--muted)', opacity: 0.5 }}>
-                      Ref: POCA 2015, Section 28
+                      Ref: MiCA (EU 2023/1114), Article 72
                     </p>
                   </div>
                 </div>
@@ -317,7 +319,7 @@ export default function ProPage() {
             <p className="text-sm mb-8 max-w-lg mx-auto" style={{ color: 'var(--muted)' }}>
               Map regulation topics directly to each user&apos;s role and sector. Adaptive scenarios, personalised progress tracking, and individual compliance roadmaps.
             </p>
-            <Link href="/products/genius"
+            <Link href="/products/luxembourg/genius"
               className="inline-block px-8 py-3.5 rounded-xl font-semibold text-sm"
               style={{ background: 'rgba(251,191,36,0.15)', color: '#fbbf24', border: '1px solid rgba(251,191,36,0.3)' }}>
               Explore Genius

@@ -2,12 +2,13 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Nav } from '@/components/marketing/Nav'
 import { Footer } from '@/components/marketing/Footer'
+import { JurisdictionBadge } from '@/components/marketing/JurisdictionBadge'
 import { BOOKING_URL } from '@/lib/constants'
 import { Crown, Database, Brain, Users, FileText, BarChart3, Shield, Layers, Target, GitBranch, User, CheckCircle, ArrowRight } from 'lucide-react'
 
 export const metadata: Metadata = {
-  title: 'Genius | Platinum',
-  description: 'Personalised compliance training journeys mapped to each user. Regulation topics feed into the AI and adapt to individual roles, sectors, and progress.',
+  title: 'Conply Genius Gibraltar | Personalised GFSC Compliance Training',
+  description: 'Role-mapped compliance training for Gibraltar-regulated firms. POCA 2015, GFSC Principles, Gambling Act 2025. Adaptive scenarios and individual compliance roadmaps.',
 }
 
 const FEATURES = [
@@ -30,6 +31,7 @@ export default function GeniusPage() {
         {/* Hero */}
         <section className="max-w-6xl mx-auto px-6 pt-16 sm:pt-24 pb-16 sm:pb-20">
           <div className="max-w-3xl">
+            <JurisdictionBadge jurisdiction="gibraltar" product="genius" />
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-6 text-[11px] font-medium uppercase tracking-widest"
               style={{ color: '#fbbf24', background: 'rgba(251,191,36,0.1)', border: '1px solid rgba(251,191,36,0.2)' }}>
               <Crown className="w-3.5 h-3.5" />

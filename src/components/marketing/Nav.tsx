@@ -12,23 +12,21 @@ const LINKS = [
   { href: '/help',    label: 'Help'    },
 ]
 
-const PRODUCTS = [
-  {
-    href: '/products/pro',
-    label: 'Pro',
-    tag: 'Premium',
-    desc: 'Team-wide compliance training with audit-ready records',
-    icon: Sparkles,
-    color: '#a78bfa',
-  },
-  {
-    href: '/products/genius',
-    label: 'Genius',
-    tag: 'Platinum',
-    desc: 'Personalised learning journeys mapped to each user',
-    icon: Crown,
-    color: '#fbbf24',
-  },
+type Jurisdiction = {
+  slug:      'gibraltar' | 'luxembourg'
+  label:     string
+  mark:      string
+  regulator: string
+}
+
+const JURISDICTIONS: Jurisdiction[] = [
+  { slug: 'gibraltar',  label: 'Gibraltar',  mark: 'GI',   regulator: 'GFSC'  },
+  { slug: 'luxembourg', label: 'Luxembourg', mark: '🇱🇺', regulator: 'CSSF' },
+]
+
+const TIERS = [
+  { slug: 'pro',    label: 'Pro',    tag: 'Premium',  desc: 'Team-wide compliance training',                 icon: Sparkles, color: '#a78bfa' },
+  { slug: 'genius', label: 'Genius', tag: 'Platinum', desc: 'Personalised learning journeys per user',       icon: Crown,    color: '#fbbf24' },
 ]
 
 export function Nav() {
@@ -72,46 +70,66 @@ export function Nav() {
                 style={{ zIndex: 50 }}
               >
                 <div
-                  className="rounded-xl p-2 w-72 space-y-1"
-                  style={{ background: 'var(--card-solid)', border: '1px solid var(--card-border)', boxShadow: '0 16px 48px -12px rgba(0,0,0,0.5)' }}
+                  className="rounded-xl p-3 grid grid-cols-2 gap-3"
+                  style={{ background: 'var(--card-solid)', border: '1px solid var(--card-border)', boxShadow: '0 16px 48px -12px rgba(0,0,0,0.5)', width: 560 }}
                 >
-                  {PRODUCTS.map(product => {
-                    const Icon = product.icon
-                    return (
-                      <Link
-                        key={product.href}
-                        href={product.href}
-                        onClick={() => setProductsOpen(false)}
-                        className="flex items-start gap-3 px-3 py-3 rounded-lg transition-colors"
-                        style={{ background: isActive(product.href) ? 'rgba(91,84,184,0.1)' : 'transparent' }}
-                        onMouseEnter={e => (e.currentTarget.style.background = 'rgba(91,84,184,0.08)')}
-                        onMouseLeave={e => (e.currentTarget.style.background = isActive(product.href) ? 'rgba(91,84,184,0.1)' : 'transparent')}
-                      >
-                        <div
-                          className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5"
-                          style={{ background: `${product.color}15`, border: `1px solid ${product.color}30` }}
-                        >
-                          <Icon className="w-4 h-4" style={{ color: product.color }} />
-                        </div>
-                        <div>
-                          <div className="flex items-center gap-2 mb-0.5">
-                            <span className="text-sm font-semibold" style={{ color: 'var(--text)' }}>
-                              {product.label}
-                            </span>
-                            <span
-                              className="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded"
-                              style={{ background: `${product.color}20`, color: product.color }}
+                  {JURISDICTIONS.map(j => (
+                    <div key={j.slug} className="rounded-lg p-2"
+                      style={{ background: 'rgba(91,84,184,0.04)', border: '1px solid var(--card-border)' }}>
+                      <div className="flex items-center gap-2 px-2 py-1.5 mb-1">
+                        <span className="inline-flex items-center justify-center min-w-[20px] h-5 rounded text-[10px] font-bold"
+                          style={{ background: 'rgba(91,84,184,0.15)', color: '#a78bfa' }}>
+                          {j.mark}
+                        </span>
+                        <span className="text-[11px] font-semibold uppercase tracking-wider" style={{ color: 'var(--text)' }}>
+                          {j.label}
+                        </span>
+                        <span className="text-[10px]" style={{ color: 'var(--muted)', opacity: 0.7 }}>
+                          · {j.regulator}
+                        </span>
+                      </div>
+                      <div className="space-y-1">
+                        {TIERS.map(t => {
+                          const href = `/products/${j.slug}/${t.slug}`
+                          const Icon = t.icon
+                          return (
+                            <Link
+                              key={t.slug}
+                              href={href}
+                              onClick={() => setProductsOpen(false)}
+                              className="flex items-start gap-2.5 px-2 py-2 rounded-lg transition-colors"
+                              style={{ background: isActive(href) ? 'rgba(91,84,184,0.1)' : 'transparent' }}
+                              onMouseEnter={e => (e.currentTarget.style.background = 'rgba(91,84,184,0.08)')}
+                              onMouseLeave={e => (e.currentTarget.style.background = isActive(href) ? 'rgba(91,84,184,0.1)' : 'transparent')}
                             >
-                              {product.tag}
-                            </span>
-                          </div>
-                          <p className="text-xs leading-relaxed" style={{ color: 'var(--muted)' }}>
-                            {product.desc}
-                          </p>
-                        </div>
-                      </Link>
-                    )
-                  })}
+                              <div
+                                className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
+                                style={{ background: `${t.color}15`, border: `1px solid ${t.color}30` }}
+                              >
+                                <Icon className="w-3.5 h-3.5" style={{ color: t.color }} />
+                              </div>
+                              <div>
+                                <div className="flex items-center gap-1.5 mb-0.5">
+                                  <span className="text-sm font-semibold" style={{ color: 'var(--text)' }}>
+                                    {t.label}
+                                  </span>
+                                  <span
+                                    className="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded"
+                                    style={{ background: `${t.color}20`, color: t.color }}
+                                  >
+                                    {t.tag}
+                                  </span>
+                                </div>
+                                <p className="text-[11px] leading-snug" style={{ color: 'var(--muted)' }}>
+                                  {t.desc}
+                                </p>
+                              </div>
+                            </Link>
+                          )
+                        })}
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
             )}
@@ -164,36 +182,46 @@ export function Nav() {
       {/* Mobile drawer */}
       {open && (
         <div className="md:hidden pt-6 pb-2 space-y-1">
-          {/* Mobile products */}
-          <p className="px-3 pt-2 pb-1 text-[10px] font-semibold uppercase tracking-widest" style={{ color: 'var(--accent)' }}>
-            Products
-          </p>
-          {PRODUCTS.map(product => {
-            const Icon = product.icon
-            return (
-              <Link
-                key={product.href}
-                href={product.href}
-                onClick={() => setOpen(false)}
-                className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors"
-                style={{
-                  color: isActive(product.href) ? 'var(--text)' : 'var(--muted)',
-                  background: isActive(product.href) ? 'rgba(91,84,184,0.1)' : 'transparent',
-                }}
-              >
-                <Icon className="w-4 h-4" style={{ color: product.color }} />
-                <span>{product.label}</span>
-                <span
-                  className="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded ml-auto"
-                  style={{ background: `${product.color}20`, color: product.color }}
-                >
-                  {product.tag}
+          {JURISDICTIONS.map(j => (
+            <div key={j.slug} className="space-y-1">
+              <div className="flex items-center gap-2 px-3 pt-3 pb-1">
+                <span className="inline-flex items-center justify-center min-w-[20px] h-5 rounded text-[10px] font-bold"
+                  style={{ background: 'rgba(91,84,184,0.15)', color: '#a78bfa' }}>
+                  {j.mark}
                 </span>
-              </Link>
-            )
-          })}
+                <p className="text-[10px] font-semibold uppercase tracking-widest" style={{ color: 'var(--accent)' }}>
+                  {j.label} · {j.regulator}
+                </p>
+              </div>
+              {TIERS.map(t => {
+                const href = `/products/${j.slug}/${t.slug}`
+                const Icon = t.icon
+                return (
+                  <Link
+                    key={t.slug}
+                    href={href}
+                    onClick={() => setOpen(false)}
+                    className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors ml-2"
+                    style={{
+                      color: isActive(href) ? 'var(--text)' : 'var(--muted)',
+                      background: isActive(href) ? 'rgba(91,84,184,0.1)' : 'transparent',
+                    }}
+                  >
+                    <Icon className="w-4 h-4" style={{ color: t.color }} />
+                    <span>{t.label}</span>
+                    <span
+                      className="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded ml-auto"
+                      style={{ background: `${t.color}20`, color: t.color }}
+                    >
+                      {t.tag}
+                    </span>
+                  </Link>
+                )
+              })}
+            </div>
+          ))}
 
-          <div className="h-px my-2" style={{ background: 'var(--border)' }} />
+          <div className="h-px my-3" style={{ background: 'var(--border)' }} />
 
           {LINKS.map(link => {
             const active = isActive(link.href)
