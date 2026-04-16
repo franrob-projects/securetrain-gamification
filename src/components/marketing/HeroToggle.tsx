@@ -1,12 +1,12 @@
 'use client'
 import { useState } from 'react'
+import { JurisdictionFlag } from '@/components/ui/JurisdictionFlag'
 
 type JurisdictionKey = 'gibraltar' | 'luxembourg'
 
 const STAFF_SCENARIOS: Record<JurisdictionKey, {
   label: string
   module: string
-  mark: string
   regulator: string
   question: string
   options: string[]
@@ -16,7 +16,6 @@ const STAFF_SCENARIOS: Record<JurisdictionKey, {
   gibraltar: {
     label:     'DLT / Crypto scenario',
     module:    'Module: AML',
-    mark:      'GI',
     regulator: 'GFSC',
     question:
       'Sarah, the MLRO at a Gibraltar-licensed DLT firm, receives an internal report that a customer has made three large deposits from different bank accounts within 48 hours. What should she do first?',
@@ -32,7 +31,6 @@ const STAFF_SCENARIOS: Record<JurisdictionKey, {
   luxembourg: {
     label:     'CASP / MiCA scenario',
     module:    'Module: MiCA Travel Rule',
-    mark:      '🇱🇺',
     regulator: 'CSSF',
     question:
       'Elise, Compliance Officer at a CSSF-authorised CASP, sees a €25,000 stablecoin transfer from a self-hosted wallet with no originator info attached. What must she do under MiCA Travel Rule obligations?',
@@ -108,10 +106,7 @@ export function HeroToggle() {
                         color:      active ? 'var(--text)' : 'var(--muted)',
                       }}
                     >
-                      <span className="inline-flex items-center justify-center min-w-[18px] h-[18px] rounded text-[9px] font-bold"
-                        style={{ background: active ? 'rgba(91,84,184,0.25)' : 'rgba(91,84,184,0.1)', color: '#a78bfa' }}>
-                        {s.mark}
-                      </span>
+                      <JurisdictionFlag slug={k} className="w-4 h-auto" />
                       {s.regulator}
                     </button>
                   )

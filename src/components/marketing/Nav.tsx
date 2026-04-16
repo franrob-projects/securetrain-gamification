@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Menu, X, Sparkles, Crown, ChevronRight } from 'lucide-react'
 import { ConplyLogo } from '@/components/ui/ConplyLogo'
+import { JurisdictionFlag } from '@/components/ui/JurisdictionFlag'
 import { BOOKING_URL } from '@/lib/constants'
 
 const LINKS = [
@@ -15,13 +16,12 @@ const LINKS = [
 type Jurisdiction = {
   slug:      'gibraltar' | 'luxembourg'
   label:     string
-  mark:      string
   regulator: string
 }
 
 const JURISDICTIONS: Jurisdiction[] = [
-  { slug: 'gibraltar',  label: 'Gibraltar',  mark: 'GI',   regulator: 'GFSC'  },
-  { slug: 'luxembourg', label: 'Luxembourg', mark: '🇱🇺', regulator: 'CSSF' },
+  { slug: 'gibraltar',  label: 'Gibraltar',  regulator: 'GFSC' },
+  { slug: 'luxembourg', label: 'Luxembourg', regulator: 'CSSF' },
 ]
 
 const TIERS = [
@@ -67,24 +67,22 @@ export function Nav() {
 
             {productsOpen && (
               <div className="absolute top-full left-0 pt-3" style={{ zIndex: 50 }}>
-                <div className="flex items-start gap-2">
-                  {/* Level 1: jurisdictions */}
-                  <div className="rounded-xl p-2 w-56"
-                    style={{ background: 'var(--card-solid)', border: '1px solid var(--card-border)', boxShadow: '0 16px 48px -12px rgba(0,0,0,0.5)' }}>
-                    {JURISDICTIONS.map(j => {
-                      const active = hoveredJx === j.slug
-                      return (
+                <div className="rounded-xl p-2 w-56"
+                  style={{ background: 'var(--card-solid)', border: '1px solid var(--card-border)', boxShadow: '0 16px 48px -12px rgba(0,0,0,0.5)' }}>
+                  {JURISDICTIONS.map(j => {
+                    const active = hoveredJx === j.slug
+                    return (
+                      <div
+                        key={j.slug}
+                        onMouseEnter={() => setHoveredJx(j.slug)}
+                        className="relative"
+                      >
                         <div
-                          key={j.slug}
-                          onMouseEnter={() => setHoveredJx(j.slug)}
                           className="flex items-center justify-between gap-3 px-3 py-2.5 rounded-lg cursor-pointer transition-colors"
                           style={{ background: active ? 'rgba(91,84,184,0.1)' : 'transparent' }}
                         >
                           <div className="flex items-center gap-2.5">
-                            <span className="inline-flex items-center justify-center min-w-[22px] h-[22px] rounded text-[10px] font-bold"
-                              style={{ background: 'rgba(91,84,184,0.15)', color: '#a78bfa' }}>
-                              {j.mark}
-                            </span>
+                            <JurisdictionFlag slug={j.slug} className="w-5 h-auto flex-shrink-0" />
                             <div>
                               <div className="text-sm font-semibold" style={{ color: 'var(--text)' }}>
                                 {j.label}
@@ -96,54 +94,61 @@ export function Nav() {
                           </div>
                           <ChevronRight className="w-3.5 h-3.5" style={{ color: active ? 'var(--accent)' : 'var(--muted)', opacity: active ? 1 : 0.5 }} />
                         </div>
-                      )
-                    })}
-                  </div>
 
-                  {/* Level 2: tiers for hovered jurisdiction */}
-                  {hoveredJx && (
-                    <div className="rounded-xl p-2 w-72"
-                      style={{ background: 'var(--card-solid)', border: '1px solid var(--card-border)', boxShadow: '0 16px 48px -12px rgba(0,0,0,0.5)' }}>
-                      {TIERS.map(t => {
-                        const href = `/products/${hoveredJx}/${t.slug}`
-                        const Icon = t.icon
-                        return (
-                          <Link
-                            key={t.slug}
-                            href={href}
-                            onClick={() => { setProductsOpen(false); setHoveredJx(null) }}
-                            className="flex items-start gap-3 px-3 py-3 rounded-lg transition-colors"
-                            style={{ background: isActive(href) ? 'rgba(91,84,184,0.1)' : 'transparent' }}
-                            onMouseEnter={e => (e.currentTarget.style.background = 'rgba(91,84,184,0.08)')}
-                            onMouseLeave={e => (e.currentTarget.style.background = isActive(href) ? 'rgba(91,84,184,0.1)' : 'transparent')}
+                        {/* Flyout aligned to this row */}
+                        {active && (
+                          <div
+                            className="absolute top-0 rounded-xl p-2 w-72"
+                            style={{
+                              left: 'calc(100% + 8px)',
+                              background: 'var(--card-solid)',
+                              border: '1px solid var(--card-border)',
+                              boxShadow: '0 16px 48px -12px rgba(0,0,0,0.5)',
+                            }}
                           >
-                            <div
-                              className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5"
-                              style={{ background: `${t.color}15`, border: `1px solid ${t.color}30` }}
-                            >
-                              <Icon className="w-4 h-4" style={{ color: t.color }} />
-                            </div>
-                            <div>
-                              <div className="flex items-center gap-2 mb-0.5">
-                                <span className="text-sm font-semibold" style={{ color: 'var(--text)' }}>
-                                  {t.label}
-                                </span>
-                                <span
-                                  className="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded"
-                                  style={{ background: `${t.color}20`, color: t.color }}
+                            {TIERS.map(t => {
+                              const href = `/products/${j.slug}/${t.slug}`
+                              const Icon = t.icon
+                              return (
+                                <Link
+                                  key={t.slug}
+                                  href={href}
+                                  onClick={() => { setProductsOpen(false); setHoveredJx(null) }}
+                                  className="flex items-start gap-3 px-3 py-3 rounded-lg transition-colors"
+                                  style={{ background: isActive(href) ? 'rgba(91,84,184,0.1)' : 'transparent' }}
+                                  onMouseEnter={e => (e.currentTarget.style.background = 'rgba(91,84,184,0.08)')}
+                                  onMouseLeave={e => (e.currentTarget.style.background = isActive(href) ? 'rgba(91,84,184,0.1)' : 'transparent')}
                                 >
-                                  {t.tag}
-                                </span>
-                              </div>
-                              <p className="text-xs leading-relaxed" style={{ color: 'var(--muted)' }}>
-                                {t.desc}
-                              </p>
-                            </div>
-                          </Link>
-                        )
-                      })}
-                    </div>
-                  )}
+                                  <div
+                                    className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5"
+                                    style={{ background: `${t.color}15`, border: `1px solid ${t.color}30` }}
+                                  >
+                                    <Icon className="w-4 h-4" style={{ color: t.color }} />
+                                  </div>
+                                  <div>
+                                    <div className="flex items-center gap-2 mb-0.5">
+                                      <span className="text-sm font-semibold" style={{ color: 'var(--text)' }}>
+                                        {t.label}
+                                      </span>
+                                      <span
+                                        className="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded"
+                                        style={{ background: `${t.color}20`, color: t.color }}
+                                      >
+                                        {t.tag}
+                                      </span>
+                                    </div>
+                                    <p className="text-xs leading-relaxed" style={{ color: 'var(--muted)' }}>
+                                      {t.desc}
+                                    </p>
+                                  </div>
+                                </Link>
+                              )
+                            })}
+                          </div>
+                        )}
+                      </div>
+                    )
+                  })}
                 </div>
               </div>
             )}
@@ -198,11 +203,8 @@ export function Nav() {
         <div className="md:hidden pt-6 pb-2 space-y-1">
           {JURISDICTIONS.map(j => (
             <div key={j.slug} className="space-y-1">
-              <div className="flex items-center gap-2 px-3 pt-3 pb-1">
-                <span className="inline-flex items-center justify-center min-w-[20px] h-5 rounded text-[10px] font-bold"
-                  style={{ background: 'rgba(91,84,184,0.15)', color: '#a78bfa' }}>
-                  {j.mark}
-                </span>
+              <div className="flex items-center gap-2.5 px-3 pt-3 pb-1">
+                <JurisdictionFlag slug={j.slug} className="w-5 h-auto" />
                 <p className="text-[10px] font-semibold uppercase tracking-widest" style={{ color: 'var(--accent)' }}>
                   {j.label} · {j.regulator}
                 </p>

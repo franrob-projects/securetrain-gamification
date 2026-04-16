@@ -4,13 +4,14 @@ import { useState, useEffect } from 'react'
 import { Check, Star } from 'lucide-react'
 import { Nav } from '@/components/marketing/Nav'
 import { Footer } from '@/components/marketing/Footer'
+import { JurisdictionFlag } from '@/components/ui/JurisdictionFlag'
 import { BOOKING_URL } from '@/lib/constants'
 
 type Jurisdiction = 'gibraltar' | 'luxembourg'
 
-const JURISDICTION_META: Record<Jurisdiction, { label: string; mark: string; regulator: string; pitch: string }> = {
-  gibraltar:  { label: 'Gibraltar',  mark: 'GI',   regulator: 'GFSC', pitch: 'Training grounded in POCA 2015, GFSC Principles, and the Gambling Act 2025.' },
-  luxembourg: { label: 'Luxembourg', mark: '🇱🇺', regulator: 'CSSF', pitch: 'Training grounded in MiCA (EU 2023/1114), the AML Law of 12 November 2004, and DORA.' },
+const JURISDICTION_META: Record<Jurisdiction, { label: string; regulator: string; pitch: string }> = {
+  gibraltar:  { label: 'Gibraltar',  regulator: 'GFSC', pitch: 'Training grounded in POCA 2015, GFSC Principles, and the Gambling Act 2025.' },
+  luxembourg: { label: 'Luxembourg', regulator: 'CSSF', pitch: 'Training grounded in MiCA (EU 2023/1114), the AML Law of 12 November 2004, and DORA.' },
 }
 
 const TIER_COPY: Record<Jurisdiction, { starter: { description: string; firstFeature: string }; growth: string }> = {
@@ -168,10 +169,7 @@ export default function PricingPage() {
                     background: active ? 'var(--brand)' : 'transparent',
                     color:      active ? '#fff'        : 'var(--muted)',
                   }}>
-                  <span className="inline-flex items-center justify-center min-w-[20px] h-5 rounded text-[10px] font-bold"
-                    style={{ background: active ? 'rgba(255,255,255,0.18)' : 'rgba(91,84,184,0.15)', color: active ? '#fff' : '#a78bfa' }}>
-                    {m.mark}
-                  </span>
+                  <JurisdictionFlag slug={k} className="w-5 h-auto" />
                   {m.label}
                   <span style={{ opacity: active ? 0.7 : 0.5 }}>· {m.regulator}</span>
                 </button>
