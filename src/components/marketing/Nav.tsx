@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Menu, X, Sparkles, Crown } from 'lucide-react'
+import { Menu, X, Sparkles, Crown, ChevronRight } from 'lucide-react'
 import { ConplyLogo } from '@/components/ui/ConplyLogo'
 import { BOOKING_URL } from '@/lib/constants'
 
@@ -33,6 +33,7 @@ export function Nav() {
   const pathname = usePathname()
   const [open, setOpen] = useState(false)
   const [productsOpen, setProductsOpen] = useState(false)
+  const [hoveredJx, setHoveredJx] = useState<'gibraltar' | 'luxembourg' | null>(null)
 
   const isActive = (href: string) =>
     href === pathname || pathname.startsWith(href + '/')
@@ -48,11 +49,11 @@ export function Nav() {
 
         {/* Desktop */}
         <div className="hidden md:flex items-center gap-1">
-          {/* Products dropdown */}
+          {/* Products dropdown — cascading */}
           <div
             className="relative"
             onMouseEnter={() => setProductsOpen(true)}
-            onMouseLeave={() => setProductsOpen(false)}
+            onMouseLeave={() => { setProductsOpen(false); setHoveredJx(null) }}
           >
             <button
               className="text-sm px-3 py-2 rounded-lg transition-colors"
@@ -65,71 +66,84 @@ export function Nav() {
             </button>
 
             {productsOpen && (
-              <div
-                className="absolute top-full left-0 pt-3"
-                style={{ zIndex: 50 }}
-              >
-                <div
-                  className="rounded-xl p-3 grid grid-cols-2 gap-3"
-                  style={{ background: 'var(--card-solid)', border: '1px solid var(--card-border)', boxShadow: '0 16px 48px -12px rgba(0,0,0,0.5)', width: 560 }}
-                >
-                  {JURISDICTIONS.map(j => (
-                    <div key={j.slug} className="rounded-lg p-2"
-                      style={{ background: 'rgba(91,84,184,0.04)', border: '1px solid var(--card-border)' }}>
-                      <div className="flex items-center gap-2 px-2 py-1.5 mb-1">
-                        <span className="inline-flex items-center justify-center min-w-[20px] h-5 rounded text-[10px] font-bold"
-                          style={{ background: 'rgba(91,84,184,0.15)', color: '#a78bfa' }}>
-                          {j.mark}
-                        </span>
-                        <span className="text-[11px] font-semibold uppercase tracking-wider" style={{ color: 'var(--text)' }}>
-                          {j.label}
-                        </span>
-                        <span className="text-[10px]" style={{ color: 'var(--muted)', opacity: 0.7 }}>
-                          · {j.regulator}
-                        </span>
-                      </div>
-                      <div className="space-y-1">
-                        {TIERS.map(t => {
-                          const href = `/products/${j.slug}/${t.slug}`
-                          const Icon = t.icon
-                          return (
-                            <Link
-                              key={t.slug}
-                              href={href}
-                              onClick={() => setProductsOpen(false)}
-                              className="flex items-start gap-2.5 px-2 py-2 rounded-lg transition-colors"
-                              style={{ background: isActive(href) ? 'rgba(91,84,184,0.1)' : 'transparent' }}
-                              onMouseEnter={e => (e.currentTarget.style.background = 'rgba(91,84,184,0.08)')}
-                              onMouseLeave={e => (e.currentTarget.style.background = isActive(href) ? 'rgba(91,84,184,0.1)' : 'transparent')}
+              <div className="absolute top-full left-0 pt-3" style={{ zIndex: 50 }}>
+                <div className="flex items-start gap-2">
+                  {/* Level 1: jurisdictions */}
+                  <div className="rounded-xl p-2 w-56"
+                    style={{ background: 'var(--card-solid)', border: '1px solid var(--card-border)', boxShadow: '0 16px 48px -12px rgba(0,0,0,0.5)' }}>
+                    {JURISDICTIONS.map(j => {
+                      const active = hoveredJx === j.slug
+                      return (
+                        <div
+                          key={j.slug}
+                          onMouseEnter={() => setHoveredJx(j.slug)}
+                          className="flex items-center justify-between gap-3 px-3 py-2.5 rounded-lg cursor-pointer transition-colors"
+                          style={{ background: active ? 'rgba(91,84,184,0.1)' : 'transparent' }}
+                        >
+                          <div className="flex items-center gap-2.5">
+                            <span className="inline-flex items-center justify-center min-w-[22px] h-[22px] rounded text-[10px] font-bold"
+                              style={{ background: 'rgba(91,84,184,0.15)', color: '#a78bfa' }}>
+                              {j.mark}
+                            </span>
+                            <div>
+                              <div className="text-sm font-semibold" style={{ color: 'var(--text)' }}>
+                                {j.label}
+                              </div>
+                              <div className="text-[10px]" style={{ color: 'var(--muted)', opacity: 0.7 }}>
+                                {j.regulator}
+                              </div>
+                            </div>
+                          </div>
+                          <ChevronRight className="w-3.5 h-3.5" style={{ color: active ? 'var(--accent)' : 'var(--muted)', opacity: active ? 1 : 0.5 }} />
+                        </div>
+                      )
+                    })}
+                  </div>
+
+                  {/* Level 2: tiers for hovered jurisdiction */}
+                  {hoveredJx && (
+                    <div className="rounded-xl p-2 w-72"
+                      style={{ background: 'var(--card-solid)', border: '1px solid var(--card-border)', boxShadow: '0 16px 48px -12px rgba(0,0,0,0.5)' }}>
+                      {TIERS.map(t => {
+                        const href = `/products/${hoveredJx}/${t.slug}`
+                        const Icon = t.icon
+                        return (
+                          <Link
+                            key={t.slug}
+                            href={href}
+                            onClick={() => { setProductsOpen(false); setHoveredJx(null) }}
+                            className="flex items-start gap-3 px-3 py-3 rounded-lg transition-colors"
+                            style={{ background: isActive(href) ? 'rgba(91,84,184,0.1)' : 'transparent' }}
+                            onMouseEnter={e => (e.currentTarget.style.background = 'rgba(91,84,184,0.08)')}
+                            onMouseLeave={e => (e.currentTarget.style.background = isActive(href) ? 'rgba(91,84,184,0.1)' : 'transparent')}
+                          >
+                            <div
+                              className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5"
+                              style={{ background: `${t.color}15`, border: `1px solid ${t.color}30` }}
                             >
-                              <div
-                                className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
-                                style={{ background: `${t.color}15`, border: `1px solid ${t.color}30` }}
-                              >
-                                <Icon className="w-3.5 h-3.5" style={{ color: t.color }} />
+                              <Icon className="w-4 h-4" style={{ color: t.color }} />
+                            </div>
+                            <div>
+                              <div className="flex items-center gap-2 mb-0.5">
+                                <span className="text-sm font-semibold" style={{ color: 'var(--text)' }}>
+                                  {t.label}
+                                </span>
+                                <span
+                                  className="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded"
+                                  style={{ background: `${t.color}20`, color: t.color }}
+                                >
+                                  {t.tag}
+                                </span>
                               </div>
-                              <div>
-                                <div className="flex items-center gap-1.5 mb-0.5">
-                                  <span className="text-sm font-semibold" style={{ color: 'var(--text)' }}>
-                                    {t.label}
-                                  </span>
-                                  <span
-                                    className="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded"
-                                    style={{ background: `${t.color}20`, color: t.color }}
-                                  >
-                                    {t.tag}
-                                  </span>
-                                </div>
-                                <p className="text-[11px] leading-snug" style={{ color: 'var(--muted)' }}>
-                                  {t.desc}
-                                </p>
-                              </div>
-                            </Link>
-                          )
-                        })}
-                      </div>
+                              <p className="text-xs leading-relaxed" style={{ color: 'var(--muted)' }}>
+                                {t.desc}
+                              </p>
+                            </div>
+                          </Link>
+                        )
+                      })}
                     </div>
-                  ))}
+                  )}
                 </div>
               </div>
             )}
