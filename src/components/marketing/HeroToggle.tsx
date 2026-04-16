@@ -1,19 +1,50 @@
 'use client'
 import { useState } from 'react'
 
-const STAFF_SCENARIO = {
-  label: 'DLT / Crypto scenario',
-  module: 'Module: AML',
-  question:
-    'Sarah, the MLRO at a Gibraltar-licensed DLT firm, receives an internal report that a customer has made three large deposits from different bank accounts within 48 hours. What should she do first?',
-  options: [
-    'A. Contact the customer directly',
-    'B. File an internal SAR and assess',
-    'C. Freeze the account immediately',
-    'D. Wait for the next scheduled review',
-  ],
-  correctIndex: 1,
-  ref: 'Regulation reference: POCA 2015, Section 28, Nominated officer reporting obligations.',
+type JurisdictionKey = 'gibraltar' | 'luxembourg'
+
+const STAFF_SCENARIOS: Record<JurisdictionKey, {
+  label: string
+  module: string
+  mark: string
+  regulator: string
+  question: string
+  options: string[]
+  correctIndex: number
+  ref: string
+}> = {
+  gibraltar: {
+    label:     'DLT / Crypto scenario',
+    module:    'Module: AML',
+    mark:      'GI',
+    regulator: 'GFSC',
+    question:
+      'Sarah, the MLRO at a Gibraltar-licensed DLT firm, receives an internal report that a customer has made three large deposits from different bank accounts within 48 hours. What should she do first?',
+    options: [
+      'A. Contact the customer directly',
+      'B. File an internal SAR and assess',
+      'C. Freeze the account immediately',
+      'D. Wait for the next scheduled review',
+    ],
+    correctIndex: 1,
+    ref: 'Regulation reference: POCA 2015, Section 28 — Nominated officer reporting obligations.',
+  },
+  luxembourg: {
+    label:     'CASP / MiCA scenario',
+    module:    'Module: MiCA Travel Rule',
+    mark:      '🇱🇺',
+    regulator: 'CSSF',
+    question:
+      'Elise, Compliance Officer at a CSSF-authorised CASP, sees a €25,000 stablecoin transfer from a self-hosted wallet with no originator info attached. What must she do under MiCA Travel Rule obligations?',
+    options: [
+      'A. Flag the transaction and continue processing',
+      'B. Suspend the transfer and apply Enhanced Due Diligence',
+      'C. Report directly to the CRF without pausing',
+      'D. Request retroactive originator info within 30 days',
+    ],
+    correctIndex: 1,
+    ref: 'Regulation reference: MiCA (EU 2023/1114), Article 72 — Transfer of funds obligations for CASPs.',
+  },
 }
 
 const TEAM = [
@@ -26,6 +57,8 @@ const TEAM = [
 
 export function HeroToggle() {
   const [tab, setTab] = useState<'staff' | 'admin'>('staff')
+  const [jx,  setJx]  = useState<JurisdictionKey>('gibraltar')
+  const scenario = STAFF_SCENARIOS[jx]
 
   return (
     <div>
@@ -57,29 +90,52 @@ export function HeroToggle() {
 
       {/* Card area */}
       <div className="lg:min-h-[370px]">
-        {/* Staff view: scenario card */}
+        {/* Staff view: scenario card with jurisdiction sub-toggle */}
         {tab === 'staff' && (
           <div className="rounded-xl p-4 sm:p-5 space-y-3 glow-md" style={{ background: 'var(--card)', border: '1px solid var(--card-border)' }}>
-            <div className="flex items-center justify-between mb-1">
-              <p className="text-[10px] sm:text-xs font-semibold uppercase tracking-widest" style={{ color: 'var(--accent)' }}>
-                {STAFF_SCENARIO.label}
-              </p>
+            <div className="flex items-center justify-between gap-2 flex-wrap">
+              <div className="inline-flex rounded-md p-0.5" style={{ background: 'rgba(14,12,30,0.4)', border: '1px solid rgba(46,42,82,0.6)' }}>
+                {(Object.keys(STAFF_SCENARIOS) as JurisdictionKey[]).map(k => {
+                  const s = STAFF_SCENARIOS[k]
+                  const active = jx === k
+                  return (
+                    <button
+                      key={k}
+                      onClick={() => setJx(k)}
+                      className="flex items-center gap-1.5 px-2.5 py-1 rounded text-[10px] sm:text-xs font-semibold transition-all"
+                      style={{
+                        background: active ? 'rgba(91,84,184,0.18)' : 'transparent',
+                        color:      active ? 'var(--text)' : 'var(--muted)',
+                      }}
+                    >
+                      <span className="inline-flex items-center justify-center min-w-[18px] h-[18px] rounded text-[9px] font-bold"
+                        style={{ background: active ? 'rgba(91,84,184,0.25)' : 'rgba(91,84,184,0.1)', color: '#a78bfa' }}>
+                        {s.mark}
+                      </span>
+                      {s.regulator}
+                    </button>
+                  )
+                })}
+              </div>
               <span className="text-[10px] font-medium px-2 py-0.5 rounded-full hidden sm:inline-block"
                 style={{ background: 'rgba(91,84,184,0.12)', color: 'var(--accent)' }}>
-                {STAFF_SCENARIO.module}
+                {scenario.module}
               </span>
             </div>
+            <p className="text-[10px] sm:text-xs font-semibold uppercase tracking-widest" style={{ color: 'var(--accent)' }}>
+              {scenario.label}
+            </p>
             <div className="rounded-lg p-3 sm:p-4" style={{ background: 'var(--bg)', border: '1px solid var(--card-border)' }}>
               <p className="text-xs sm:text-sm leading-relaxed mb-3" style={{ color: 'var(--text)' }}>
-                {STAFF_SCENARIO.question}
+                {scenario.question}
               </p>
               <div className="space-y-1.5">
-                {STAFF_SCENARIO.options.map((opt, i) => (
+                {scenario.options.map((opt, i) => (
                   <div key={opt} className="px-3 py-1.5 rounded-lg text-xs"
                     style={{
-                      background: i === STAFF_SCENARIO.correctIndex ? 'rgba(22,163,74,0.1)' : 'transparent',
-                      border: `1px solid ${i === STAFF_SCENARIO.correctIndex ? 'rgba(22,163,74,0.4)' : 'rgba(46,42,82,0.4)'}`,
-                      color: i === STAFF_SCENARIO.correctIndex ? '#4ade80' : 'var(--muted)',
+                      background: i === scenario.correctIndex ? 'rgba(22,163,74,0.1)' : 'transparent',
+                      border: `1px solid ${i === scenario.correctIndex ? 'rgba(22,163,74,0.4)' : 'rgba(46,42,82,0.4)'}`,
+                      color: i === scenario.correctIndex ? '#4ade80' : 'var(--muted)',
                     }}>
                     {opt}
                   </div>
@@ -87,7 +143,7 @@ export function HeroToggle() {
               </div>
             </div>
             <p className="text-[10px] sm:text-xs" style={{ color: 'var(--muted)', opacity: 0.75 }}>
-              {STAFF_SCENARIO.ref}
+              {scenario.ref}
             </p>
           </div>
         )}

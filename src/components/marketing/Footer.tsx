@@ -3,10 +3,12 @@ import { ConplyLogo } from '@/components/ui/ConplyLogo'
 import { CONTACT_EMAIL_BARE } from '@/lib/constants'
 
 const PRODUCT = [
-  { label: 'Pro',             href: '/products/pro'    },
-  { label: 'Genius',          href: '/products/genius' },
-  { label: 'Pricing',         href: '/pricing'         },
-  { label: 'How it works',    href: '/#how-it-works'   },
+  { label: 'Pro — Gibraltar',     href: '/products/gibraltar/pro'      },
+  { label: 'Genius — Gibraltar',  href: '/products/gibraltar/genius'   },
+  { label: 'Pro — Luxembourg',    href: '/products/luxembourg/pro'     },
+  { label: 'Genius — Luxembourg', href: '/products/luxembourg/genius'  },
+  { label: 'Pricing',             href: '/pricing'                     },
+  { label: 'How it works',        href: '/#how-it-works'               },
 ]
 
 const RESOURCES = [
@@ -16,11 +18,18 @@ const RESOURCES = [
   { label: 'Log in',          href: '/auth'            },
 ]
 
-const REGULATION = [
+const REGULATION_GIB = [
   'POCA 2015',
   'GFSC DLT Principles',
   'Gambling Act 2025',
   'Data Protection Act',
+]
+
+const REGULATION_LUX = [
+  'AML Law 12 Nov 2004',
+  'MiCA (EU 2023/1114)',
+  'DORA (EU 2022/2554)',
+  'CSSF Circulars',
 ]
 
 export function Footer() {
@@ -35,7 +44,7 @@ export function Footer() {
               <ConplyLogo size="sm" />
             </div>
             <p className="text-xs leading-relaxed max-w-xs mb-5" style={{ color: 'var(--muted)' }}>
-              AI-powered compliance training built for Gibraltar-regulated crypto and iGaming firms.
+              AI-powered compliance training built for regulated crypto, iGaming, and fintech firms in Gibraltar and Luxembourg.
             </p>
             {/* Socials */}
             <div className="flex items-center gap-2">
@@ -101,8 +110,21 @@ export function Footer() {
             <h3 className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: 'var(--text)' }}>
               Mapped to
             </h3>
-            <ul className="space-y-2.5">
-              {REGULATION.map(item => (
+            <p className="text-[10px] font-semibold uppercase tracking-widest mb-2" style={{ color: 'var(--accent)', opacity: 0.8 }}>
+              Gibraltar
+            </p>
+            <ul className="space-y-2 mb-5">
+              {REGULATION_GIB.map(item => (
+                <li key={item} className="text-sm" style={{ color: 'var(--muted)' }}>
+                  {item}
+                </li>
+              ))}
+            </ul>
+            <p className="text-[10px] font-semibold uppercase tracking-widest mb-2" style={{ color: 'var(--accent)', opacity: 0.8 }}>
+              Luxembourg
+            </p>
+            <ul className="space-y-2">
+              {REGULATION_LUX.map(item => (
                 <li key={item} className="text-sm" style={{ color: 'var(--muted)' }}>
                   {item}
                 </li>

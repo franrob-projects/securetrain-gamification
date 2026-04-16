@@ -1,62 +1,88 @@
 'use client'
 
-import { useState } from 'react'
-import Link from 'next/link'
+import { useState, useEffect } from 'react'
 import { Check, Star } from 'lucide-react'
 import { Nav } from '@/components/marketing/Nav'
 import { Footer } from '@/components/marketing/Footer'
 import { BOOKING_URL } from '@/lib/constants'
 
-const TIERS = [
-  {
-    name: 'Starter',
-    annualPrice: 24,
-    minUsers: 10,
-    description: 'For small Gibraltar firms: boutique DLT providers, B2B iGaming suppliers, and early-stage operators.',
-    cta: 'Book a demo',
-    featured: false,
-    features: [
-      'All 8 Gibraltar compliance modules',
-      'AI-generated scenarios (RAG)',
-      'Slack delivery',
-      'PDF completion records',
-      'Team compliance dashboard',
-      'Email support',
-    ],
+type Jurisdiction = 'gibraltar' | 'luxembourg'
+
+const JURISDICTION_META: Record<Jurisdiction, { label: string; mark: string; regulator: string; pitch: string }> = {
+  gibraltar:  { label: 'Gibraltar',  mark: 'GI',   regulator: 'GFSC', pitch: 'Training grounded in POCA 2015, GFSC Principles, and the Gambling Act 2025.' },
+  luxembourg: { label: 'Luxembourg', mark: '🇱🇺', regulator: 'CSSF', pitch: 'Training grounded in MiCA (EU 2023/1114), the AML Law of 12 November 2004, and DORA.' },
+}
+
+const TIER_COPY: Record<Jurisdiction, { starter: { description: string; firstFeature: string }; growth: string }> = {
+  gibraltar: {
+    starter: {
+      description:  'For small Gibraltar firms: boutique DLT providers, B2B iGaming suppliers, and early-stage operators.',
+      firstFeature: 'All 8 Gibraltar compliance modules',
+    },
+    growth: 'For mid-sized crypto and iGaming operators who need a real audit trail and admin oversight.',
   },
-  {
-    name: 'Growth',
-    annualPrice: 19,
-    minUsers: 25,
-    description: 'For mid-sized crypto and iGaming operators who need a real audit trail and admin oversight.',
-    cta: 'Book a demo',
-    featured: true,
-    features: [
-      'Everything in Starter, plus:',
-      'Per-user Slack reminders',
-      'Per-user training history',
-      'Sector-based module mapping',
-      'Priority support (4hr response)',
-      'Quarterly compliance reports',
-    ],
+  luxembourg: {
+    starter: {
+      description:  'For small Luxembourg firms: CASP start-ups, payment institutions, and early-stage fintechs authorised by the CSSF.',
+      firstFeature: 'All 8 Luxembourg compliance modules',
+    },
+    growth: 'For mid-sized CASPs, fintechs, and investment fund managers who need a real audit trail and admin oversight.',
   },
-  {
-    name: 'Scale',
-    annualPrice: 14,
-    minUsers: 75,
-    description: 'For larger licence holders, multi-entity groups, and firms needing dedicated onboarding and custom modules.',
-    cta: 'Book a demo',
-    featured: false,
-    features: [
-      'Everything in Growth, plus:',
-      'Custom regulation modules',
-      'SSO (Google / Microsoft 365)',
-      'Dedicated success manager',
-      'Service-level agreement',
-      'Multi-entity support',
-    ],
-  },
-] as const
+}
+
+function makeTiers(j: Jurisdiction) {
+  const copy = TIER_COPY[j]
+  return [
+    {
+      name: 'Starter',
+      annualPrice: 24,
+      minUsers: 10,
+      description: copy.starter.description,
+      cta: 'Book a demo',
+      featured: false,
+      features: [
+        copy.starter.firstFeature,
+        'AI-generated scenarios (RAG)',
+        'Slack delivery',
+        'PDF completion records',
+        'Team compliance dashboard',
+        'Email support',
+      ],
+    },
+    {
+      name: 'Growth',
+      annualPrice: 19,
+      minUsers: 25,
+      description: copy.growth,
+      cta: 'Book a demo',
+      featured: true,
+      features: [
+        'Everything in Starter, plus:',
+        'Per-user Slack reminders',
+        'Per-user training history',
+        'Sector-based module mapping',
+        'Priority support (4hr response)',
+        'Quarterly compliance reports',
+      ],
+    },
+    {
+      name: 'Scale',
+      annualPrice: 14,
+      minUsers: 75,
+      description: 'For larger licence holders, multi-entity groups, and firms needing dedicated onboarding and custom modules.',
+      cta: 'Book a demo',
+      featured: false,
+      features: [
+        'Everything in Growth, plus:',
+        'Custom regulation modules',
+        'SSO (Google / Microsoft 365)',
+        'Dedicated success manager',
+        'Service-level agreement',
+        'Multi-entity support',
+      ],
+    },
+  ]
+}
 
 const FAQ = [
   {
@@ -68,8 +94,8 @@ const FAQ = [
     a: 'Any team member you invite from the admin dashboard. Admins count as users. Removing a user stops billing for them at the next cycle.',
   },
   {
-    q: 'Do you support firms outside Gibraltar?',
-    a: 'Conply is purpose-built for Gibraltar regulation: POCA 2015, GFSC DLT Principles, the Gambling Act 2025, and the Commissioner\'s Codes. If you\'re regulated elsewhere, the content will not map to your obligations.',
+    q: 'Which jurisdictions do you support?',
+    a: 'Conply currently supports Gibraltar (POCA 2015, GFSC Principles, the Gambling Act 2025, Commissioner\'s Codes) and Luxembourg (MiCA, the AML Law of 12 November 2004, DORA, CSSF circulars). If you\'re regulated elsewhere, the content will not map to your obligations — get in touch if you\'d like to see your jurisdiction added.',
   },
   {
     q: 'Are completion records suitable for regulator audits?',
@@ -93,6 +119,19 @@ function calcAnnualSaving(annualPrice: number, minUsers: number) {
 
 export default function PricingPage() {
   const [annual, setAnnual] = useState(true)
+  const [jx, setJx] = useState<Jurisdiction>('gibraltar')
+
+  useEffect(() => {
+    const saved = typeof window !== 'undefined' ? window.localStorage.getItem('conply:jurisdiction') : null
+    if (saved === 'gibraltar' || saved === 'luxembourg') setJx(saved)
+  }, [])
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') window.localStorage.setItem('conply:jurisdiction', jx)
+  }, [jx])
+
+  const tiers = makeTiers(jx)
+  const meta  = JURISDICTION_META[jx]
 
   return (
     <div className="min-h-screen" style={{ background: 'var(--bg)' }}>
@@ -109,10 +148,38 @@ export default function PricingPage() {
           <h1 className="text-3xl sm:text-5xl tracking-tight font-bold leading-tight mb-5" style={{ color: 'var(--text)' }}>
             Simple per-user pricing for{' '}
             <br className="hidden sm:block" />
-            Gibraltar firms
+            regulated firms
           </h1>
-          <p className="text-base max-w-xl mx-auto mb-8" style={{ color: 'var(--muted)' }}>
-            All plans include the full set of Gibraltar compliance modules, AI-generated scenarios, and the audit trail your regulator expects. Billed annually or monthly.
+          <p className="text-base max-w-xl mx-auto mb-6" style={{ color: 'var(--muted)' }}>
+            All plans include the full set of compliance modules for your jurisdiction, AI-generated scenarios, and the audit trail your regulator expects. Billed annually or monthly.
+          </p>
+
+          {/* Jurisdiction toggle */}
+          <div className="inline-flex items-center gap-1 rounded-xl p-1 mb-4"
+            style={{ background: 'var(--card)', border: '1px solid var(--card-border)' }}>
+            {(Object.keys(JURISDICTION_META) as Jurisdiction[]).map(k => {
+              const m = JURISDICTION_META[k]
+              const active = jx === k
+              return (
+                <button key={k}
+                  onClick={() => setJx(k)}
+                  className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all"
+                  style={{
+                    background: active ? 'var(--brand)' : 'transparent',
+                    color:      active ? '#fff'        : 'var(--muted)',
+                  }}>
+                  <span className="inline-flex items-center justify-center min-w-[20px] h-5 rounded text-[10px] font-bold"
+                    style={{ background: active ? 'rgba(255,255,255,0.18)' : 'rgba(91,84,184,0.15)', color: active ? '#fff' : '#a78bfa' }}>
+                    {m.mark}
+                  </span>
+                  {m.label}
+                  <span style={{ opacity: active ? 0.7 : 0.5 }}>· {m.regulator}</span>
+                </button>
+              )
+            })}
+          </div>
+          <p className="text-xs max-w-lg mx-auto mb-8" style={{ color: 'var(--muted)', opacity: 0.8 }}>
+            {meta.pitch}
           </p>
 
           {/* Billing toggle */}
@@ -146,7 +213,7 @@ export default function PricingPage() {
         {/* Tier cards */}
         <section className="max-w-6xl mx-auto px-6 pb-16 sm:pb-24">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5 items-start">
-            {TIERS.map(tier => {
+            {tiers.map(tier => {
               const price = annual ? tier.annualPrice : Math.round(tier.annualPrice * 1.2)
               const floor = price * tier.minUsers
               const saving = calcAnnualSaving(tier.annualPrice, tier.minUsers)

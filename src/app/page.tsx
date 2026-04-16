@@ -12,21 +12,21 @@ import { formatDate } from '@/lib/format'
 import { BOOKING_URL } from '@/lib/constants'
 
 export const metadata: Metadata = {
-  title: 'Conply | Gibraltar Compliance Training',
-  description: 'AI-powered, role-specific compliance training for Gibraltar-regulated crypto and iGaming firms. Mapped to POCA 2015, GFSC principles, and the Gambling Act 2025.',
+  title: 'Conply | AI-Powered Compliance Training for iGaming, Crypto & Fintech',
+  description: 'Conply delivers AI-generated compliance training scenarios grounded in real regulation. Supporting Gibraltar (GFSC) and Luxembourg (CSSF) regulated firms. Delivered via Slack. Audit-ready.',
 }
 
 const FEATURES = [
   {
     icon: Shield,
-    title: 'Gibraltar-specific regulation',
-    body: 'Every scenario references actual Gibraltar law: POCA 2015, GFSC DLT Principles, the Gambling Act 2025, and the Commissioner\'s Social Responsibility Codes. Not UK or Malta templates.',
+    title: 'Jurisdiction-specific regulation',
+    body: 'Every scenario references actual statute for your jurisdiction. Gibraltar firms get POCA 2015, GFSC DLT Principles, and the Gambling Act 2025. Luxembourg firms get MiCA (EU 2023/1114), the AML Law of 12 November 2004, DORA, and CSSF supervisory guidance. Not generic EU templates.',
     color: '#60a5fa', bg: 'rgba(96,165,250,0.1)', border: 'rgba(96,165,250,0.25)',
   },
   {
     icon: Brain,
     title: 'Regulated AI agents',
-    body: 'Purpose-built AI agents retrieve real Gibraltar regulation text and generate unique scenarios grounded in actual statute. Every explanation cites the specific section. No hallucinated law.',
+    body: 'Purpose-built AI agents retrieve the real regulation text that governs your firm and generate unique scenarios grounded in actual statute. Every explanation cites the specific section. No hallucinated law.',
     color: '#a78bfa', bg: 'rgba(167,139,250,0.1)', border: 'rgba(167,139,250,0.25)',
   },
   {
@@ -44,10 +44,10 @@ const FEATURES = [
 ]
 
 const METRICS = [
-  { value: '8',   label: 'Regulatory modules',           sub: 'AML, DLT, KYC, Sanctions, Gambling, and more',         color: '#4ade80' },
-  { value: '18',  label: 'Gibraltar regulation sources',  sub: 'POCA, GFSC Principles, Gambling Act, Data Protection', color: '#fbbf24' },
-  { value: '<10', label: 'Minutes per session',           sub: 'Three scenarios, scored, with a compliance record',    color: '#f472b6' },
-  { value: '0',   label: 'Slide decks',                   sub: 'AI scenarios replace passive e-learning',              color: '#a78bfa' },
+  { value: '8',    label: 'Regulatory modules',           sub: 'AML, DLT, KYC, Sanctions, MiCA, DORA, and more',           color: '#4ade80' },
+  { value: '30+',  label: 'Regulation sources',           sub: 'Across Gibraltar and Luxembourg — POCA, GFSC, MiCA, CSSF', color: '#fbbf24' },
+  { value: '<10',  label: 'Minutes per session',          sub: 'Three scenarios, scored, with a compliance record',        color: '#f472b6' },
+  { value: '0',    label: 'Slide decks',                  sub: 'AI scenarios replace passive e-learning',                  color: '#a78bfa' },
 ]
 
 export default function HomePage() {
@@ -76,17 +76,19 @@ export default function HomePage() {
             {/* Left: text */}
             <div>
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-[1.1] mb-6" style={{ letterSpacing: '-0.03em' }}>
-                <span style={{ color: 'var(--text)' }}>AI-powered training.{' '}</span>
+                <span style={{ color: 'var(--text)' }}>AI-powered compliance training.{' '}</span>
                 <br className="hidden sm:block" />
-                <span className="text-gradient">Real regulation, real scenarios.</span>
+                <span className="text-gradient">Built for your jurisdiction.</span>
               </h1>
-              <p className="text-sm sm:text-base leading-relaxed mb-8 max-w-lg" style={{ color: 'var(--muted)' }}>
-                Conply generates compliance training scenarios grounded in real Gibraltar statute.
-                Delivered via Slack, completed in under 10 minutes, with PDF records for every session.
+              <p className="text-sm sm:text-base leading-relaxed mb-4 max-w-lg" style={{ color: 'var(--muted)' }}>
+                Conply generates compliance training scenarios grounded in the actual regulation that governs your firm. Delivered via Slack, completed in under 10 minutes, with audit-ready PDF records for every session.
+              </p>
+              <p className="text-xs leading-relaxed mb-8 max-w-lg" style={{ color: 'var(--muted)', opacity: 0.75 }}>
+                Currently supporting <span style={{ color: 'var(--accent)', fontWeight: 500 }}>Gibraltar</span> (GFSC / POCA 2015 / Gambling Act 2025) and <span style={{ color: 'var(--accent)', fontWeight: 500 }}>Luxembourg</span> (CSSF / MiCA / AML Law 2004).
               </p>
               <ul className="space-y-3 mb-10">
                 {[
-                  'Scenarios built from POCA 2015, GFSC Principles, and the Gambling Act 2025',
+                  'Scenarios built from POCA 2015, GFSC Principles, MiCA, the AML Law of 2004, DORA, and CSSF circulars.',
                   'Delivered daily via Slack. No login portals, no passive e-learning.',
                   'Audit-ready PDF completion records for every user and every module.',
                 ].map(item => (
@@ -150,14 +152,13 @@ export default function HomePage() {
                   AI agents that only speak from the law
                 </h2>
                 <p className="text-sm leading-relaxed mb-8" style={{ color: 'var(--muted)' }}>
-                  Conply doesn&apos;t use generic AI prompts. Purpose-built agents retrieve the actual text of Gibraltar regulation
-                  and generate training scenarios constrained to what the law says, not what a language model guesses it says.
+                  Conply doesn&apos;t use generic AI prompts. Purpose-built agents retrieve the actual text of the regulation that governs your firm — whether that is Gibraltar statute or Luxembourg/EU law — and generate training scenarios constrained to what the law says, not what a language model guesses it says.
                 </p>
                 <div className="space-y-5">
                   {[
                     {
                       label: 'Retrieve',
-                      text: 'Agents pull the relevant sections from POCA 2015, GFSC Principles, the Gambling Act, and other source documents before generating anything.',
+                      text: 'Agents pull the relevant sections from your jurisdiction\'s primary sources before generating anything. For Gibraltar: POCA 2015, GFSC Principles, the Gambling Act. For Luxembourg: the AML Law of 12 November 2004, MiCA (EU 2023/1114), DORA, and CSSF circulars.',
                     },
                     {
                       label: 'Generate',
@@ -212,14 +213,14 @@ export default function HomePage() {
               {
                 step: '02',
                 title: 'Slack delivers training',
-                body: 'Each working day, one Slack message with a direct link. Staff click, complete three AI-generated scenarios grounded in Gibraltar law, and return to work.',
+                body: 'Each working day, one Slack message with a direct link. Staff click, complete three AI-generated scenarios grounded in their firm\'s regulation, and return to work.',
                 icon: 'M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z',
                 color: '#a78bfa', bg: 'rgba(167,139,250,0.1)', border: 'rgba(167,139,250,0.25)',
               },
               {
                 step: '03',
                 title: 'AI generates scenarios',
-                body: 'Purpose-built agents retrieve real regulation text (POCA 2015, GFSC Principles, Gambling Act) then generate unique scenarios. Every explanation cites the specific section.',
+                body: 'Purpose-built agents retrieve real regulation text — POCA 2015 and GFSC Principles for Gibraltar firms, or the AML Law of 2004, MiCA, and CSSF guidance for Luxembourg firms — then generate unique scenarios. Every explanation cites the specific section.',
                 icon: 'M12 2a7 7 0 0 0-7 7c0 2.8 1.6 4.5 3 5.5V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.5c1.4-1 3-2.7 3-5.5a7 7 0 0 0-7-7zM9 21h6M10 21v1M14 21v1',
                 color: '#f472b6', bg: 'rgba(244,114,182,0.1)', border: 'rgba(244,114,182,0.25)',
               },
@@ -273,7 +274,7 @@ export default function HomePage() {
                 What you get
               </p>
               <h2 className="text-3xl sm:text-4xl font-bold tracking-tight" style={{ color: 'var(--text)' }}>
-                Everything a Gibraltar regulator expects
+                Everything a regulator expects
               </h2>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
@@ -308,10 +309,10 @@ export default function HomePage() {
                 From the blog
               </p>
               <h2 className="text-3xl sm:text-4xl font-bold mb-3" style={{ color: 'var(--text)' }}>
-                Stay ahead of Gibraltar regulation
+                Stay ahead of regulation
               </h2>
               <p className="text-sm max-w-lg mx-auto" style={{ color: 'var(--muted)' }}>
-                Practical guidance on POCA 2015, GFSC DLT principles, the Gambling Act 2025, and AML/CFT obligations for Gibraltar firms.
+                Practical guidance on Gibraltar and Luxembourg compliance obligations — covering POCA 2015, MiCA, CSSF supervisory requirements, AML/CFT, and more.
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5 mb-8">
@@ -362,7 +363,7 @@ export default function HomePage() {
                 Get your team compliant in days, not weeks
               </h2>
               <p className="text-sm sm:text-base mb-10 max-w-lg mx-auto leading-relaxed" style={{ color: 'var(--muted)' }}>
-                Onboard your staff and send the first training module within 24 hours. No implementation project, no content to write.
+                Select your jurisdiction, onboard your staff, and send the first training module within 24 hours. No implementation project, no content to write.
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
                 <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer"
@@ -389,7 +390,7 @@ export default function HomePage() {
           '@context': 'https://schema.org',
           '@type': 'Organization',
           name: 'Conply',
-          description: 'Gibraltar compliance training for crypto and iGaming firms',
+          description: 'AI-powered compliance training for crypto, iGaming, and fintech firms in Gibraltar and Luxembourg',
           url: 'https://www.conply.org',
         })}}
       />
