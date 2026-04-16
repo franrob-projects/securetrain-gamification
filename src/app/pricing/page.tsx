@@ -231,7 +231,7 @@ export default function PricingPage() {
                       <span className="text-sm" style={{ color: 'var(--muted)' }}>/user/mo</span>
                     </div>
                     <p className="text-xs mb-1" style={{ color: 'var(--muted)' }}>
-                      From £{formatFloor(price, tier.minUsers)}/month (min {tier.minUsers} users)
+                      From £{formatFloor(price, tier.minUsers)}/month
                     </p>
                     {annual && (
                       <p className="text-xs font-medium mb-6" style={{ color: '#4ade80' }}>
