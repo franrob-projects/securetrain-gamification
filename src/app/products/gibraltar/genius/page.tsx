@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { Nav } from '@/components/marketing/Nav'
 import { Footer } from '@/components/marketing/Footer'
 import { JurisdictionBadge } from '@/components/marketing/JurisdictionBadge'
+import { DeliveryChannels } from '@/components/ui/DeliveryChannels'
 import { BOOKING_URL } from '@/lib/constants'
 import { Database, Brain, Users, FileText, BarChart3, Shield, Layers, Target, GitBranch, User, CheckCircle, ArrowRight } from 'lucide-react'
 
@@ -17,7 +18,7 @@ const FEATURES = [
   { icon: GitBranch,  title: 'Topic-level regulation mapping', desc: 'Regulation chunks are mapped to individual topics. The system knows exactly which sections of POCA or the Gambling Act each user has been tested on.', color: '#a78bfa', bg: 'rgba(167,139,250,0.1)', border: 'rgba(167,139,250,0.25)' },
   { icon: Users,      title: 'Individual compliance profiles', desc: 'Each user has a compliance profile showing their coverage across regulation sources, not just module completions.', color: '#60a5fa', bg: 'rgba(96,165,250,0.1)', border: 'rgba(96,165,250,0.25)' },
   { icon: Layers,     title: 'Progressive difficulty',         desc: 'Scenarios increase in complexity as users demonstrate competence. Early sessions cover fundamentals; later sessions cover edge cases.', color: '#4ade80', bg: 'rgba(74,222,128,0.1)', border: 'rgba(74,222,128,0.25)' },
-  { icon: Shield,     title: 'Everything in Pro, plus more',   desc: 'All Pro features included: shared database, PDF records, compliance matrix, Slack delivery, and audit-ready reporting.', color: '#38bdf8', bg: 'rgba(56,189,248,0.1)', border: 'rgba(56,189,248,0.25)' },
+  { icon: Shield,     title: 'Everything in Pro, plus more',   desc: 'All Pro features included: shared database, PDF records, compliance matrix, Slack & Teams delivery, and audit-ready reporting.', color: '#38bdf8', bg: 'rgba(56,189,248,0.1)', border: 'rgba(56,189,248,0.25)' },
 ]
 
 export default function GeniusPage() {
@@ -43,6 +44,9 @@ export default function GeniusPage() {
               style={{ background: 'linear-gradient(135deg, #fbbf24, #f59e0b)' }}>
               Book a demo
             </a>
+            <div className="mt-8 max-w-md">
+              <DeliveryChannels variant="card" />
+            </div>
           </div>
         </section>
 
@@ -319,7 +323,8 @@ export default function GeniusPage() {
               { feature: 'AI scenario generation',        pro: true,  genius: true },
               { feature: 'PDF completion records',        pro: true,  genius: true },
               { feature: 'Team compliance matrix',        pro: true,  genius: true },
-              { feature: 'Slack delivery',                pro: true,  genius: true },
+              { feature: 'Slack & Teams delivery',        pro: true,  genius: true },
+              { feature: 'Mobile-friendly (on the go)',   pro: true,  genius: true },
               { feature: 'Per-user learning paths',       pro: false, genius: true },
               { feature: 'Adaptive difficulty',           pro: false, genius: true },
               { feature: 'Regulation-level coverage map', pro: false, genius: true },

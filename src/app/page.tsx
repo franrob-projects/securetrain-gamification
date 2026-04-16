@@ -1,19 +1,20 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
-import { Shield, Brain, MessageSquare, BarChart3 } from 'lucide-react'
+import { Shield, Brain, BarChart3, Smartphone } from 'lucide-react'
 import { Nav } from '@/components/marketing/Nav'
 import { Footer } from '@/components/marketing/Footer'
 import { AuthRedirect } from '@/components/marketing/AuthRedirect'
 import { HeroToggle } from '@/components/marketing/HeroToggle'
 import { ComplianceChart } from '@/components/marketing/ComplianceChart'
 import { BlogCover } from '@/components/marketing/BlogCover'
+import { DeliveryChannels, SlackLogo, TeamsLogo } from '@/components/ui/DeliveryChannels'
 import { getAllPosts } from '@/lib/blog'
 import { formatDate } from '@/lib/format'
 import { BOOKING_URL } from '@/lib/constants'
 
 export const metadata: Metadata = {
   title: 'Conply | AI-Powered Compliance Training for iGaming, Crypto & Fintech',
-  description: 'Conply delivers AI-generated compliance training scenarios grounded in real regulation. Supporting Gibraltar (GFSC) and Luxembourg (CSSF) regulated firms. Delivered via Slack. Audit-ready.',
+  description: 'Conply delivers AI-generated compliance training scenarios grounded in real regulation. Supporting Gibraltar (GFSC) and Luxembourg (CSSF) regulated firms. Delivered in Slack or Microsoft Teams — mobile-friendly, on the go. Audit-ready.',
 }
 
 const FEATURES = [
@@ -30,10 +31,11 @@ const FEATURES = [
     color: '#a78bfa', bg: 'rgba(167,139,250,0.1)', border: 'rgba(167,139,250,0.25)',
   },
   {
-    icon: MessageSquare,
-    title: 'Delivered via Slack',
-    body: 'One Slack message per day with a direct link. No login portals. Staff click, train, and return to work in under 10 minutes.',
+    icon: Smartphone,
+    title: 'Delivered in Slack & Teams',
+    body: 'One message per day in Slack or Microsoft Teams, with a direct link. No login portals, no extra apps. Staff train on the apps they already have open — including on mobile, on the go.',
     color: '#f472b6', bg: 'rgba(244,114,182,0.1)', border: 'rgba(244,114,182,0.25)',
+    delivery: true,
   },
   {
     icon: BarChart3,
@@ -81,7 +83,7 @@ export default function HomePage() {
                 <span className="text-gradient">Built for your jurisdiction.</span>
               </h1>
               <p className="text-sm sm:text-base leading-relaxed mb-4 max-w-lg" style={{ color: 'var(--muted)' }}>
-                Conply generates compliance training scenarios grounded in the actual regulation that governs your firm. Delivered via Slack, completed in under 10 minutes, with audit-ready PDF records for every session.
+                Conply generates compliance training scenarios grounded in the actual regulation that governs your firm. Delivered in Slack or Microsoft Teams — mobile-friendly, so staff can train on the go — and completed in under 10 minutes, with audit-ready PDF records for every session.
               </p>
               <p className="text-xs leading-relaxed mb-8 max-w-lg" style={{ color: 'var(--muted)', opacity: 0.75 }}>
                 Currently supporting <span style={{ color: 'var(--accent)', fontWeight: 500 }}>Gibraltar</span> (GFSC / POCA 2015 / Gambling Act 2025) and <span style={{ color: 'var(--accent)', fontWeight: 500 }}>Luxembourg</span> (CSSF / MiCA / AML Law 2004).
@@ -89,7 +91,7 @@ export default function HomePage() {
               <ul className="space-y-3 mb-10">
                 {[
                   'Scenarios built from POCA 2015, GFSC Principles, MiCA, the AML Law of 2004, DORA, and CSSF circulars.',
-                  'Delivered daily via Slack. No login portals, no passive e-learning.',
+                  'Delivered daily in Slack or Microsoft Teams — works on the mobile apps, train on the go.',
                   'Audit-ready PDF completion records for every user and every module.',
                 ].map(item => (
                   <li key={item} className="flex items-start gap-2.5 text-sm" style={{ color: 'var(--muted)' }}>
@@ -108,6 +110,9 @@ export default function HomePage() {
                   style={{ color: 'var(--accent)', border: '1px solid rgba(91,84,184,0.3)' }}>
                   How it works
                 </Link>
+              </div>
+              <div className="mt-6">
+                <DeliveryChannels variant="pill" />
               </div>
             </div>
 
@@ -212,8 +217,8 @@ export default function HomePage() {
               },
               {
                 step: '02',
-                title: 'Slack delivers training',
-                body: 'Each working day, one Slack message with a direct link. Staff click, complete three AI-generated scenarios grounded in their firm\'s regulation, and return to work.',
+                title: 'Slack or Teams delivers training',
+                body: 'Each working day, one message lands in Slack or Microsoft Teams with a direct link. Staff click, complete three AI-generated scenarios grounded in their firm\'s regulation, and return to work. Works on the mobile apps they already have — train on the commute, between meetings, wherever.',
                 icon: 'M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z',
                 color: '#a78bfa', bg: 'rgba(167,139,250,0.1)', border: 'rgba(167,139,250,0.25)',
               },
@@ -291,7 +296,15 @@ export default function HomePage() {
                           style={{ background: `radial-gradient(circle, ${f.bg}, transparent 70%)` }} />
                         <Icon style={{ color: f.color, width: '20px', height: '20px', position: 'relative', zIndex: 1 }} />
                       </div>
-                      <h3 className="text-base font-semibold mb-2" style={{ color: 'var(--text)' }}>{f.title}</h3>
+                      <div className="flex items-center gap-2 mb-2">
+                        <h3 className="text-base font-semibold" style={{ color: 'var(--text)' }}>{f.title}</h3>
+                        {'delivery' in f && f.delivery && (
+                          <span className="inline-flex items-center gap-1.5">
+                            <SlackLogo className="w-5 h-5" />
+                            <TeamsLogo className="w-5 h-5" />
+                          </span>
+                        )}
+                      </div>
                       <p className="text-sm leading-relaxed" style={{ color: 'var(--muted)' }}>{f.body}</p>
                     </div>
                   </div>

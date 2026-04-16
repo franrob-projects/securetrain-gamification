@@ -5,6 +5,7 @@ import { Check, Star } from 'lucide-react'
 import { Nav } from '@/components/marketing/Nav'
 import { Footer } from '@/components/marketing/Footer'
 import { JurisdictionFlag } from '@/components/ui/JurisdictionFlag'
+import { DeliveryChannels } from '@/components/ui/DeliveryChannels'
 import { BOOKING_URL } from '@/lib/constants'
 
 type Jurisdiction = 'gibraltar' | 'luxembourg'
@@ -44,7 +45,8 @@ function makeTiers(j: Jurisdiction) {
       features: [
         copy.starter.firstFeature,
         'AI-generated scenarios (RAG)',
-        'Slack delivery',
+        'Delivered in Slack or Microsoft Teams',
+        'Mobile-friendly — train on the go',
         'PDF completion records',
         'Team compliance dashboard',
         'Email support',
@@ -59,7 +61,7 @@ function makeTiers(j: Jurisdiction) {
       featured: true,
       features: [
         'Everything in Starter, plus:',
-        'Per-user Slack reminders',
+        'Per-user Slack / Teams reminders',
         'Per-user training history',
         'Sector-based module mapping',
         'Priority support (4hr response)',
@@ -205,6 +207,10 @@ export default function PricingPage() {
               }}>
               Monthly
             </button>
+          </div>
+
+          <div className="mt-8 flex justify-center">
+            <DeliveryChannels variant="pill" />
           </div>
         </section>
 

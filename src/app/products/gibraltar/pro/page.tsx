@@ -3,8 +3,9 @@ import Link from 'next/link'
 import { Nav } from '@/components/marketing/Nav'
 import { Footer } from '@/components/marketing/Footer'
 import { JurisdictionBadge } from '@/components/marketing/JurisdictionBadge'
+import { DeliveryChannels, SlackLogo, TeamsLogo } from '@/components/ui/DeliveryChannels'
 import { BOOKING_URL } from '@/lib/constants'
-import { Database, BookOpen, FileText, CheckCircle, Users, BarChart3, Shield } from 'lucide-react'
+import { Sparkles, Database, BookOpen, FileText, CheckCircle, Users, BarChart3, Shield } from 'lucide-react'
 
 export const metadata: Metadata = {
   title: 'Conply Pro Gibraltar | GFSC & POCA 2015 Compliance Training',
@@ -42,6 +43,9 @@ export default function ProPage() {
               className="cta-primary inline-block px-8 py-3.5 rounded-xl font-semibold text-white text-sm">
               Book a demo
             </a>
+            <div className="mt-8 max-w-md">
+              <DeliveryChannels variant="card" />
+            </div>
           </div>
         </section>
 
@@ -213,7 +217,7 @@ export default function ProPage() {
                   Stage 3 &middot; Evidence
                 </p>
                 <p className="text-sm leading-relaxed" style={{ color: 'var(--muted)' }}>
-                  Every completion is recorded against the user with date, time, score, and module. Admins see a live team compliance matrix, staff can download PDF certificates, and Slack delivers the next training to the whole team the following working day.
+                  Every completion is recorded against the user with date, time, score, and module. Admins see a live team compliance matrix, staff can download PDF certificates, and the next training lands in Slack or Microsoft Teams the following working day — on the mobile apps they already have.
                 </p>
               </div>
 
@@ -249,10 +253,13 @@ export default function ProPage() {
                 </div>
 
                 <div className="rounded-xl px-5 py-4 text-center flex flex-col items-center justify-center"
-                  style={{ background: 'var(--card)', border: '1px solid var(--card-border)' }}>
-                  <Shield className="w-5 h-5 mb-2" style={{ color: '#60a5fa' }} />
-                  <p className="text-xs font-semibold" style={{ color: 'var(--text)' }}>Slack delivery</p>
-                  <p className="text-[10px] mt-1" style={{ color: 'var(--muted)' }}>Daily training reminders</p>
+                  style={{ background: 'rgba(98,100,167,0.08)', border: '1px solid rgba(98,100,167,0.3)' }}>
+                  <div className="flex items-center gap-2 mb-2">
+                    <SlackLogo className="w-6 h-6" />
+                    <TeamsLogo className="w-6 h-6" />
+                  </div>
+                  <p className="text-xs font-semibold" style={{ color: 'var(--text)' }}>Slack &amp; Teams</p>
+                  <p className="text-[10px] mt-1" style={{ color: 'var(--muted)' }}>Delivered in-app &middot; works on mobile</p>
                 </div>
               </div>
 
