@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createServerClient } from '@/lib/supabaseServer'
-import { sendSlackReminder } from '@/lib/slackSender'
+import { sendTeamsReminder } from '@/lib/teamsSender'
 
 // Vercel cron: Authorization: Bearer {CRON_SECRET}
 export async function GET(req: NextRequest) {
@@ -9,9 +9,9 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: 'Unauthorised' }, { status: 401 })
   }
 
-  const result = await sendSlackReminder({})
+  const result = await sendTeamsReminder({})
   if (!result.ok) return NextResponse.json({ error: result.error }, { status: 500 })
-  return NextResponse.json({ ok: true, ts: result.ts })
+  return NextResponse.json({ ok: true })
 }
 
 // POST: admin-triggered reminder
@@ -38,7 +38,7 @@ export async function POST(req: NextRequest) {
   }
 
   const body = await req.json().catch(() => ({})) as { userName?: string; moduleId?: string }
-  const result = await sendSlackReminder({ userName: body.userName, moduleId: body.moduleId })
+  const result = await sendTeamsReminder({ userName: body.userName, moduleId: body.moduleId })
   if (!result.ok) return NextResponse.json({ error: result.error }, { status: 500 })
-  return NextResponse.json({ ok: true, ts: result.ts })
+  return NextResponse.json({ ok: true })
 }
