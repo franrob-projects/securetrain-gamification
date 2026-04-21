@@ -50,7 +50,7 @@ export async function sendSlackReminder(opts: {
       channel:      channelId,
       text:         content.fallbackText,
       attachments:  [{ color: '#5B54B8', blocks }],
-      icon_url:     `${content.baseUrl}/conply-logo.svg`,
+      icon_url:     `${content.baseUrl}/conply-icon.png`,
       username:     'Conply',
       unfurl_links: false,
       unfurl_media: false,
