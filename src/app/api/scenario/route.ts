@@ -43,28 +43,30 @@ Examples of valid regulation references:
 - Regulation reference: GFSC DLT Regulatory Principles, Principle 7: Systems and security protocols.
 - Regulation reference: Gibraltar Gambling Act 2025, Section 42: Staff training requirements.`
 
-  const message = await client.messages.create({
-    model: 'claude-haiku-4-5-20251001',
-    max_tokens: 700,
-    messages: [{ role: 'user', content: prompt }],
-  })
-
-  const block = message.content[0]
-  if (!block || block.type !== 'text') {
-    return NextResponse.json({ error: 'Scenario generation failed' }, { status: 502 })
-  }
-
-  const text = block.text
-  const start = text.indexOf('{')
-  const end   = text.lastIndexOf('}')
-  if (start === -1 || end === -1) {
-    return NextResponse.json({ error: 'Scenario generation failed' }, { status: 502 })
-  }
-
   try {
+    const message = await client.messages.create({
+      model: 'claude-haiku-4-5-20251001',
+      max_tokens: 700,
+      messages: [{ role: 'user', content: prompt }],
+    })
+
+    const block = message.content[0]
+    if (!block || block.type !== 'text') {
+      return NextResponse.json({ error: 'Scenario generation failed: no text block' }, { status: 502 })
+    }
+
+    const text = block.text
+    const start = text.indexOf('{')
+    const end   = text.lastIndexOf('}')
+    if (start === -1 || end === -1) {
+      return NextResponse.json({ error: 'Scenario generation failed: no JSON in response' }, { status: 502 })
+    }
+
     const json = JSON.parse(text.slice(start, end + 1))
     return NextResponse.json({ ...json, _ragChunksUsed: chunks.length })
-  } catch {
-    return NextResponse.json({ error: 'Scenario generation failed' }, { status: 502 })
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err)
+    console.error('[scenario] Generation failed:', message)
+    return NextResponse.json({ error: `Scenario generation failed: ${message}` }, { status: 500 })
   }
 }
