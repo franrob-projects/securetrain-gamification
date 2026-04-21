@@ -136,6 +136,6 @@ MIT. Do whatever you want with it.
 
 ## About me
 
-I'm Francis, a developer based in Gibraltar. This project is a mix of things I care about: making compliance less tedious, building with modern tools, and shipping something that actually works end-to-end. If you're into crypto compliance or full-stack development, feel free to reach out.
+I'm Francis, a developer based in the UK. This project is a mix of things I care about: making compliance less tedious, building with modern tools, and shipping something that actually works end-to-end. If you're into crypto compliance or full-stack development, feel free to reach out.
 
 [conply.org](https://www.conply.org) | [Book a chat](https://cal.com/conply/30min)
