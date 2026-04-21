@@ -20,50 +20,24 @@ export async function sendSlackReminder(opts: {
 
   const blocks = [
     {
-      type: 'header' as const,
-      text: { type: 'plain_text' as const, text: content.headerText, emoji: true },
-    },
-    {
       type: 'section' as const,
       text: {
         type: 'mrkdwn' as const,
-        text: `*${content.module.title}*\n${content.shortDescription}`,
+        text: `*${content.module.title}*\n${content.topicPreview.slice(0, 2).map(t => `•  ${t}`).join('\n')}`,
       },
-    },
-    {
-      type: 'context' as const,
-      elements: [{ type: 'mrkdwn' as const, text: content.metaLine }],
-    },
-    { type: 'divider' as const },
-    {
-      type: 'section' as const,
-      text: {
-        type: 'mrkdwn' as const,
-        text: `*What you'll cover*\n${content.topicPreview.map(t => `  •  ${t}`).join('\n')}`,
+      accessory: {
+        type: 'button' as const,
+        text: { type: 'plain_text' as const, text: 'Start training', emoji: true },
+        url: content.trainingUrl,
+        style: 'primary' as const,
       },
-    },
-    {
-      type: 'actions' as const,
-      elements: [
-        {
-          type: 'button' as const,
-          text: { type: 'plain_text' as const, text: 'Start training', emoji: true },
-          url: content.trainingUrl,
-          style: 'primary' as const,
-        },
-        {
-          type: 'button' as const,
-          text: { type: 'plain_text' as const, text: 'View all modules', emoji: true },
-          url: content.progressUrl,
-        },
-      ],
     },
     {
       type: 'context' as const,
       elements: [
         {
           type: 'plain_text' as const,
-          text: 'Conply  ·  Compliance training, grounded in statute',
+          text: `${content.module.durationMins} min  ·  Conply`,
           emoji: true,
         },
       ],
