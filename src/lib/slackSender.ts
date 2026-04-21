@@ -62,8 +62,9 @@ export async function sendSlackReminder(opts: {
       type: 'context' as const,
       elements: [
         {
-          type: 'mrkdwn' as const,
-          text: `<${content.baseUrl}|Conply>  ·  Compliance training, grounded in statute`,
+          type: 'plain_text' as const,
+          text: 'Conply  ·  Compliance training, grounded in statute',
+          emoji: true,
         },
       ],
     },
