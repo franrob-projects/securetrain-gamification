@@ -8,6 +8,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: base,            lastModified: new Date(), changeFrequency: 'weekly', priority: 1.0 },
     { url: `${base}/pricing`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.9 },
+    { url: `${base}/products/gibraltar/pro`,    lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${base}/products/gibraltar/genius`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${base}/products/luxembourg/pro`,    lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${base}/products/luxembourg/genius`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
     { url: `${base}/blog`,    lastModified: new Date(), changeFrequency: 'daily',   priority: 0.9 },
     { url: `${base}/help`,    lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
   ]
