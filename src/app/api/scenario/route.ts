@@ -20,7 +20,7 @@ ${c.content}`).join('\n\n')}
 `
     : ''
 
-  const prompt = `You are a Gibraltar compliance training expert. Generate a realistic workplace scenario for a training module called "${moduleTitle}".
+  const prompt = `You are a compliance training expert specialising in Gibraltar and Luxembourg regulation. Generate a realistic workplace scenario for a training module called "${moduleTitle}".
 
 Topics covered: ${topics.join(', ')}
 ${regulationContext}

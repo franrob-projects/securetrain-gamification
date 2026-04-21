@@ -7,7 +7,7 @@ import { CONTACT_EMAIL_BARE } from '@/lib/constants'
 
 export const metadata: Metadata = {
   title: 'Help & Setup Guide',
-  description: 'Everything you need to get Conply running for your Gibraltar firm: inviting team members, Slack reminders, admin access, and exporting compliance records.',
+  description: 'Everything you need to get Conply running for your firm: inviting team members, Slack and Teams reminders, admin access, and exporting compliance records.',
 }
 
 const SECTIONS = [
@@ -71,7 +71,7 @@ export default function HelpPage() {
             Get Conply running for your firm
           </h1>
           <p className="text-base max-w-2xl" style={{ color: 'var(--muted)' }}>
-            Everything you need to set up team members, enable Slack reminders, and produce compliance records.
+            Everything you need to set up team members, enable Slack or Teams reminders, and produce compliance records.
             Most firms are live within a day.
           </p>
         </div>
@@ -107,7 +107,7 @@ export default function HelpPage() {
             <section id="getting-started">
               <h2>Getting started</h2>
               <p>
-                Conply delivers role-specific Gibraltar compliance training to your staff via Slack and tracks every completion in an audit-ready dashboard.
+                Conply delivers role-specific compliance training to your staff via Slack or Microsoft Teams and tracks every completion in an audit-ready dashboard. Supporting Gibraltar (GFSC) and Luxembourg (CSSF) regulated firms.
               </p>
 
               <Callout type="info">
@@ -122,7 +122,7 @@ export default function HelpPage() {
                   Add staff from the admin dashboard. They get a sign-in link by email.
                 </StepCard>
                 <StepCard number="3" title="Enable the Slack reminder">
-                  We configure this during onboarding. Your team gets one message per working day with a direct training link.
+                  We configure this during onboarding. Your team gets one message per working day in Slack or Microsoft Teams with a direct training link.
                 </StepCard>
               </div>
             </section>
@@ -165,7 +165,7 @@ export default function HelpPage() {
             <section id="training-flow">
               <h2>How training works</h2>
               <p>
-                For each module, Conply&apos;s AI agents retrieve relevant sections of Gibraltar regulation, then generate three unique multiple-choice scenarios grounded in that text. The user selects an answer, sees an explanation citing the specific statute, and progresses to the next scenario.
+                For each module, Conply&apos;s AI agents retrieve relevant sections of your jurisdiction&apos;s regulation (Gibraltar or Luxembourg), then generate three unique multiple-choice scenarios grounded in that text. The user selects an answer, sees an explanation citing the specific statute, and progresses to the next scenario.
               </p>
 
               <div className="rounded-xl overflow-hidden my-6" style={{ border: '1px solid var(--card-border)' }}>
@@ -284,17 +284,24 @@ export default function HelpPage() {
                 This section is for technical administrators. If you&apos;re a compliance officer using the platform, you can skip this. We handle setup for paying customers during onboarding.
               </Callout>
 
-              <h3>Slack reminders</h3>
+              <h3>Slack &amp; Teams reminders</h3>
               <p>
-                Conply posts a daily reminder message to your nominated Slack channel at 09:00 UTC on working days. To enable this, you need:
+                Conply posts a daily reminder at 09:00 UTC on working days via Slack or Microsoft Teams. Each team member&apos;s preferred channel is set in the admin dashboard.
               </p>
+              <h4>Slack setup</h4>
               <ul>
                 <li><code>SLACK_BOT_TOKEN</code>: a bot token from your Slack workspace</li>
-                <li><code>SLACK_CHANNEL_ID</code>: the ID of the target channel</li>
-                <li><code>SLACK_MODULE_ID</code>: the default module to link to (optional; defaults to AML)</li>
+                <li><code>SLACK_CHANNEL_ID</code>: the ID of the target channel or DM</li>
               </ul>
               <p>
-                Create a Slack app with the <code>chat:write</code> permission, install it to your workspace, invite the bot to the channel, and set the environment variables.
+                Create a Slack app with <code>chat:write</code>, <code>users:read</code>, and <code>im:write</code> permissions, install it to your workspace, and set the environment variables.
+              </p>
+              <h4>Teams setup</h4>
+              <ul>
+                <li><code>TEAMS_WEBHOOK_URL</code>: an Incoming Webhook URL from your Teams channel</li>
+              </ul>
+              <p>
+                In Teams, go to the target channel, click Manage channel, add an Incoming Webhook connector, and copy the URL.
               </p>
 
               <h3>Admin access</h3>
@@ -329,15 +336,15 @@ export default function HelpPage() {
                   },
                   {
                     q: 'Can we use our own logo or brand the platform?',
-                    a: 'Custom branding is part of the Enterprise tier. Book a demo and we\'ll discuss what you need.',
+                    a: 'Custom branding is available on request. Book a demo and we\'ll discuss what you need.',
                   },
                   {
                     q: 'Is the regulation content kept up to date?',
-                    a: 'Yes. Scenarios are grounded in real Gibraltar statute via our retrieval system. When new regulation comes into force, we update the source documents and the change is reflected in generated scenarios immediately.',
+                    a: 'Yes. Scenarios are grounded in real statute (Gibraltar and Luxembourg) via our retrieval system. When new regulation comes into force, we update the source documents and the change is reflected in generated scenarios immediately.',
                   },
                   {
                     q: 'How do I cancel?',
-                    a: 'Email us. There\'s no contractual minimum on the Starter or Team tiers. Cancel any time. Your audit trail remains accessible for 90 days after cancellation in case you need to produce records during a regulator transition.',
+                    a: 'Email us. There\'s no contractual minimum on the Pro or Genius tiers. Cancel any time. Your audit trail remains accessible for 90 days after cancellation in case you need to produce records during a regulator transition.',
                   },
                 ].map(item => (
                   <details key={item.q} className="group rounded-xl overflow-hidden"

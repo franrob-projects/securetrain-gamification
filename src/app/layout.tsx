@@ -5,9 +5,9 @@ export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL ?? 'https://www.conply.org'),
   title: {
     template: '%s | Conply',
-    default: 'Conply | Gibraltar Compliance Training',
+    default: 'Conply | Gibraltar & Luxembourg Compliance Training',
   },
-  description: 'AI-powered, role-specific compliance training for Gibraltar-regulated crypto and iGaming firms. Mapped to POCA 2015, GFSC principles, and the Gambling Act 2025.',
+  description: 'AI-powered compliance training for Gibraltar and Luxembourg regulated firms. Grounded in POCA 2015, GFSC Principles, MiCA, CSSF, and more. Delivered in Slack or Microsoft Teams.',
   openGraph: {
     type: 'website',
     locale: 'en_GB',

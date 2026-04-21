@@ -156,7 +156,7 @@ function AuthInner() {
 
         {/* Trust note */}
         <p className="text-center mt-6 text-xs" style={{ color: 'rgba(169,165,196,0.5)' }}>
-          Gibraltar compliance training for crypto and iGaming firms
+          Compliance training for regulated firms in Gibraltar and Luxembourg
         </p>
       </div>
     </div>

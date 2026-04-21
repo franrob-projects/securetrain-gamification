@@ -77,7 +77,7 @@ export default function TrainPage() {
 
     doc.setFontSize(11)
     doc.setTextColor(100)
-    doc.text('Issued by Conply · Gibraltar Compliance Training', 20, 38)
+    doc.text('Issued by Conply · Gibraltar & Luxembourg Compliance Training', 20, 38)
 
     doc.setDrawColor(200)
     doc.line(20, 44, 190, 44)
@@ -100,7 +100,7 @@ export default function TrainPage() {
 
     doc.setFontSize(9)
     doc.setTextColor(120)
-    doc.text('Recorded by Conply | Gibraltar Compliance Training', 20, 280)
+    doc.text('Recorded by Conply | Gibraltar & Luxembourg Compliance Training', 20, 280)
 
     const safeName = module.id.replace(/[^a-z0-9-]/gi, '-')
     doc.save(`conply-completion-${safeName}.pdf`)

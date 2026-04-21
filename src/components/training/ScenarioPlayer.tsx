@@ -97,7 +97,7 @@ export function ScenarioPlayer({ module: m, onComplete }: { module: TrainingModu
           Generating scenario
         </p>
         <p className="text-xs" style={{ color: 'var(--muted)', animation: 'pulse 1.5s ease-in-out infinite' }}>
-          Retrieving Gibraltar regulation text...
+          Retrieving regulation text...
         </p>
       </div>
     </div>
