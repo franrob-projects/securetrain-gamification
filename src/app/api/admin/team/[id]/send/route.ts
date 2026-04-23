@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createServerClient } from '@/lib/supabaseServer'
 import { sendSlackReminder } from '@/lib/slackSender'
 import { sendTeamsReminder } from '@/lib/teamsSender'
+import { pickModule } from '@/lib/moduleRotation'
 
 async function requireAdmin(req: NextRequest) {
   const auth = req.headers.get('Authorization')
@@ -24,14 +25,15 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
 
   const { data: member, error } = await ctx.supabase
     .from('team_members')
-    .select('id, name, delivery_channel, slack_user_id')
+    .select('id, name, sector, delivery_channel, slack_user_id')
     .eq('id', id)
     .single()
 
   if (error || !member) return NextResponse.json({ error: 'Team member not found' }, { status: 404 })
 
   const channel = member.delivery_channel ?? 'slack'
-  const moduleId = body.moduleId
+  const sector = (member.sector ?? 'both') as 'crypto' | 'gambling' | 'both'
+  const moduleId = body.moduleId ?? pickModule({ sector, override: process.env.SLACK_MODULE_ID }).id
 
   if (channel === 'teams') {
     const result = await sendTeamsReminder({
