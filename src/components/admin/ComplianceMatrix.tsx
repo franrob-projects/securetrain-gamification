@@ -1,6 +1,6 @@
 'use client'
 import { useState, useEffect, useRef } from 'react'
-import { CheckCircle2, XCircle, Minus, Bell, Plus } from 'lucide-react'
+import { CheckCircle2, XCircle, Minus, Bell, Plus, Download } from 'lucide-react'
 import { createClient } from '@/lib/supabase'
 import { AddTeamMemberForm } from './AddTeamMemberForm'
 
@@ -196,6 +196,7 @@ export function ComplianceMatrix() {
   const [pendingId, setPending]   = useState<string | null>(null)
   const [realMembers, setReal]    = useState<TeamMember[] | null>(null)
   const [showAddForm, setShowAdd] = useState(false)
+  const [exporting, setExporting] = useState(false)
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   // Clean up toast timer on unmount
@@ -248,6 +249,38 @@ export function ComplianceMatrix() {
     }
   }
 
+  const exportCsv = async () => {
+    setExporting(true)
+    try {
+      const supabase = createClient()
+      const { data: { session } } = await supabase.auth.getSession()
+      if (!session) {
+        setToast({ type: 'error', message: 'You need to be signed in.' })
+        return
+      }
+      const res = await fetch('/api/admin/export', {
+        headers: { 'Authorization': 'Bearer ' + session.access_token },
+      })
+      if (!res.ok) throw new Error('Export failed')
+      const blob = await res.blob()
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      const today = new Date().toISOString().slice(0, 10)
+      a.download = `conply-compliance-${today}.csv`
+      document.body.appendChild(a)
+      a.click()
+      a.remove()
+      URL.revokeObjectURL(url)
+      setToast({ type: 'success', message: 'Compliance CSV downloaded' })
+    } catch {
+      setToast({ type: 'error', message: 'Could not export CSV' })
+    } finally {
+      setExporting(false)
+      toastTimer.current = setTimeout(() => setToast(null), 3000)
+    }
+  }
+
   // Use real members if any have been added, else fall back to seed data
   const isRealData    = realMembers !== null && realMembers.length > 0
   const displayTeam   = isRealData ? realMembers : TEAM
@@ -277,12 +310,22 @@ export function ComplianceMatrix() {
             {displayTeam.length} {displayTeam.length === 1 ? 'team member' : 'team members'} · {isRealData ? 'live data' : 'demo data'}
           </p>
         </div>
-        <button onClick={() => setShowAdd(true)}
-          className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold text-white transition-colors"
-          style={{ background: 'var(--brand)' }}>
-          <Plus className="w-4 h-4" />
-          Add team member
-        </button>
+        <div className="flex items-center gap-2">
+          <button onClick={exportCsv}
+            disabled={exporting || !isRealData}
+            title={isRealData ? 'Download compliance CSV' : 'Add real team members to enable export'}
+            className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors disabled:opacity-40"
+            style={{ background: 'var(--card)', color: 'var(--text)', border: '1px solid var(--card-border)' }}>
+            <Download className="w-4 h-4" />
+            {exporting ? 'Exporting...' : 'Export CSV'}
+          </button>
+          <button onClick={() => setShowAdd(true)}
+            className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold text-white transition-colors"
+            style={{ background: 'var(--brand)' }}>
+            <Plus className="w-4 h-4" />
+            Add team member
+          </button>
+        </div>
       </div>
 
       {/* Stat cards */}
