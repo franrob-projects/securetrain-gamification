@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react'
-import { CheckCircle2, XCircle, Save, Send, Trash2, AlertTriangle, HelpCircle, Zap } from 'lucide-react'
+import { CheckCircle2, XCircle, Save, Send, Trash2, AlertTriangle, HelpCircle, Zap, RotateCw } from 'lucide-react'
 import { createClient } from '@/lib/supabase'
 import { MODULES } from '@/data/modules'
 
@@ -71,6 +71,7 @@ export function DeliverySettings() {
   const [saving, setSaving]   = useState<string | null>(null)
   const [sending, setSending] = useState<string | null>(null)
   const [testing, setTesting] = useState<'slack' | 'teams' | null>(null)
+  const [retrying, setRetrying] = useState<string | null>(null)
   const [removing, setRemoving] = useState<string | null>(null)
   const [confirmRemove, setConfirmRemove] = useState<ApiMember | null>(null)
   const [diag, setDiag]       = useState<Diagnostics | null>(null)
@@ -148,6 +149,32 @@ export function DeliverySettings() {
     } finally {
       setTesting(null)
       setTimeout(() => setToast(null), 3500)
+    }
+  }
+
+  const retry = async (log: DeliveryLog) => {
+    if (!log.team_member_id) return
+    const session = await getSession()
+    if (!session) return
+    setRetrying(log.id)
+    try {
+      const res = await fetch(`/api/admin/team/${log.team_member_id}/send`, {
+        method:  'POST',
+        headers: {
+          'Content-Type':  'application/json',
+          'Authorization': 'Bearer ' + session.access_token,
+        },
+        body: JSON.stringify({ moduleId: log.module_id }),
+      })
+      const json = await res.json().catch(() => ({}))
+      if (!res.ok) throw new Error(json.error ?? 'Retry failed')
+      setToast({ type: 'success', message: `Retried ${log.member_name ?? 'delivery'}` })
+      fetchAll()
+    } catch (e) {
+      setToast({ type: 'error', message: e instanceof Error ? e.message : 'Retry failed' })
+    } finally {
+      setRetrying(null)
+      setTimeout(() => setToast(null), 3000)
     }
   }
 
@@ -486,6 +513,7 @@ export function DeliverySettings() {
                   <th className="px-4 py-3 text-left font-semibold text-xs uppercase tracking-wider" style={{ color: 'var(--muted)' }}>Channel</th>
                   <th className="px-4 py-3 text-left font-semibold text-xs uppercase tracking-wider" style={{ color: 'var(--muted)' }}>Module</th>
                   <th className="px-4 py-3 text-left font-semibold text-xs uppercase tracking-wider" style={{ color: 'var(--muted)' }}>Status</th>
+                  <th className="px-4 py-3"></th>
                 </tr>
               </thead>
               <tbody>
@@ -508,6 +536,21 @@ export function DeliverySettings() {
                         </span>
                       ) : (
                         <span className="text-xs" style={{ color: 'var(--muted)' }}>pending</span>
+                      )}
+                    </td>
+                    <td className="px-4 py-2.5 text-right">
+                      {l.status === 'failed' && l.team_member_id && (
+                        <button
+                          onClick={() => retry(l)}
+                          disabled={retrying === l.id}
+                          title={`Retry sending ${moduleLabel(l.module_id)} to ${l.member_name ?? 'member'}`}
+                          className="inline-flex items-center gap-1 px-2 py-1 rounded text-xs font-medium transition-colors disabled:opacity-30"
+                          style={{ color: 'var(--accent)' }}
+                          onMouseOver={e => (e.currentTarget.style.background = 'rgba(91,84,184,0.12)')}
+                          onMouseOut={e => (e.currentTarget.style.background = 'transparent')}>
+                          <RotateCw className={`w-3 h-3 ${retrying === l.id ? 'animate-spin' : ''}`} />
+                          Retry
+                        </button>
                       )}
                     </td>
                   </tr>
