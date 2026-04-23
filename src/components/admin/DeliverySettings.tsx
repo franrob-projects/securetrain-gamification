@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react'
-import { CheckCircle2, XCircle, Save, Send, Trash2 } from 'lucide-react'
+import { CheckCircle2, XCircle, Save, Send, Trash2, AlertTriangle, HelpCircle } from 'lucide-react'
 import { createClient } from '@/lib/supabase'
 import { MODULES } from '@/data/modules'
 
@@ -14,6 +14,13 @@ interface ApiMember {
   delivery_channel: Channel | null
   slack_user_id:    string | null
   teams_user_id:    string | null
+}
+
+interface Diagnostics {
+  slack:     { botToken: boolean; channelId: boolean }
+  teams:     { webhook: boolean }
+  anthropic: { apiKey: boolean }
+  cron:      { secret: boolean }
 }
 
 interface DeliveryLog {
@@ -65,6 +72,7 @@ export function DeliverySettings() {
   const [sending, setSending] = useState<string | null>(null)
   const [removing, setRemoving] = useState<string | null>(null)
   const [confirmRemove, setConfirmRemove] = useState<ApiMember | null>(null)
+  const [diag, setDiag]       = useState<Diagnostics | null>(null)
   const [logs, setLogs]       = useState<DeliveryLog[] | null>(null)
   const [statusFilter, setStatusFilter] = useState<'all' | 'sent' | 'failed'>('all')
   const [channelFilter, setChannelFilter] = useState<'all' | 'slack' | 'teams'>('all')
@@ -80,9 +88,10 @@ export function DeliverySettings() {
     const session = await getSession()
     if (!session) return
     const headers = { 'Authorization': 'Bearer ' + session.access_token }
-    const [teamRes, logRes] = await Promise.all([
+    const [teamRes, logRes, diagRes] = await Promise.all([
       fetch('/api/admin/team',         { headers }),
       fetch('/api/admin/delivery-log', { headers }),
+      fetch('/api/admin/diagnostics',  { headers }),
     ])
     if (teamRes.ok) {
       const json = await teamRes.json() as { members: ApiMember[] }
@@ -94,6 +103,9 @@ export function DeliverySettings() {
     if (logRes.ok) {
       const json = await logRes.json() as { logs: DeliveryLog[] }
       setLogs(json.logs)
+    }
+    if (diagRes.ok) {
+      setDiag(await diagRes.json() as Diagnostics)
     }
   }
 
@@ -218,8 +230,32 @@ export function DeliverySettings() {
     return <p className="text-sm" style={{ color: 'var(--muted)' }}>Loading delivery settings...</p>
   }
 
+  const missingTeams = diag && !diag.teams.webhook
+  const missingSlack = diag && (!diag.slack.botToken || !diag.slack.channelId)
+  const usingTeamsAnywhere = members.some(m => (m.delivery_channel ?? 'slack') === 'teams')
+
   return (
     <div className="space-y-10">
+      {/* Env warnings */}
+      {(missingSlack || (missingTeams && usingTeamsAnywhere)) && (
+        <div className="rounded-lg px-4 py-3 text-xs flex items-start gap-2"
+          style={{ background: 'rgba(217,119,6,0.10)', color: '#d97706', border: '1px solid rgba(217,119,6,0.25)' }}>
+          <AlertTriangle className="w-4 h-4 mt-0.5 flex-shrink-0" />
+          <div className="space-y-1">
+            {missingSlack && (
+              <div>
+                Slack is missing credentials (<code>SLACK_BOT_TOKEN</code> and/or <code>SLACK_CHANNEL_ID</code>). Slack-routed members will fail until these are set.
+              </div>
+            )}
+            {missingTeams && usingTeamsAnywhere && (
+              <div>
+                Teams webhook is not configured (<code>TEAMS_WEBHOOK_URL</code>). {members.filter(m => m.delivery_channel === 'teams').length} member(s) are routed to Teams — their sends will fail until you add the webhook in Vercel env.
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
       {/* Stats */}
       <div>
         <h2 className="text-lg font-semibold mb-1" style={{ color: 'var(--text)' }}>Delivery history</h2>
@@ -243,8 +279,14 @@ export function DeliverySettings() {
       {/* Per-member delivery prefs */}
       <div>
         <h2 className="text-lg font-semibold mb-1" style={{ color: 'var(--text)' }}>Per-member channel</h2>
-        <p className="text-xs mb-5" style={{ color: 'var(--muted)' }}>
-          Choose where each person receives training. Slack uses their user ID (starts with <code>U</code>) if set, otherwise the default channel.
+        <p className="text-xs mb-5 flex items-center gap-1.5" style={{ color: 'var(--muted)' }}>
+          Choose where each person receives training. Slack DMs the <code>slack_user_id</code> if set, otherwise falls back to the default channel.
+          <a href="https://api.slack.com/methods/users.lookupByEmail"
+            target="_blank" rel="noopener noreferrer"
+            title="How to find a Slack user ID — users.lookupByEmail or Slack admin profile"
+            style={{ color: 'var(--accent)' }}>
+            <HelpCircle className="w-3.5 h-3.5" />
+          </a>
         </p>
         {members.length === 0 ? (
           <div className="rounded-xl px-5 py-6 text-sm" style={{ background: 'var(--card)', border: '1px solid var(--card-border)', color: 'var(--muted)' }}>
