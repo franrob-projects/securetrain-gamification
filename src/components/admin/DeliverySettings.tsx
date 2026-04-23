@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react'
-import { CheckCircle2, XCircle, Save } from 'lucide-react'
+import { CheckCircle2, XCircle, Save, Send, Trash2 } from 'lucide-react'
 import { createClient } from '@/lib/supabase'
 import { MODULES } from '@/data/modules'
 
@@ -62,6 +62,9 @@ export function DeliverySettings() {
   const [members, setMembers] = useState<ApiMember[] | null>(null)
   const [drafts, setDrafts]   = useState<Record<string, MemberDraft>>({})
   const [saving, setSaving]   = useState<string | null>(null)
+  const [sending, setSending] = useState<string | null>(null)
+  const [removing, setRemoving] = useState<string | null>(null)
+  const [confirmRemove, setConfirmRemove] = useState<ApiMember | null>(null)
   const [logs, setLogs]       = useState<DeliveryLog[] | null>(null)
   const [toast, setToast]     = useState<{ type: 'success' | 'error'; message: string } | null>(null)
 
@@ -106,6 +109,55 @@ export function DeliverySettings() {
       d.slack_user_id    !== (m.slack_user_id ?? '') ||
       d.teams_user_id    !== (m.teams_user_id ?? '')
     )
+  }
+
+  const sendNow = async (m: ApiMember) => {
+    const session = await getSession()
+    if (!session) return
+    setSending(m.id)
+    try {
+      const res = await fetch(`/api/admin/team/${m.id}/send`, {
+        method:  'POST',
+        headers: {
+          'Content-Type':  'application/json',
+          'Authorization': 'Bearer ' + session.access_token,
+        },
+        body: JSON.stringify({}),
+      })
+      const json = await res.json().catch(() => ({}))
+      if (!res.ok) throw new Error(json.error ?? 'Send failed')
+      setToast({ type: 'success', message: `Sent to ${m.name} via ${json.channel ?? m.delivery_channel ?? 'slack'}` })
+      fetchAll()
+    } catch (e) {
+      setToast({ type: 'error', message: e instanceof Error ? e.message : 'Send failed' })
+    } finally {
+      setSending(null)
+      setTimeout(() => setToast(null), 3500)
+    }
+  }
+
+  const remove = async (m: ApiMember) => {
+    const session = await getSession()
+    if (!session) return
+    setRemoving(m.id)
+    try {
+      const res = await fetch(`/api/admin/team/${m.id}`, {
+        method:  'DELETE',
+        headers: { 'Authorization': 'Bearer ' + session.access_token },
+      })
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}))
+        throw new Error(err.error ?? 'Remove failed')
+      }
+      setMembers(prev => prev?.filter(x => x.id !== m.id) ?? null)
+      setToast({ type: 'success', message: `Removed ${m.name}` })
+    } catch (e) {
+      setToast({ type: 'error', message: e instanceof Error ? e.message : 'Remove failed' })
+    } finally {
+      setRemoving(null)
+      setConfirmRemove(null)
+      setTimeout(() => setToast(null), 3000)
+    }
   }
 
   const save = async (m: ApiMember) => {
@@ -247,15 +299,36 @@ export function DeliverySettings() {
                           style={{ background: 'var(--bg)', border: '1px solid var(--border)', color: 'var(--text)' }}
                         />
                       </td>
-                      <td className="px-4 py-3 text-right">
-                        <button
-                          onClick={() => save(m)}
-                          disabled={!dirty || saving === m.id}
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold text-white transition-opacity disabled:opacity-30"
-                          style={{ background: 'var(--brand)' }}>
-                          <Save className="w-3 h-3" />
-                          {saving === m.id ? 'Saving...' : 'Save'}
-                        </button>
+                      <td className="px-4 py-3">
+                        <div className="flex items-center justify-end gap-1.5">
+                          <button
+                            onClick={() => sendNow(m)}
+                            disabled={dirty || sending === m.id}
+                            title={dirty ? 'Save changes first' : `Send training now to ${m.name}`}
+                            className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-xs font-medium transition-opacity disabled:opacity-30"
+                            style={{ background: 'rgba(91,84,184,0.12)', color: 'var(--accent)', border: '1px solid rgba(91,84,184,0.3)' }}>
+                            <Send className="w-3 h-3" />
+                            {sending === m.id ? 'Sending...' : 'Send now'}
+                          </button>
+                          <button
+                            onClick={() => save(m)}
+                            disabled={!dirty || saving === m.id}
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold text-white transition-opacity disabled:opacity-30"
+                            style={{ background: 'var(--brand)' }}>
+                            <Save className="w-3 h-3" />
+                            {saving === m.id ? 'Saving...' : 'Save'}
+                          </button>
+                          <button
+                            onClick={() => setConfirmRemove(m)}
+                            disabled={removing === m.id}
+                            title={`Remove ${m.name}`}
+                            className="p-1.5 rounded-md transition-colors disabled:opacity-30"
+                            style={{ color: '#dc2626' }}
+                            onMouseOver={e => (e.currentTarget.style.background = 'rgba(220,38,38,0.12)')}
+                            onMouseOut={e => (e.currentTarget.style.background = 'transparent')}>
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   )
@@ -315,6 +388,37 @@ export function DeliverySettings() {
           </div>
         )}
       </div>
+
+      {confirmRemove && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center px-4"
+          style={{ background: 'rgba(14,12,30,0.75)' }}
+          onClick={() => !removing && setConfirmRemove(null)}>
+          <div className="rounded-2xl w-full max-w-sm p-6"
+            style={{ background: 'var(--card)', border: '1px solid var(--card-border)' }}
+            onClick={e => e.stopPropagation()}>
+            <h3 className="text-base font-semibold mb-2" style={{ color: 'var(--text)' }}>
+              Remove {confirmRemove.name}?
+            </h3>
+            <p className="text-xs mb-5" style={{ color: 'var(--muted)' }}>
+              This removes them from the team list. Their past completions and delivery log entries are preserved. This cannot be undone.
+            </p>
+            <div className="flex items-center gap-2 justify-end">
+              <button onClick={() => setConfirmRemove(null)}
+                disabled={removing === confirmRemove.id}
+                className="px-3 py-2 text-xs rounded-md transition-colors"
+                style={{ color: 'var(--muted)' }}>
+                Cancel
+              </button>
+              <button onClick={() => remove(confirmRemove)}
+                disabled={removing === confirmRemove.id}
+                className="px-3 py-2 text-xs font-semibold rounded-md text-white disabled:opacity-50"
+                style={{ background: '#dc2626' }}>
+                {removing === confirmRemove.id ? 'Removing...' : 'Remove'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {toast && (
         <div className="fixed bottom-6 right-6 px-4 py-3 rounded-lg text-sm font-medium shadow-lg z-50"
