@@ -66,6 +66,8 @@ export function DeliverySettings() {
   const [removing, setRemoving] = useState<string | null>(null)
   const [confirmRemove, setConfirmRemove] = useState<ApiMember | null>(null)
   const [logs, setLogs]       = useState<DeliveryLog[] | null>(null)
+  const [statusFilter, setStatusFilter] = useState<'all' | 'sent' | 'failed'>('all')
+  const [channelFilter, setChannelFilter] = useState<'all' | 'slack' | 'teams'>('all')
   const [toast, setToast]     = useState<{ type: 'success' | 'error'; message: string } | null>(null)
 
   const getSession = async () => {
@@ -194,6 +196,11 @@ export function DeliverySettings() {
       setTimeout(() => setToast(null), 3000)
     }
   }
+
+  const filteredLogs = (logs ?? []).filter(l =>
+    (statusFilter  === 'all' || l.status  === statusFilter) &&
+    (channelFilter === 'all' || l.channel === channelFilter)
+  )
 
   const stats = (() => {
     if (!logs) return { sent: 0, failed: 0, slack: 0, teams: 0 }
@@ -341,9 +348,39 @@ export function DeliverySettings() {
 
       {/* Log */}
       <div>
-        <h2 className="text-lg font-semibold mb-1" style={{ color: 'var(--text)' }}>Recent deliveries</h2>
-        <p className="text-xs mb-5" style={{ color: 'var(--muted)' }}>Latest {logs?.length ?? 0} events from delivery_log</p>
-        {logs && logs.length === 0 ? (
+        <div className="flex items-end justify-between gap-4 flex-wrap mb-5">
+          <div>
+            <h2 className="text-lg font-semibold mb-1" style={{ color: 'var(--text)' }}>Recent deliveries</h2>
+            <p className="text-xs" style={{ color: 'var(--muted)' }}>
+              {logs ? `${filteredLogs.length} of ${logs.length}` : '0'} events from delivery_log
+            </p>
+          </div>
+          <div className="flex items-center gap-2 flex-wrap">
+            <div className="flex gap-1 p-0.5 rounded-md" style={{ background: 'var(--bg)', border: '1px solid var(--border)' }}>
+              {(['all', 'sent', 'failed'] as const).map(s => (
+                <button key={s} onClick={() => setStatusFilter(s)}
+                  className="px-2.5 py-1 rounded text-xs font-medium capitalize transition-colors"
+                  style={statusFilter === s
+                    ? { background: 'var(--brand)', color: '#fff' }
+                    : { color: 'var(--muted)' }}>
+                  {s}
+                </button>
+              ))}
+            </div>
+            <div className="flex gap-1 p-0.5 rounded-md" style={{ background: 'var(--bg)', border: '1px solid var(--border)' }}>
+              {(['all', 'slack', 'teams'] as const).map(c => (
+                <button key={c} onClick={() => setChannelFilter(c)}
+                  className="px-2.5 py-1 rounded text-xs font-medium capitalize transition-colors"
+                  style={channelFilter === c
+                    ? { background: 'var(--brand)', color: '#fff' }
+                    : { color: 'var(--muted)' }}>
+                  {c}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+        {logs && filteredLogs.length === 0 ? (
           <div className="rounded-xl px-5 py-6 text-sm" style={{ background: 'var(--card)', border: '1px solid var(--card-border)', color: 'var(--muted)' }}>
             No delivery events yet. The cron runs weekdays at 09:00.
           </div>
@@ -360,7 +397,7 @@ export function DeliverySettings() {
                 </tr>
               </thead>
               <tbody>
-                {(logs ?? []).slice(0, 50).map((l, i) => (
+                {filteredLogs.slice(0, 50).map((l, i) => (
                   <tr key={l.id} style={{ borderTop: '1px solid var(--border)', background: i % 2 === 0 ? 'transparent' : 'rgba(91,84,184,0.02)' }}>
                     <td className="px-4 py-2.5 text-xs" style={{ color: 'var(--muted)' }}>{relativeTime(l.delivered_at)}</td>
                     <td className="px-4 py-2.5" style={{ color: 'var(--text)' }}>
