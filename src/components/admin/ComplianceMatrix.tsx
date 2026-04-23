@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from 'react'
 import { CheckCircle2, XCircle, Minus, Bell, Plus, Download } from 'lucide-react'
 import { createClient } from '@/lib/supabase'
 import { AddTeamMemberForm } from './AddTeamMemberForm'
+import { CompletionsTrend } from './CompletionsTrend'
 
 type UserSector = 'crypto' | 'gambling' | 'both'
 type ComplianceStatus = 'compliant' | 'in-progress' | 'overdue'
@@ -195,6 +196,7 @@ export function ComplianceMatrix() {
   const [toast, setToast]         = useState<Toast>(null)
   const [pendingId, setPending]   = useState<string | null>(null)
   const [realMembers, setReal]    = useState<TeamMember[] | null>(null)
+  const [completionEvents, setCompletionEvents] = useState<{ created_at: string }[]>([])
   const [showAddForm, setShowAdd] = useState(false)
   const [exporting, setExporting] = useState(false)
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -213,6 +215,7 @@ export function ComplianceMatrix() {
       if (!res.ok) return
       const json = await res.json() as { members: ApiTeamMember[] }
       setReal(json.members.map(toTeamMember))
+      setCompletionEvents(json.members.flatMap(m => m.completions.map(c => ({ created_at: c.created_at }))))
     } catch {
       // Silent fail, falls back to seed data
     }
@@ -347,6 +350,13 @@ export function ComplianceMatrix() {
           </div>
         ))}
       </div>
+
+      {/* Trend chart (only when we have real data) */}
+      {isRealData && completionEvents.length > 0 && (
+        <div className="mb-6">
+          <CompletionsTrend events={completionEvents} />
+        </div>
+      )}
 
       {/* Compliance matrix */}
       <div className="rounded-xl overflow-x-auto" style={{ border: '1px solid var(--border)' }}>
