@@ -2,13 +2,16 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createServerClient } from '@/lib/supabaseServer'
 
 interface TeamMemberRow {
-  id:         string
-  email:      string
-  name:       string
-  job_title:  string | null
-  sector:     'crypto' | 'gambling' | 'both'
-  user_id:    string | null
-  invited_at: string
+  id:               string
+  email:            string
+  name:             string
+  job_title:        string | null
+  sector:           'crypto' | 'gambling' | 'both'
+  user_id:          string | null
+  invited_at:       string
+  delivery_channel: 'slack' | 'teams' | null
+  slack_user_id:    string | null
+  teams_user_id:    string | null
 }
 
 interface CompletionRow {
@@ -35,7 +38,7 @@ export async function GET(req: NextRequest) {
 
   const { data: members, error } = await ctx.supabase
     .from('team_members')
-    .select('id, email, name, job_title, sector, user_id, invited_at')
+    .select('id, email, name, job_title, sector, user_id, invited_at, delivery_channel, slack_user_id, teams_user_id')
     .order('invited_at', { ascending: false })
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })

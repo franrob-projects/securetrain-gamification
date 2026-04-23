@@ -1,0 +1,331 @@
+'use client'
+import { useEffect, useState } from 'react'
+import { CheckCircle2, XCircle, Save } from 'lucide-react'
+import { createClient } from '@/lib/supabase'
+import { MODULES } from '@/data/modules'
+
+type Channel = 'slack' | 'teams'
+
+interface ApiMember {
+  id:               string
+  email:            string
+  name:             string
+  sector:           'crypto' | 'gambling' | 'both'
+  delivery_channel: Channel | null
+  slack_user_id:    string | null
+  teams_user_id:    string | null
+}
+
+interface DeliveryLog {
+  id:             string
+  team_member_id: string | null
+  channel:        Channel
+  module_id:      string
+  status:         'pending' | 'sent' | 'failed'
+  error_message:  string | null
+  delivered_at:   string
+  member_name:    string | null
+  member_email:   string | null
+}
+
+interface MemberDraft {
+  delivery_channel: Channel
+  slack_user_id:    string
+  teams_user_id:    string
+}
+
+function toDraft(m: ApiMember): MemberDraft {
+  return {
+    delivery_channel: m.delivery_channel ?? 'slack',
+    slack_user_id:    m.slack_user_id ?? '',
+    teams_user_id:    m.teams_user_id ?? '',
+  }
+}
+
+function moduleLabel(id: string): string {
+  return MODULES.find(m => m.id === id)?.title ?? id
+}
+
+function relativeTime(iso: string): string {
+  const ms = Date.now() - new Date(iso).getTime()
+  const mins = Math.round(ms / 60000)
+  if (mins < 1) return 'just now'
+  if (mins < 60) return `${mins}m ago`
+  const hours = Math.round(mins / 60)
+  if (hours < 24) return `${hours}h ago`
+  const days = Math.round(hours / 24)
+  if (days < 30) return `${days}d ago`
+  return new Date(iso).toLocaleDateString()
+}
+
+export function DeliverySettings() {
+  const [members, setMembers] = useState<ApiMember[] | null>(null)
+  const [drafts, setDrafts]   = useState<Record<string, MemberDraft>>({})
+  const [saving, setSaving]   = useState<string | null>(null)
+  const [logs, setLogs]       = useState<DeliveryLog[] | null>(null)
+  const [toast, setToast]     = useState<{ type: 'success' | 'error'; message: string } | null>(null)
+
+  const getSession = async () => {
+    const supabase = createClient()
+    const { data: { session } } = await supabase.auth.getSession()
+    return session
+  }
+
+  const fetchAll = async () => {
+    const session = await getSession()
+    if (!session) return
+    const headers = { 'Authorization': 'Bearer ' + session.access_token }
+    const [teamRes, logRes] = await Promise.all([
+      fetch('/api/admin/team',         { headers }),
+      fetch('/api/admin/delivery-log', { headers }),
+    ])
+    if (teamRes.ok) {
+      const json = await teamRes.json() as { members: ApiMember[] }
+      setMembers(json.members)
+      const initialDrafts: Record<string, MemberDraft> = {}
+      for (const m of json.members) initialDrafts[m.id] = toDraft(m)
+      setDrafts(initialDrafts)
+    }
+    if (logRes.ok) {
+      const json = await logRes.json() as { logs: DeliveryLog[] }
+      setLogs(json.logs)
+    }
+  }
+
+  useEffect(() => { fetchAll() }, [])
+
+  const updateDraft = (id: string, patch: Partial<MemberDraft>) => {
+    setDrafts(d => ({ ...d, [id]: { ...d[id], ...patch } }))
+  }
+
+  const isDirty = (m: ApiMember): boolean => {
+    const d = drafts[m.id]
+    if (!d) return false
+    return (
+      d.delivery_channel !== (m.delivery_channel ?? 'slack') ||
+      d.slack_user_id    !== (m.slack_user_id ?? '') ||
+      d.teams_user_id    !== (m.teams_user_id ?? '')
+    )
+  }
+
+  const save = async (m: ApiMember) => {
+    const session = await getSession()
+    if (!session) return
+    setSaving(m.id)
+    try {
+      const d = drafts[m.id]
+      const res = await fetch(`/api/admin/team/${m.id}`, {
+        method:  'PATCH',
+        headers: {
+          'Content-Type':  'application/json',
+          'Authorization': 'Bearer ' + session.access_token,
+        },
+        body: JSON.stringify({
+          delivery_channel: d.delivery_channel,
+          slack_user_id:    d.slack_user_id,
+          teams_user_id:    d.teams_user_id,
+        }),
+      })
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}))
+        throw new Error(err.error ?? 'Save failed')
+      }
+      setMembers(prev => prev?.map(x => x.id === m.id
+        ? { ...x, delivery_channel: d.delivery_channel, slack_user_id: d.slack_user_id || null, teams_user_id: d.teams_user_id || null }
+        : x
+      ) ?? null)
+      setToast({ type: 'success', message: `Saved ${m.name}` })
+    } catch (e) {
+      setToast({ type: 'error', message: e instanceof Error ? e.message : 'Save failed' })
+    } finally {
+      setSaving(null)
+      setTimeout(() => setToast(null), 3000)
+    }
+  }
+
+  const stats = (() => {
+    if (!logs) return { sent: 0, failed: 0, slack: 0, teams: 0 }
+    const cutoff = Date.now() - 7 * 24 * 60 * 60 * 1000
+    const recent = logs.filter(l => new Date(l.delivered_at).getTime() >= cutoff)
+    return {
+      sent:   recent.filter(l => l.status === 'sent').length,
+      failed: recent.filter(l => l.status === 'failed').length,
+      slack:  recent.filter(l => l.channel === 'slack').length,
+      teams:  recent.filter(l => l.channel === 'teams').length,
+    }
+  })()
+
+  if (members === null) {
+    return <p className="text-sm" style={{ color: 'var(--muted)' }}>Loading delivery settings...</p>
+  }
+
+  return (
+    <div className="space-y-10">
+      {/* Stats */}
+      <div>
+        <h2 className="text-lg font-semibold mb-1" style={{ color: 'var(--text)' }}>Delivery history</h2>
+        <p className="text-xs mb-5" style={{ color: 'var(--muted)' }}>Last 7 days across Slack + Teams</p>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          {[
+            { label: 'Sent',        value: stats.sent,   color: '#16a34a',       border: 'rgba(22,163,74,0.15)' },
+            { label: 'Failed',      value: stats.failed, color: '#dc2626',       border: 'rgba(220,38,38,0.15)' },
+            { label: 'Slack sends', value: stats.slack,  color: 'var(--accent)', border: 'var(--card-border)'   },
+            { label: 'Teams sends', value: stats.teams,  color: 'var(--accent)', border: 'var(--card-border)'   },
+          ].map(c => (
+            <div key={c.label} className="rounded-xl px-5 py-5"
+              style={{ background: 'var(--card)', border: `1px solid ${c.border}` }}>
+              <div className="text-3xl font-extrabold mb-1 tracking-tight" style={{ color: c.color }}>{c.value}</div>
+              <div className="text-xs font-medium" style={{ color: 'var(--muted)' }}>{c.label}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Per-member delivery prefs */}
+      <div>
+        <h2 className="text-lg font-semibold mb-1" style={{ color: 'var(--text)' }}>Per-member channel</h2>
+        <p className="text-xs mb-5" style={{ color: 'var(--muted)' }}>
+          Choose where each person receives training. Slack uses their user ID (starts with <code>U</code>) if set, otherwise the default channel.
+        </p>
+        {members.length === 0 ? (
+          <div className="rounded-xl px-5 py-6 text-sm" style={{ background: 'var(--card)', border: '1px solid var(--card-border)', color: 'var(--muted)' }}>
+            No team members yet. Add some from the Team Compliance tab.
+          </div>
+        ) : (
+          <div className="rounded-xl overflow-x-auto" style={{ border: '1px solid var(--border)' }}>
+            <table className="text-sm border-collapse w-full" style={{ minWidth: '720px' }}>
+              <thead>
+                <tr style={{ background: 'rgba(91,84,184,0.06)', borderBottom: '1px solid var(--border)' }}>
+                  <th className="px-4 py-3.5 text-left font-semibold text-xs uppercase tracking-wider" style={{ color: 'var(--accent)' }}>Member</th>
+                  <th className="px-4 py-3.5 text-left font-semibold text-xs uppercase tracking-wider" style={{ color: 'var(--muted)' }}>Channel</th>
+                  <th className="px-4 py-3.5 text-left font-semibold text-xs uppercase tracking-wider" style={{ color: 'var(--muted)' }}>Slack user ID</th>
+                  <th className="px-4 py-3.5 text-left font-semibold text-xs uppercase tracking-wider" style={{ color: 'var(--muted)' }}>Teams user ID</th>
+                  <th className="px-4 py-3.5"></th>
+                </tr>
+              </thead>
+              <tbody>
+                {members.map((m, i) => {
+                  const d = drafts[m.id] ?? toDraft(m)
+                  const dirty = isDirty(m)
+                  return (
+                    <tr key={m.id} style={{ borderTop: '1px solid var(--border)', background: i % 2 === 0 ? 'transparent' : 'rgba(91,84,184,0.02)' }}>
+                      <td className="px-4 py-3">
+                        <div className="font-medium" style={{ color: 'var(--text)' }}>{m.name}</div>
+                        <div className="text-xs" style={{ color: 'var(--muted)' }}>{m.email}</div>
+                      </td>
+                      <td className="px-4 py-3">
+                        <div className="flex gap-1 p-0.5 rounded-md w-fit" style={{ background: 'var(--bg)', border: '1px solid var(--border)' }}>
+                          {(['slack', 'teams'] as const).map(c => (
+                            <button key={c}
+                              onClick={() => updateDraft(m.id, { delivery_channel: c })}
+                              className="px-3 py-1 rounded text-xs font-medium capitalize transition-colors"
+                              style={d.delivery_channel === c
+                                ? { background: 'var(--brand)', color: '#fff' }
+                                : { color: 'var(--muted)' }}>
+                              {c === 'teams' ? 'Teams' : 'Slack'}
+                            </button>
+                          ))}
+                        </div>
+                      </td>
+                      <td className="px-4 py-3">
+                        <input
+                          type="text"
+                          value={d.slack_user_id}
+                          onChange={e => updateDraft(m.id, { slack_user_id: e.target.value })}
+                          placeholder="U012ABC3DE"
+                          className="w-full max-w-[160px] px-2.5 py-1.5 rounded text-xs outline-none font-mono"
+                          style={{ background: 'var(--bg)', border: '1px solid var(--border)', color: 'var(--text)' }}
+                        />
+                      </td>
+                      <td className="px-4 py-3">
+                        <input
+                          type="text"
+                          value={d.teams_user_id}
+                          onChange={e => updateDraft(m.id, { teams_user_id: e.target.value })}
+                          placeholder="optional"
+                          className="w-full max-w-[160px] px-2.5 py-1.5 rounded text-xs outline-none font-mono"
+                          style={{ background: 'var(--bg)', border: '1px solid var(--border)', color: 'var(--text)' }}
+                        />
+                      </td>
+                      <td className="px-4 py-3 text-right">
+                        <button
+                          onClick={() => save(m)}
+                          disabled={!dirty || saving === m.id}
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold text-white transition-opacity disabled:opacity-30"
+                          style={{ background: 'var(--brand)' }}>
+                          <Save className="w-3 h-3" />
+                          {saving === m.id ? 'Saving...' : 'Save'}
+                        </button>
+                      </td>
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+
+      {/* Log */}
+      <div>
+        <h2 className="text-lg font-semibold mb-1" style={{ color: 'var(--text)' }}>Recent deliveries</h2>
+        <p className="text-xs mb-5" style={{ color: 'var(--muted)' }}>Latest {logs?.length ?? 0} events from delivery_log</p>
+        {logs && logs.length === 0 ? (
+          <div className="rounded-xl px-5 py-6 text-sm" style={{ background: 'var(--card)', border: '1px solid var(--card-border)', color: 'var(--muted)' }}>
+            No delivery events yet. The cron runs weekdays at 09:00.
+          </div>
+        ) : (
+          <div className="rounded-xl overflow-x-auto" style={{ border: '1px solid var(--border)' }}>
+            <table className="text-sm border-collapse w-full" style={{ minWidth: '720px' }}>
+              <thead>
+                <tr style={{ background: 'rgba(91,84,184,0.06)', borderBottom: '1px solid var(--border)' }}>
+                  <th className="px-4 py-3 text-left font-semibold text-xs uppercase tracking-wider" style={{ color: 'var(--muted)' }}>When</th>
+                  <th className="px-4 py-3 text-left font-semibold text-xs uppercase tracking-wider" style={{ color: 'var(--muted)' }}>Recipient</th>
+                  <th className="px-4 py-3 text-left font-semibold text-xs uppercase tracking-wider" style={{ color: 'var(--muted)' }}>Channel</th>
+                  <th className="px-4 py-3 text-left font-semibold text-xs uppercase tracking-wider" style={{ color: 'var(--muted)' }}>Module</th>
+                  <th className="px-4 py-3 text-left font-semibold text-xs uppercase tracking-wider" style={{ color: 'var(--muted)' }}>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {(logs ?? []).slice(0, 50).map((l, i) => (
+                  <tr key={l.id} style={{ borderTop: '1px solid var(--border)', background: i % 2 === 0 ? 'transparent' : 'rgba(91,84,184,0.02)' }}>
+                    <td className="px-4 py-2.5 text-xs" style={{ color: 'var(--muted)' }}>{relativeTime(l.delivered_at)}</td>
+                    <td className="px-4 py-2.5" style={{ color: 'var(--text)' }}>
+                      {l.member_name ?? <span style={{ color: 'var(--muted)' }}>(broadcast)</span>}
+                    </td>
+                    <td className="px-4 py-2.5 text-xs capitalize" style={{ color: 'var(--muted)' }}>{l.channel}</td>
+                    <td className="px-4 py-2.5 text-xs" style={{ color: 'var(--muted)' }}>{moduleLabel(l.module_id)}</td>
+                    <td className="px-4 py-2.5">
+                      {l.status === 'sent' ? (
+                        <span className="inline-flex items-center gap-1 text-xs" style={{ color: '#16a34a' }}>
+                          <CheckCircle2 className="w-3.5 h-3.5" /> sent
+                        </span>
+                      ) : l.status === 'failed' ? (
+                        <span className="inline-flex items-center gap-1 text-xs" style={{ color: '#dc2626' }} title={l.error_message ?? ''}>
+                          <XCircle className="w-3.5 h-3.5" /> failed
+                        </span>
+                      ) : (
+                        <span className="text-xs" style={{ color: 'var(--muted)' }}>pending</span>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+
+      {toast && (
+        <div className="fixed bottom-6 right-6 px-4 py-3 rounded-lg text-sm font-medium shadow-lg z-50"
+          style={{
+            background: toast.type === 'success' ? 'rgba(22,163,74,0.95)' : 'rgba(220,38,38,0.95)',
+            color: '#fff',
+            border: `1px solid ${toast.type === 'success' ? 'rgba(22,163,74,1)' : 'rgba(220,38,38,1)'}`,
+          }}>
+          {toast.message}
+        </div>
+      )}
+    </div>
+  )
+}

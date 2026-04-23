@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase'
 import { MODULES } from '@/data/modules'
 import { ComplianceMatrix } from '@/components/admin/ComplianceMatrix'
+import { DeliverySettings } from '@/components/admin/DeliverySettings'
 import { ConplyLogo } from '@/components/ui/ConplyLogo'
 import { ThreatBadge } from '@/components/ui/ThreatBadge'
 import { SectorBadge } from '@/components/ui/SectorBadge'
@@ -13,7 +14,7 @@ import { formatDuration } from '@/lib/utils'
 export default function AdminPage() {
   const router = useRouter()
   const [loading, setLoading] = useState(true)
-  const [tab, setTab] = useState<'modules' | 'team'>('modules')
+  const [tab, setTab] = useState<'modules' | 'team' | 'delivery'>('modules')
 
   useEffect(() => {
     const init = async () => {
@@ -49,13 +50,13 @@ export default function AdminPage() {
 
         {/* Tabs */}
         <div className="flex gap-1 mb-8 p-1 rounded-lg w-fit" style={{ background: 'var(--surface)' }}>
-          {(['modules', 'team'] as const).map(t => (
+          {(['modules', 'team', 'delivery'] as const).map(t => (
             <button key={t} onClick={() => setTab(t)}
               className="px-4 py-1.5 rounded text-sm font-medium capitalize transition-all"
               style={tab === t
                 ? { background: 'var(--brand)', color: '#fff' }
                 : { color: 'var(--muted)' }}>
-              {t === 'modules' ? `Modules (${MODULES.length})` : 'Team Compliance'}
+              {t === 'modules' ? `Modules (${MODULES.length})` : t === 'team' ? 'Team Compliance' : 'Delivery'}
             </button>
           ))}
         </div>
@@ -89,6 +90,8 @@ export default function AdminPage() {
         )}
 
         {tab === 'team' && <ComplianceMatrix />}
+
+        {tab === 'delivery' && <DeliverySettings />}
       </main>
     </div>
   )
