@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react'
-import { CheckCircle2, XCircle, Save, Send, Trash2, AlertTriangle, HelpCircle } from 'lucide-react'
+import { CheckCircle2, XCircle, Save, Send, Trash2, AlertTriangle, HelpCircle, Zap } from 'lucide-react'
 import { createClient } from '@/lib/supabase'
 import { MODULES } from '@/data/modules'
 
@@ -70,6 +70,7 @@ export function DeliverySettings() {
   const [drafts, setDrafts]   = useState<Record<string, MemberDraft>>({})
   const [saving, setSaving]   = useState<string | null>(null)
   const [sending, setSending] = useState<string | null>(null)
+  const [testing, setTesting] = useState<'slack' | 'teams' | null>(null)
   const [removing, setRemoving] = useState<string | null>(null)
   const [confirmRemove, setConfirmRemove] = useState<ApiMember | null>(null)
   const [diag, setDiag]       = useState<Diagnostics | null>(null)
@@ -123,6 +124,31 @@ export function DeliverySettings() {
       d.slack_user_id    !== (m.slack_user_id ?? '') ||
       d.teams_user_id    !== (m.teams_user_id ?? '')
     )
+  }
+
+  const testChannel = async (channel: 'slack' | 'teams') => {
+    const session = await getSession()
+    if (!session) return
+    setTesting(channel)
+    try {
+      const res = await fetch(`/api/${channel}/remind`, {
+        method:  'POST',
+        headers: {
+          'Content-Type':  'application/json',
+          'Authorization': 'Bearer ' + session.access_token,
+        },
+        body: JSON.stringify({ userName: 'Test (admin)' }),
+      })
+      const json = await res.json().catch(() => ({}))
+      if (!res.ok) throw new Error(json.error ?? `${channel} test failed`)
+      setToast({ type: 'success', message: `${channel === 'slack' ? 'Slack' : 'Teams'} test sent` })
+      fetchAll()
+    } catch (e) {
+      setToast({ type: 'error', message: e instanceof Error ? e.message : `${channel} test failed` })
+    } finally {
+      setTesting(null)
+      setTimeout(() => setToast(null), 3500)
+    }
   }
 
   const sendNow = async (m: ApiMember) => {
@@ -258,8 +284,32 @@ export function DeliverySettings() {
 
       {/* Stats */}
       <div>
-        <h2 className="text-lg font-semibold mb-1" style={{ color: 'var(--text)' }}>Delivery history</h2>
-        <p className="text-xs mb-5" style={{ color: 'var(--muted)' }}>Last 7 days across Slack + Teams</p>
+        <div className="flex items-end justify-between flex-wrap gap-4 mb-5">
+          <div>
+            <h2 className="text-lg font-semibold mb-1" style={{ color: 'var(--text)' }}>Delivery history</h2>
+            <p className="text-xs" style={{ color: 'var(--muted)' }}>Last 7 days across Slack + Teams</p>
+          </div>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => testChannel('slack')}
+              disabled={testing !== null || (diag ? !diag.slack.botToken || !diag.slack.channelId : false)}
+              title="Send a test training message to the Slack channel"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-opacity disabled:opacity-30"
+              style={{ background: 'var(--card)', color: 'var(--text)', border: '1px solid var(--card-border)' }}>
+              <Zap className="w-3.5 h-3.5" />
+              {testing === 'slack' ? 'Testing...' : 'Test Slack'}
+            </button>
+            <button
+              onClick={() => testChannel('teams')}
+              disabled={testing !== null || (diag ? !diag.teams.webhook : false)}
+              title={diag && !diag.teams.webhook ? 'Set TEAMS_WEBHOOK_URL first' : 'Send a test training card to the Teams channel'}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-opacity disabled:opacity-30"
+              style={{ background: 'var(--card)', color: 'var(--text)', border: '1px solid var(--card-border)' }}>
+              <Zap className="w-3.5 h-3.5" />
+              {testing === 'teams' ? 'Testing...' : 'Test Teams'}
+            </button>
+          </div>
+        </div>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {[
             { label: 'Sent',        value: stats.sent,   color: '#16a34a',       border: 'rgba(22,163,74,0.15)' },
