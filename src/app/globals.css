@@ -4,13 +4,30 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
+/* global.css mein sabse upar ye change karo */
+
 :root {
+  /* --- LIGHT THEME (Default) --- */
+  --bg:          #ffffff;
+  --surface:     #f8f9fa;
+  --border:      #e2e8f0;
+  --brand:       #5B54B8;
+  --brand-hover: #4a44a3;
+  --muted:       #64748b;
+  --accent:      #5B54B8;
+  --text:        #0f172a;
+  --card:        rgba(255,255,255,0.8);
+  --card-solid:  #ffffff;
+  --card-border: rgba(0,0,0,0.1);
+}
+
+.dark {
+  /* --- DARK THEME (Jo pehle root mein tha) --- */
   --bg:          #0e0c1e;
   --surface:     #1a1730;
   --border:      #2a2550;
   --brand:       #5B54B8;
   --brand-hover: #7A74CC;
-  --brand-dark:  #3F3A8A;
   --muted:       #a9a5c4;
   --accent:      #9d97e8;
   --text:        #ffffff;
@@ -57,12 +74,12 @@ body::after {
 
 /* Glassmorphism card */
 .glass-card {
-  background: rgba(30,27,56,0.5);
+  background: var(--card); /* var use karo, hardcoded rgba nahi */
   backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(91,84,184,0.15);
-  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+  border: 1px solid var(--card-border);
+  /* ... rest same */
 }
+
 .glass-card:hover {
   border-color: rgba(91,84,184,0.35);
   box-shadow: 0 0 30px -8px rgba(91,84,184,0.25);
