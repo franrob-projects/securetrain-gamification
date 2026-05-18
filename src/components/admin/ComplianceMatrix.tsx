@@ -2,6 +2,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { CheckCircle2, XCircle, Minus, Bell, Plus, Download } from 'lucide-react'
 import { createClient } from '@/lib/supabase'
+import { useDemoMode } from '@/lib/demoMode'
 import { AddTeamMemberForm } from './AddTeamMemberForm'
 import { CompletionsTrend } from './CompletionsTrend'
 
@@ -134,7 +135,40 @@ function formatDate(iso: string) {
   return `${parseInt(d)} ${months[parseInt(m) - 1]}`
 }
 
-const THIS_WEEK_CUTOFF = '2026-04-07'
+// Rolling 7-day window so the stat reflects the current week,
+// regardless of when seed data was written.
+function thisWeekCutoff(): string {
+  const d = new Date()
+  d.setDate(d.getDate() - 7)
+  return d.toISOString().slice(0, 10)
+}
+
+// Shift every seed completion date forward so the most recent one lands
+// yesterday — makes the demo dashboard look like a live customer account
+// without touching the static seed data.
+function shiftSeedDates(team: TeamMember[]): TeamMember[] {
+  let maxDate = ''
+  for (const m of team) for (const d of Object.values(m.completions)) if (d > maxDate) maxDate = d
+  if (!maxDate) return team
+  const today = new Date()
+  today.setDate(today.getDate() - 1)
+  const target = today.toISOString().slice(0, 10)
+  const shiftDays = Math.round(
+    (Date.parse(target) - Date.parse(maxDate)) / (24 * 3600 * 1000)
+  )
+  if (shiftDays === 0) return team
+  const shift = (iso: string): string => {
+    const dt = new Date(iso + 'T00:00:00Z')
+    dt.setUTCDate(dt.getUTCDate() + shiftDays)
+    return dt.toISOString().slice(0, 10)
+  }
+  return team.map(m => ({
+    ...m,
+    completions: Object.fromEntries(
+      Object.entries(m.completions).map(([k, v]) => [k, shift(v)])
+    ),
+  }))
+}
 
 function StatusBadge({ status }: { status: ComplianceStatus }) {
   const styles: Record<ComplianceStatus, { color: string; bg: string; label: string }> = {
@@ -193,6 +227,7 @@ function toTeamMember(api: ApiTeamMember): TeamMember {
 }
 
 export function ComplianceMatrix() {
+  const demoMode = useDemoMode()
   const [toast, setToast]         = useState<Toast>(null)
   const [pendingId, setPending]   = useState<string | null>(null)
   const [realMembers, setReal]    = useState<TeamMember[] | null>(null)
@@ -286,18 +321,21 @@ export function ComplianceMatrix() {
 
   // Use real members if any have been added, else fall back to seed data
   const isRealData    = realMembers !== null && realMembers.length > 0
-  const displayTeam   = isRealData ? realMembers : TEAM
+  const seedTeam      = demoMode ? shiftSeedDates(TEAM) : TEAM
+  const displayTeam   = isRealData ? realMembers : seedTeam
 
   const statuses = displayTeam.map(getStatus)
   const compliantCount   = statuses.filter(s => s === 'compliant').length
   const overdueCount     = statuses.filter(s => s === 'overdue').length
+  const cutoff           = thisWeekCutoff()
   const thisWeekCount    = displayTeam.reduce((acc, m) =>
-    acc + Object.values(m.completions).filter(d => d >= THIS_WEEK_CUTOFF).length, 0)
+    acc + Object.values(m.completions).filter(d => d >= cutoff).length, 0)
 
   return (
     <div>
-      {/* Seed data banner, full width when present */}
-      {!isRealData && (
+      {/* Seed data banner, full width when present. Hidden in demo mode
+          so the dashboard looks like a populated customer account. */}
+      {!isRealData && !demoMode && (
         <div className="mb-5 px-4 py-3 rounded-lg flex items-center gap-2 text-xs"
           style={{ background: 'rgba(217,119,6,0.10)', color: '#d97706', border: '1px solid rgba(217,119,6,0.25)' }}>
           <span className="text-base leading-none">⚠</span>
@@ -310,7 +348,7 @@ export function ComplianceMatrix() {
         <div>
           <h2 className="text-lg font-semibold mb-1" style={{ color: 'var(--text)' }}>Team compliance</h2>
           <p className="text-xs" style={{ color: 'var(--muted)' }}>
-            {displayTeam.length} {displayTeam.length === 1 ? 'team member' : 'team members'} · {isRealData ? 'live data' : 'demo data'}
+            {displayTeam.length} {displayTeam.length === 1 ? 'team member' : 'team members'} · {isRealData || demoMode ? 'live data' : 'demo data'}
           </p>
         </div>
         <div className="flex items-center gap-2">
@@ -351,10 +389,18 @@ export function ComplianceMatrix() {
         ))}
       </div>
 
-      {/* Trend chart (only when we have real data) */}
+      {/* Trend chart: real completions when available, else synthesised
+          from the (date-shifted) seed data in demo mode. */}
       {isRealData && completionEvents.length > 0 && (
         <div className="mb-6">
           <CompletionsTrend events={completionEvents} />
+        </div>
+      )}
+      {!isRealData && demoMode && (
+        <div className="mb-6">
+          <CompletionsTrend events={displayTeam.flatMap(m =>
+            Object.values(m.completions).map(d => ({ created_at: d + 'T12:00:00Z' }))
+          )} />
         </div>
       )}
 

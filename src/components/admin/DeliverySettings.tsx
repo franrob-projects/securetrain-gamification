@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react'
 import { CheckCircle2, XCircle, Save, Send, Trash2, AlertTriangle, HelpCircle, Zap, RotateCw } from 'lucide-react'
 import { createClient } from '@/lib/supabase'
+import { useDemoMode, demoDeliveryLogs, isDemoLogId } from '@/lib/demoMode'
 import { MODULES } from '@/data/modules'
 
 type Channel = 'slack' | 'teams'
@@ -66,6 +67,7 @@ function relativeTime(iso: string): string {
 }
 
 export function DeliverySettings() {
+  const demoMode = useDemoMode()
   const [members, setMembers] = useState<ApiMember[] | null>(null)
   const [drafts, setDrafts]   = useState<Record<string, MemberDraft>>({})
   const [saving, setSaving]   = useState<string | null>(null)
@@ -153,6 +155,17 @@ export function DeliverySettings() {
   }
 
   const retry = async (log: DeliveryLog) => {
+    // Demo log entries have no real team_member_id — short-circuit with a
+    // success toast so the retry button still looks responsive on camera.
+    if (isDemoLogId(log.id)) {
+      setRetrying(log.id)
+      setTimeout(() => {
+        setRetrying(null)
+        setToast({ type: 'success', message: `Retried ${log.member_name ?? 'delivery'}` })
+        setTimeout(() => setToast(null), 3000)
+      }, 600)
+      return
+    }
     if (!log.team_member_id) return
     const session = await getSession()
     if (!session) return
@@ -262,15 +275,24 @@ export function DeliverySettings() {
     }
   }
 
-  const filteredLogs = (logs ?? []).filter(l =>
+  // In demo mode, merge fake entries in front of any real logs so the
+  // Delivery tab looks like a populated customer account.
+  const displayLogs: DeliveryLog[] | null = logs === null
+    ? null
+    : demoMode
+      ? [...logs, ...demoDeliveryLogs()].sort((a, b) =>
+          b.delivered_at.localeCompare(a.delivered_at))
+      : logs
+
+  const filteredLogs = (displayLogs ?? []).filter(l =>
     (statusFilter  === 'all' || l.status  === statusFilter) &&
     (channelFilter === 'all' || l.channel === channelFilter)
   )
 
   const stats = (() => {
-    if (!logs) return { sent: 0, failed: 0, slack: 0, teams: 0 }
+    if (!displayLogs) return { sent: 0, failed: 0, slack: 0, teams: 0 }
     const cutoff = Date.now() - 7 * 24 * 60 * 60 * 1000
-    const recent = logs.filter(l => new Date(l.delivered_at).getTime() >= cutoff)
+    const recent = displayLogs.filter(l => new Date(l.delivered_at).getTime() >= cutoff)
     return {
       sent:   recent.filter(l => l.status === 'sent').length,
       failed: recent.filter(l => l.status === 'failed').length,
@@ -471,7 +493,7 @@ export function DeliverySettings() {
           <div>
             <h2 className="text-lg font-semibold mb-1" style={{ color: 'var(--text)' }}>Recent deliveries</h2>
             <p className="text-xs" style={{ color: 'var(--muted)' }}>
-              {logs ? `${filteredLogs.length} of ${logs.length}` : '0'} events from delivery_log
+              {displayLogs ? `${filteredLogs.length} of ${displayLogs.length}` : '0'} events from delivery_log
             </p>
           </div>
           <div className="flex items-center gap-2 flex-wrap">
@@ -499,7 +521,7 @@ export function DeliverySettings() {
             </div>
           </div>
         </div>
-        {logs && filteredLogs.length === 0 ? (
+        {displayLogs && filteredLogs.length === 0 ? (
           <div className="rounded-xl px-5 py-6 text-sm" style={{ background: 'var(--card)', border: '1px solid var(--card-border)', color: 'var(--muted)' }}>
             No delivery events yet. The cron runs weekdays at 09:00.
           </div>
