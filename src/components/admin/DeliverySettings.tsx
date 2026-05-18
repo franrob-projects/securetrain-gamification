@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react'
 import { CheckCircle2, XCircle, Save, Send, Trash2, AlertTriangle, HelpCircle, Zap, RotateCw } from 'lucide-react'
 import { createClient } from '@/lib/supabase'
-import { useDemoMode, demoDeliveryLogs, isDemoLogId } from '@/lib/demoMode'
+import { useDemoMode, useDemoRoute, demoDeliveryLogs, isDemoLogId } from '@/lib/demoMode'
 import { MODULES } from '@/data/modules'
 
 type Channel = 'slack' | 'teams'
@@ -68,6 +68,7 @@ function relativeTime(iso: string): string {
 
 export function DeliverySettings() {
   const demoMode = useDemoMode()
+  const isDemoRoute = useDemoRoute()
   const [members, setMembers] = useState<ApiMember[] | null>(null)
   const [drafts, setDrafts]   = useState<Record<string, MemberDraft>>({})
   const [saving, setSaving]   = useState<string | null>(null)
@@ -113,7 +114,16 @@ export function DeliverySettings() {
     }
   }
 
-  useEffect(() => { fetchAll() }, [])
+  useEffect(() => {
+    // On the public /demo route there's no session — short-circuit with
+    // empty arrays so demoDeliveryLogs() and seed members render.
+    if (isDemoRoute) {
+      setMembers([])
+      setLogs([])
+      return
+    }
+    fetchAll()
+  }, [isDemoRoute])
 
   const updateDraft = (id: string, patch: Partial<MemberDraft>) => {
     setDrafts(d => ({ ...d, [id]: { ...d[id], ...patch } }))
@@ -130,10 +140,22 @@ export function DeliverySettings() {
   }
 
   const testChannel = async (channel: 'slack' | 'teams') => {
-    const session = await getSession()
-    if (!session) return
     setTesting(channel)
     try {
+      // On /demo there's no session — hit the public sample endpoint instead.
+      if (isDemoRoute) {
+        const res = await fetch('/api/demo/sample', {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body:    JSON.stringify({ channel }),
+        })
+        const json = await res.json().catch(() => ({}))
+        if (!res.ok) throw new Error(json.error ?? `${channel} sample failed`)
+        setToast({ type: 'success', message: `${channel === 'slack' ? 'Slack' : 'Teams'} sample sent` })
+        return
+      }
+      const session = await getSession()
+      if (!session) return
       const res = await fetch(`/api/${channel}/remind`, {
         method:  'POST',
         headers: {

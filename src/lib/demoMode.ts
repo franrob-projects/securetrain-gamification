@@ -11,6 +11,7 @@ export function useDemoMode(): boolean {
 
   useEffect(() => {
     if (typeof window === 'undefined') return
+    if (window.location.pathname.startsWith('/demo')) { setOn(true); return }
     const params = new URLSearchParams(window.location.search)
     const fromUrl = params.get('demo')
     if (fromUrl === '1') localStorage.setItem(KEY, '1')
@@ -18,6 +19,15 @@ export function useDemoMode(): boolean {
     setOn(localStorage.getItem(KEY) === '1')
   }, [])
 
+  return on
+}
+
+export function useDemoRoute(): boolean {
+  const [on, setOn] = useState(false)
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    setOn(window.location.pathname.startsWith('/demo'))
+  }, [])
   return on
 }
 

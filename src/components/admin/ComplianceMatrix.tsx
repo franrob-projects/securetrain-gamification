@@ -2,7 +2,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { CheckCircle2, XCircle, Minus, Bell, Plus, Download } from 'lucide-react'
 import { createClient } from '@/lib/supabase'
-import { useDemoMode } from '@/lib/demoMode'
+import { useDemoMode, useDemoRoute } from '@/lib/demoMode'
 import { AddTeamMemberForm } from './AddTeamMemberForm'
 import { CompletionsTrend } from './CompletionsTrend'
 
@@ -228,6 +228,7 @@ function toTeamMember(api: ApiTeamMember): TeamMember {
 
 export function ComplianceMatrix() {
   const demoMode = useDemoMode()
+  const isDemoRoute = useDemoRoute()
   const [toast, setToast]         = useState<Toast>(null)
   const [pendingId, setPending]   = useState<string | null>(null)
   const [realMembers, setReal]    = useState<TeamMember[] | null>(null)
@@ -261,6 +262,19 @@ export function ComplianceMatrix() {
   const sendReminder = async (member: TeamMember) => {
     setPending(member.id)
     try {
+      // On the public /demo route, route through the rate-limited sample
+      // endpoint so live prospects can see a real Slack message land.
+      if (isDemoRoute) {
+        const res = await fetch('/api/demo/sample', {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body:    JSON.stringify({ channel: 'slack' }),
+        })
+        const json = await res.json().catch(() => ({}))
+        if (!res.ok) throw new Error(json.error ?? 'Sample failed')
+        setToast({ type: 'success', message: `Reminder sent to ${member.name}` })
+        return
+      }
       const supabase = createClient()
       const { data: { session } } = await supabase.auth.getSession()
       if (!session) {
@@ -279,8 +293,8 @@ export function ComplianceMatrix() {
       })
       if (!res.ok) throw new Error('Request failed')
       setToast({ type: 'success', message: `Reminder sent to ${member.name}` })
-    } catch {
-      setToast({ type: 'error', message: `Could not send reminder to ${member.name}` })
+    } catch (e) {
+      setToast({ type: 'error', message: e instanceof Error ? e.message : `Could not send reminder to ${member.name}` })
     } finally {
       setPending(null)
       toastTimer.current = setTimeout(() => setToast(null), 3000)
@@ -352,20 +366,24 @@ export function ComplianceMatrix() {
           </p>
         </div>
         <div className="flex items-center gap-2">
-          <button onClick={exportCsv}
-            disabled={exporting || !isRealData}
-            title={isRealData ? 'Download compliance CSV' : 'Add real team members to enable export'}
-            className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors disabled:opacity-40"
-            style={{ background: 'var(--card)', color: 'var(--text)', border: '1px solid var(--card-border)' }}>
-            <Download className="w-4 h-4" />
-            {exporting ? 'Exporting...' : 'Export CSV'}
-          </button>
-          <button onClick={() => setShowAdd(true)}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold text-white transition-colors"
-            style={{ background: 'var(--brand)' }}>
-            <Plus className="w-4 h-4" />
-            Add team member
-          </button>
+          {!isDemoRoute && (
+            <>
+              <button onClick={exportCsv}
+                disabled={exporting || !isRealData}
+                title={isRealData ? 'Download compliance CSV' : 'Add real team members to enable export'}
+                className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors disabled:opacity-40"
+                style={{ background: 'var(--card)', color: 'var(--text)', border: '1px solid var(--card-border)' }}>
+                <Download className="w-4 h-4" />
+                {exporting ? 'Exporting...' : 'Export CSV'}
+              </button>
+              <button onClick={() => setShowAdd(true)}
+                className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold text-white transition-colors"
+                style={{ background: 'var(--brand)' }}>
+                <Plus className="w-4 h-4" />
+                Add team member
+              </button>
+            </>
+          )}
         </div>
       </div>
 
