@@ -22,8 +22,8 @@ export async function POST(req: NextRequest) {
   lastSendAt = now
 
   const result = channel === 'teams'
-    ? await sendTeamsReminder({ userName: 'Demo viewer' })
-    : await sendSlackReminder({ userName: 'Demo viewer' })
+    ? await sendTeamsReminder({ userName: 'Demo viewer', demoMode: true })
+    : await sendSlackReminder({ userName: 'Demo viewer', demoMode: true })
 
   if (!result.ok) {
     lastSendAt = 0 // failures shouldn't burn the cooldown

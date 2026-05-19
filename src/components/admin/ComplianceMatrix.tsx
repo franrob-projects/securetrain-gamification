@@ -2,7 +2,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { CheckCircle2, XCircle, Minus, Bell, Plus, Download } from 'lucide-react'
 import { createClient } from '@/lib/supabase'
-import { useDemoMode, useDemoRoute } from '@/lib/demoMode'
+import { useDemoMode, useDemoRoute, getDemoCompletions } from '@/lib/demoMode'
 import { AddTeamMemberForm } from './AddTeamMemberForm'
 import { CompletionsTrend } from './CompletionsTrend'
 
@@ -229,6 +229,7 @@ function toTeamMember(api: ApiTeamMember): TeamMember {
 export function ComplianceMatrix() {
   const demoMode = useDemoMode()
   const isDemoRoute = useDemoRoute()
+  const [demoSelfCompletions, setDemoSelfCompletions] = useState<Record<string, string>>({})
   const [toast, setToast]         = useState<Toast>(null)
   const [pendingId, setPending]   = useState<string | null>(null)
   const [realMembers, setReal]    = useState<TeamMember[] | null>(null)
@@ -258,6 +259,28 @@ export function ComplianceMatrix() {
   }
 
   useEffect(() => { fetchMembers() }, [])
+
+  // On /demo, pull any completions the prospect just finished so we can
+  // surface them at the top of the matrix and the trend chart.
+  useEffect(() => {
+    if (!isDemoRoute) return
+    const refresh = () => {
+      const arr = getDemoCompletions()
+      const byModule: Record<string, string> = {}
+      for (const c of arr) {
+        const d = c.completedAt.slice(0, 10)
+        if (!byModule[c.moduleId] || d > byModule[c.moduleId]) byModule[c.moduleId] = d
+      }
+      setDemoSelfCompletions(byModule)
+    }
+    refresh()
+    window.addEventListener('focus', refresh)
+    window.addEventListener('storage', refresh)
+    return () => {
+      window.removeEventListener('focus', refresh)
+      window.removeEventListener('storage', refresh)
+    }
+  }, [isDemoRoute])
 
   const sendReminder = async (member: TeamMember) => {
     setPending(member.id)
@@ -336,7 +359,18 @@ export function ComplianceMatrix() {
   // Use real members if any have been added, else fall back to seed data
   const isRealData    = realMembers !== null && realMembers.length > 0
   const seedTeam      = demoMode ? shiftSeedDates(TEAM) : TEAM
-  const displayTeam   = isRealData ? realMembers : seedTeam
+
+  // On /demo, prepend a "You (demo viewer)" row populated from completions
+  // the prospect just finished. Shows up at the top of the matrix.
+  const selfRow: TeamMember | null = isDemoRoute && Object.keys(demoSelfCompletions).length > 0 ? {
+    id: 'demo-self',
+    name: 'You (demo viewer)',
+    role: 'Just completed',
+    sector: 'both',
+    completions: demoSelfCompletions,
+  } : null
+
+  const displayTeam   = isRealData ? realMembers : (selfRow ? [selfRow, ...seedTeam] : seedTeam)
 
   const statuses = displayTeam.map(getStatus)
   const compliantCount   = statuses.filter(s => s === 'compliant').length
@@ -446,9 +480,16 @@ export function ComplianceMatrix() {
               const done     = required.filter(m => member.completions[m.id])
               const pct      = Math.round((done.length / required.length) * 100)
 
+              const isSelf = member.id === 'demo-self'
               return (
-                <tr key={member.id} style={{ borderTop: '1px solid var(--border)', background: i % 2 === 0 ? 'transparent' : 'rgba(91,84,184,0.02)' }}>
-                  <td className="px-4 py-3 font-medium" style={{ color: 'var(--text)' }}>{member.name}</td>
+                <tr key={member.id} style={{
+                  borderTop: '1px solid var(--border)',
+                  background: isSelf
+                    ? 'rgba(91,84,184,0.10)'
+                    : i % 2 === 0 ? 'transparent' : 'rgba(91,84,184,0.02)',
+                  borderLeft: isSelf ? '3px solid var(--brand)' : undefined,
+                }}>
+                  <td className="px-4 py-3 font-medium" style={{ color: isSelf ? 'var(--accent)' : 'var(--text)' }}>{member.name}</td>
                   <td className="px-4 py-3" style={{ color: 'var(--muted)' }}>{member.role}</td>
                   <td className="px-4 py-3"><SectorLabel sector={member.sector} /></td>
                   {MATRIX_MODULES.map(m => {

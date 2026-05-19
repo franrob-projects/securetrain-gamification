@@ -7,17 +7,28 @@ import { DeliverySettings } from '@/components/admin/DeliverySettings'
 import { ConplyLogo } from '@/components/ui/ConplyLogo'
 import { ThreatBadge } from '@/components/ui/ThreatBadge'
 import { SectorBadge } from '@/components/ui/SectorBadge'
-import { Clock, ExternalLink, Play } from 'lucide-react'
+import { clearDemoCompletions } from '@/lib/demoMode'
+import { Clock, ExternalLink, Play, RotateCw } from 'lucide-react'
 import { formatDuration } from '@/lib/utils'
 
 export default function DemoPage() {
   const [tab, setTab] = useState<'modules' | 'team' | 'delivery'>('team')
+  const resetDemo = () => {
+    clearDemoCompletions()
+    window.location.reload()
+  }
 
   return (
     <div className="min-h-screen" style={{ background: 'var(--bg)' }}>
       <nav className="px-6 py-4 flex items-center justify-between" style={{ borderBottom: '1px solid var(--border)' }}>
         <Link href="/"><ConplyLogo /></Link>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
+          <button onClick={resetDemo}
+            title="Clear any modules you completed during this demo"
+            className="inline-flex items-center gap-1.5 text-xs transition-colors"
+            style={{ color: 'var(--muted)' }}>
+            <RotateCw className="w-3 h-3" /> Reset demo
+          </button>
           <span className="text-xs font-semibold px-2.5 py-1 rounded-full" style={{ background: 'rgba(91,84,184,0.15)', color: 'var(--accent)', border: '1px solid rgba(91,84,184,0.3)' }}>
             Live demo
           </span>

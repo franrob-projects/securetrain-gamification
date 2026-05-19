@@ -12,11 +12,12 @@ export async function sendSlackReminder(opts: {
   moduleId?: string
   channel?: string
   teamMemberId?: string
+  demoMode?: boolean
 }): Promise<{ ok: boolean; error?: string; ts?: string }> {
   const channelId = opts.channel ?? process.env.SLACK_CHANNEL_ID
   if (!channelId) return { ok: false, error: 'No Slack channel configured' }
 
-  const content = buildDeliveryContent({ userName: opts.userName, moduleId: opts.moduleId })
+  const content = buildDeliveryContent({ userName: opts.userName, moduleId: opts.moduleId, demoMode: opts.demoMode })
 
   const blocks = [
     {

@@ -72,3 +72,40 @@ export function demoDeliveryLogs(): DemoDeliveryLog[] {
 export function isDemoLogId(id: string): boolean {
   return id.startsWith('demo-')
 }
+
+// Demo-viewer completions persisted in localStorage so the /demo
+// dashboard can show "look — your completion just showed up".
+const COMPLETIONS_KEY = 'conply-demo-completions'
+
+export interface DemoCompletion {
+  moduleId:    string
+  score:       number
+  completedAt: string
+}
+
+export function saveDemoCompletion(c: DemoCompletion): void {
+  if (typeof window === 'undefined') return
+  try {
+    const raw = localStorage.getItem(COMPLETIONS_KEY)
+    const arr: DemoCompletion[] = raw ? JSON.parse(raw) : []
+    arr.push(c)
+    localStorage.setItem(COMPLETIONS_KEY, JSON.stringify(arr))
+  } catch {
+    // ignore
+  }
+}
+
+export function getDemoCompletions(): DemoCompletion[] {
+  if (typeof window === 'undefined') return []
+  try {
+    const raw = localStorage.getItem(COMPLETIONS_KEY)
+    return raw ? JSON.parse(raw) : []
+  } catch {
+    return []
+  }
+}
+
+export function clearDemoCompletions(): void {
+  if (typeof window === 'undefined') return
+  localStorage.removeItem(COMPLETIONS_KEY)
+}

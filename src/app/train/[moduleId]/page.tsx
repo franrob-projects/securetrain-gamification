@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState, useCallback } from 'react'
-import { useParams, useRouter } from 'next/navigation'
+import { useParams, useRouter, useSearchParams } from 'next/navigation'
 import { motion } from 'framer-motion'
 import jsPDF from 'jspdf'
 import { MODULES } from '@/data/modules'
@@ -9,6 +9,7 @@ import { ArrowLeft, CheckCircle2, Download } from 'lucide-react'
 import { ThreatBadge } from '@/components/ui/ThreatBadge'
 import { ConplyLogo } from '@/components/ui/ConplyLogo'
 import { createClient } from '@/lib/supabase'
+import { saveDemoCompletion } from '@/lib/demoMode'
 import Link from 'next/link'
 
 type Phase = 'intro' | 'training' | 'complete'
@@ -17,6 +18,8 @@ const TOTAL = 3
 export default function TrainPage() {
   const { moduleId } = useParams<{ moduleId: string }>()
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const isDemo = searchParams.get('demo') === '1'
   const [phase, setPhase]                 = useState<Phase>('intro')
   const [finalScore, setFinalScore]       = useState(0)
   const [correctCount, setCorrectCount]   = useState(0)
@@ -28,6 +31,8 @@ export default function TrainPage() {
   const module = MODULES.find(m => m.id === moduleId)
 
   useEffect(() => {
+    // ?demo=1 lets prospects walk through the module without an account.
+    if (isDemo) { setUserEmail('demo@conply.org'); return }
     const checkAuth = async () => {
       const supabase = createClient()
       const { data: { session } } = await supabase.auth.getSession()
@@ -38,7 +43,7 @@ export default function TrainPage() {
       setUserEmail(session.user.email ?? '')
     }
     checkAuth()
-  }, [router, moduleId])
+  }, [router, moduleId, isDemo])
 
   const handleComplete = useCallback(async (score: number, correct: number) => {
     setFinalScore(score)
@@ -47,6 +52,11 @@ export default function TrainPage() {
     setPhase('complete')
     setSaving(true)
     try {
+      if (isDemo) {
+        // Persist locally so the /demo dashboard can surface it.
+        saveDemoCompletion({ moduleId, score, completedAt: new Date().toISOString() })
+        return
+      }
       const supabase = createClient()
       const { data: { session } } = await supabase.auth.getSession()
       if (!session) {
@@ -64,7 +74,7 @@ export default function TrainPage() {
     } finally {
       setSaving(false)
     }
-  }, [moduleId])
+  }, [moduleId, isDemo])
 
   const downloadPdf = () => {
     if (!module || !completedAt) return
@@ -106,9 +116,11 @@ export default function TrainPage() {
     doc.save(`conply-completion-${safeName}.pdf`)
   }
 
+  const backHref = isDemo ? '/demo' : '/'
+
   if (!module) return (
     <div className="min-h-screen flex items-center justify-center" style={{ background: 'var(--bg)' }}>
-      <p style={{ color: 'var(--muted)' }}>Module not found. <Link href="/" style={{ color: 'var(--accent)' }}>Go back</Link></p>
+      <p style={{ color: 'var(--muted)' }}>Module not found. <Link href={backHref} style={{ color: 'var(--accent)' }}>Go back</Link></p>
     </div>
   )
 
@@ -121,11 +133,13 @@ export default function TrainPage() {
       <nav className="px-6 py-4 flex items-center justify-between" style={{ borderBottom: '1px solid var(--border)' }}>
         <ConplyLogo size="sm" />
         <div className="flex items-center gap-4 sm:gap-6">
-          <Link href="/progress" className="text-xs sm:text-sm transition-colors" style={{ color: 'var(--muted)' }}>
-            My progress
-          </Link>
-          <Link href="/" className="flex items-center gap-1 sm:gap-1.5 text-xs sm:text-sm transition-colors" style={{ color: 'var(--muted)' }}>
-            <ArrowLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> Back
+          {!isDemo && (
+            <Link href="/progress" className="text-xs sm:text-sm transition-colors" style={{ color: 'var(--muted)' }}>
+              My progress
+            </Link>
+          )}
+          <Link href={backHref} className="flex items-center gap-1 sm:gap-1.5 text-xs sm:text-sm transition-colors" style={{ color: 'var(--muted)' }}>
+            <ArrowLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> {isDemo ? 'Back to dashboard' : 'Back'}
           </Link>
         </div>
       </nav>
@@ -278,11 +292,13 @@ export default function TrainPage() {
                 className="text-xs transition-colors" style={{ color: 'var(--muted)' }}>
                 Retry
               </button>
-              <Link href="/progress" className="text-xs transition-colors" style={{ color: 'var(--muted)' }}>
-                My progress
-              </Link>
-              <Link href="/" className="text-xs transition-colors" style={{ color: 'var(--muted)' }}>
-                Back to modules
+              {!isDemo && (
+                <Link href="/progress" className="text-xs transition-colors" style={{ color: 'var(--muted)' }}>
+                  My progress
+                </Link>
+              )}
+              <Link href={backHref} className="text-xs transition-colors" style={{ color: 'var(--muted)' }}>
+                {isDemo ? 'See it in the dashboard →' : 'Back to modules'}
               </Link>
             </div>
 

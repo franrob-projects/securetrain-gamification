@@ -26,10 +26,12 @@ export interface DeliveryContent {
   baseUrl: string
 }
 
-export function buildDeliveryContent(opts: { userName?: string; moduleId?: string }): DeliveryContent {
+export function buildDeliveryContent(opts: { userName?: string; moduleId?: string; demoMode?: boolean }): DeliveryContent {
   const base     = process.env.NEXT_PUBLIC_APP_URL ?? 'https://www.conply.org'
   const moduleId = opts.moduleId ?? process.env.SLACK_MODULE_ID ?? 'aml-financial-crime'
   const module   = MODULES.find(m => m.id === moduleId) ?? MODULES[0]
+  // ?demo=1 tells the training page to skip auth and save completion locally
+  const qs       = opts.demoMode ? '?demo=1' : ''
 
   const headerText = opts.userName
     ? `${opts.userName}, your training is due`
@@ -54,7 +56,7 @@ export function buildDeliveryContent(opts: { userName?: string; moduleId?: strin
     topicPreview,
     metaLine,
     fallbackText: `${headerText}: ${module.title}`,
-    trainingUrl: `${base}/train/${moduleId}`,
+    trainingUrl: `${base}/train/${moduleId}${qs}`,
     progressUrl: `${base}/progress`,
     baseUrl: base,
   }

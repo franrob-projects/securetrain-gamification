@@ -5,11 +5,12 @@ export async function sendTeamsReminder(opts: {
   moduleId?: string
   webhookUrl?: string
   teamMemberId?: string
+  demoMode?: boolean
 }): Promise<{ ok: boolean; error?: string }> {
   const webhook = opts.webhookUrl ?? process.env.TEAMS_WEBHOOK_URL
   if (!webhook) return { ok: false, error: 'No Teams webhook URL configured (set TEAMS_WEBHOOK_URL)' }
 
-  const content = buildDeliveryContent({ userName: opts.userName, moduleId: opts.moduleId })
+  const content = buildDeliveryContent({ userName: opts.userName, moduleId: opts.moduleId, demoMode: opts.demoMode })
 
   const card = {
     type: 'message',
