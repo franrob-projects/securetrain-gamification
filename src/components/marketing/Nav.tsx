@@ -1,8 +1,8 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Menu, X, Sparkles, Crown, ChevronRight } from 'lucide-react'
+import { Menu, X, Sparkles, Crown, ChevronRight, Moon, Sun } from 'lucide-react'
 import { ConplyLogo } from '@/components/ui/ConplyLogo'
 import { JurisdictionFlag } from '@/components/ui/JurisdictionFlag'
 import { BOOKING_URL } from '@/lib/constants'
@@ -14,8 +14,8 @@ const LINKS = [
 ]
 
 type Jurisdiction = {
-  slug:      'gibraltar' | 'luxembourg'
-  label:     string
+  slug:  'gibraltar' | 'luxembourg'
+  label:  string
   regulator: string
 }
 
@@ -26,7 +26,7 @@ const JURISDICTIONS: Jurisdiction[] = [
 
 const TIERS = [
   { slug: 'pro',    label: 'Pro',    tag: 'Premium',  desc: 'Team-wide compliance training',                 icon: Sparkles, color: '#a78bfa' },
-  { slug: 'genius', label: 'Genius', tag: 'Platinum', desc: 'Personalised learning journeys per user',       icon: Crown,    color: '#fbbf24' },
+  { slug: 'genius', label: 'Genius', tag: 'Platinum', desc: 'Personalised learning journeys per user',        icon: Crown,    color: '#fbbf24' },
 ]
 
 export function Nav() {
@@ -34,11 +34,37 @@ export function Nav() {
   const [open, setOpen] = useState(false)
   const [productsOpen, setProductsOpen] = useState(false)
   const [hoveredJx, setHoveredJx] = useState<'gibraltar' | 'luxembourg' | null>(null)
+  
+  // Dark theme state
+  const [theme, setTheme] = useState<string | null>(null)
+
+  // 1. Initial theme load (client-side only)
+  useEffect(() => {
+    const saved = localStorage.getItem("theme") || "light"
+    setTheme(saved)
+  }, [])
+
+  // 2. Apply theme to HTML tag
+  useEffect(() => {
+    if (!theme) return
+
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark")
+    } else {
+      document.documentElement.classList.remove("dark")
+    }
+    localStorage.setItem("theme", theme)
+  }, [theme])
 
   const isActive = (href: string) =>
     href === pathname || pathname.startsWith(href + '/')
 
   const isProductsActive = pathname.startsWith('/products')
+
+  // Theme toggle function
+  const toggleTheme = () => {
+    setTheme(prev => (prev === "dark" ? "light" : "dark"))
+  }
 
   return (
     <nav className="px-6 py-4 max-w-6xl mx-auto">
@@ -47,9 +73,8 @@ export function Nav() {
           <ConplyLogo size="sm" />
         </Link>
 
-        {/* Desktop */}
+        {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-1">
-          {/* Products dropdown, cascading */}
           <div
             className="relative"
             onMouseEnter={() => setProductsOpen(true)}
@@ -72,11 +97,7 @@ export function Nav() {
                   {JURISDICTIONS.map(j => {
                     const active = hoveredJx === j.slug
                     return (
-                      <div
-                        key={j.slug}
-                        onMouseEnter={() => setHoveredJx(j.slug)}
-                        className="relative"
-                      >
+                      <div key={j.slug} onMouseEnter={() => setHoveredJx(j.slug)} className="relative">
                         <div
                           className="flex items-center justify-between gap-3 px-3 py-2.5 rounded-lg cursor-pointer transition-colors"
                           style={{ background: active ? 'rgba(91,84,184,0.1)' : 'transparent' }}
@@ -95,7 +116,6 @@ export function Nav() {
                           <ChevronRight className="w-3.5 h-3.5" style={{ color: active ? 'var(--accent)' : 'var(--muted)', opacity: active ? 1 : 0.5 }} />
                         </div>
 
-                        {/* Flyout aligned to this row */}
                         {active && (
                           <div
                             className="absolute top-0 rounded-xl p-2 w-72"
@@ -116,8 +136,6 @@ export function Nav() {
                                   onClick={() => { setProductsOpen(false); setHoveredJx(null) }}
                                   className="flex items-start gap-3 px-3 py-3 rounded-lg transition-colors"
                                   style={{ background: isActive(href) ? 'rgba(91,84,184,0.1)' : 'transparent' }}
-                                  onMouseEnter={e => (e.currentTarget.style.background = 'rgba(91,84,184,0.08)')}
-                                  onMouseLeave={e => (e.currentTarget.style.background = isActive(href) ? 'rgba(91,84,184,0.1)' : 'transparent')}
                                 >
                                   <div
                                     className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5"
@@ -127,9 +145,7 @@ export function Nav() {
                                   </div>
                                   <div>
                                     <div className="flex items-center gap-2 mb-0.5">
-                                      <span className="text-sm font-semibold" style={{ color: 'var(--text)' }}>
-                                        {t.label}
-                                      </span>
+                                      <span className="text-sm font-semibold" style={{ color: 'var(--text)' }}>{t.label}</span>
                                       <span
                                         className="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded"
                                         style={{ background: `${t.color}20`, color: t.color }}
@@ -137,9 +153,7 @@ export function Nav() {
                                         {t.tag}
                                       </span>
                                     </div>
-                                    <p className="text-xs leading-relaxed" style={{ color: 'var(--muted)' }}>
-                                      {t.desc}
-                                    </p>
+                                    <p className="text-xs leading-relaxed" style={{ color: 'var(--muted)' }}>{t.desc}</p>
                                   </div>
                                 </Link>
                               )
@@ -154,30 +168,35 @@ export function Nav() {
             )}
           </div>
 
-          {LINKS.map(link => {
-            const active = isActive(link.href)
-            return (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="text-sm px-3 py-2 rounded-lg transition-colors"
-                style={{
-                  color: active ? 'var(--text)' : 'var(--muted)',
-                  background: active ? 'rgba(91,84,184,0.08)' : 'transparent',
-                }}
-              >
-                {link.label}
-              </Link>
-            )
-          })}
-          <Link
-            href="/auth"
-            className="text-sm px-3 py-2 rounded-lg transition-colors"
-            style={{ color: 'var(--muted)' }}
-          >
+          {LINKS.map(link => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="text-sm px-3 py-2 rounded-lg transition-colors"
+              style={{
+                color: isActive(link.href) ? 'var(--text)' : 'var(--muted)',
+                background: isActive(link.href) ? 'rgba(91,84,184,0.08)' : 'transparent',
+              }}
+            >
+              {link.label}
+            </Link>
+          ))}
+
+          <Link href="/auth" className="text-sm px-3 py-2 rounded-lg transition-colors" style={{ color: 'var(--muted)' }}>
             Log in
           </Link>
+
           <div className="w-px h-5 mx-1" style={{ background: 'var(--border)' }} />
+
+          {/* Theme Toggle Button */}
+          <button
+            onClick={toggleTheme}
+            className="p-2 rounded-lg transition-colors hover:bg-gray-100 dark:hover:bg-gray-800"
+            title="Toggle theme"
+          >
+            {theme === "dark" ? <Sun size={18} className="text-yellow-400" /> : <Moon size={18} className="text-slate-600" />}
+          </button>
+
           <a
             href={BOOKING_URL} target="_blank" rel="noopener noreferrer"
             className="text-sm font-semibold px-4 py-2 rounded-lg transition-colors text-white ml-1"
@@ -201,6 +220,16 @@ export function Nav() {
       {/* Mobile drawer */}
       {open && (
         <div className="md:hidden pt-6 pb-2 space-y-1">
+          {/* Mobile Theme Toggle */}
+          <div className="px-3 pb-4">
+            <button
+              onClick={toggleTheme}
+              className="flex items-center gap-2 text-sm font-medium w-full p-2 rounded-lg border border-gray-200 dark:border-gray-700"
+            >
+              {theme === "dark" ? <><Sun size={16} /> Light Mode</> : <><Moon size={16} /> Dark Mode</>}
+            </button>
+          </div>
+
           {JURISDICTIONS.map(j => (
             <div key={j.slug} className="space-y-1">
               <div className="flex items-center gap-2.5 px-3 pt-3 pb-1">
@@ -239,23 +268,21 @@ export function Nav() {
 
           <div className="h-px my-3" style={{ background: 'var(--border)' }} />
 
-          {LINKS.map(link => {
-            const active = isActive(link.href)
-            return (
-              <Link
-                key={link.href}
-                href={link.href}
-                onClick={() => setOpen(false)}
-                className="block px-3 py-2.5 rounded-lg text-sm transition-colors"
-                style={{
-                  color: active ? 'var(--text)' : 'var(--muted)',
-                  background: active ? 'rgba(91,84,184,0.1)' : 'transparent',
-                }}
-              >
-                {link.label}
-              </Link>
-            )
-          })}
+          {LINKS.map(link => (
+            <Link
+              key={link.href}
+              href={link.href}
+              onClick={() => setOpen(false)}
+              className="block px-3 py-2.5 rounded-lg text-sm transition-colors"
+              style={{
+                color: isActive(link.href) ? 'var(--text)' : 'var(--muted)',
+                background: isActive(link.href) ? 'rgba(91,84,184,0.1)' : 'transparent',
+              }}
+            >
+              {link.label}
+            </Link>
+          ))}
+          
           <Link
             href="/auth"
             onClick={() => setOpen(false)}
@@ -264,6 +291,7 @@ export function Nav() {
           >
             Log in
           </Link>
+
           <div className="pt-3">
             <a
               href={BOOKING_URL} target="_blank" rel="noopener noreferrer"
