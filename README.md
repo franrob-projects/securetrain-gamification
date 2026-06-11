@@ -74,6 +74,10 @@ cp .env.example .env.local
 # Run Supabase migrations
 # (paste the SQL files from supabase/migrations/ into the Supabase SQL editor)
 
+# Embed regulation text for the RAG pipeline
+# (populates pgvector so AI scenarios can cite real regulation)
+npm run embed:regulations
+
 # Start dev server
 npm run dev
 ```
