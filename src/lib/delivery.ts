@@ -27,9 +27,10 @@ export interface DeliveryContent {
 }
 
 export function buildDeliveryContent(opts: { userName?: string; moduleId?: string; demoMode?: boolean }): DeliveryContent {
-  const base     = process.env.NEXT_PUBLIC_APP_URL ?? 'https://www.conply.org'
-  const moduleId = opts.moduleId ?? process.env.SLACK_MODULE_ID ?? 'aml-financial-crime'
-  const module   = MODULES.find(m => m.id === moduleId) ?? MODULES[0]
+  const base        = process.env.NEXT_PUBLIC_APP_URL ?? 'https://www.conply.org'
+  const requestedId = opts.moduleId ?? process.env.SLACK_MODULE_ID ?? 'aml-financial-crime'
+  const module      = MODULES.find(m => m.id === requestedId) ?? MODULES[0]
+  const moduleId    = module.id
   // ?demo=1 tells the training page to skip auth and save completion locally
   const qs       = opts.demoMode ? '?demo=1' : ''
 
